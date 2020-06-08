@@ -14,7 +14,7 @@ elx_make_query(
 \arguments{
 \item{resource_type}{Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"}
 
-\item{manual_type}{Define manually the type of resource to be retrieved, see \url(http://publications.europa.eu/resource/authority/resource-type)}
+\item{manual_type}{Define manually the type of resource to be retrieved}
 
 \item{include_corrigenda}{Should the query include corrigenda? Defaults to FALSE}
 
@@ -23,6 +23,8 @@ elx_make_query(
 \description{
 Generates pre-defined or manual SPARQL queries.
 Mainly to be called internally by other functions.
+List of available resource types: http://publications.europa.eu/resource/authority/resource-type
+Note that not all resource types are compatible with the pre-defined query
 }
 \examples{
 elx_make_query(resource_type = "directive")
@@ -30,4 +32,3 @@ elx_make_query(resource_type = "regulation")
 elx_make_query(resource_type = "decision")
 elx_make_query(resource_type = "manual", manual_type = "SWD")
 }
-\keyword{SPARQL}
