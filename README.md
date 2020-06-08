@@ -1,2 +1,2 @@
 # eurlex
-Convenience functions for accessing and working with the Eur-Lex database in R.
+Convenience functions for retrieving official data on European Union law.
