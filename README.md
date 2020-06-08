@@ -1,5 +1,5 @@
 # eurlex
-Convenience functions for retrieving official data on European Union law.
+Convenience functions for retrieving official data on European Union law through R.
 
 ## Useful resources
 Guide to CELEX numbers: https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html
