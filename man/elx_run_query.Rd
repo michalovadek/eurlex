@@ -4,7 +4,7 @@
 \alias{elx_run_query}
 \title{Execute SPARQL queries}
 \usage{
-elx_run_query(resource_type, manual_type)
+elx_run_query(resource_type, manual_type = "")
 }
 \arguments{
 \item{resource_type}{Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"}

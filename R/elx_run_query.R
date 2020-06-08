@@ -8,13 +8,13 @@
 #' @examples
 #' elx_run_query(resource_type = "directive")
 
-elx_run_query <- function(resource_type, manual_type){
+elx_run_query <- function(resource_type, manual_type = ""){
 
   endpoint <- "http://publications.europa.eu/webapi/rdf/sparql"
 
   query <- elx_make_query(resource_type = resource_type, manual_type = manual_type)
 
-  sparql_output <- SPARQL::SPARQL(endpoint,query)
+  sparql_output <- SPARQL(endpoint,query)
 
   return(sparql_output)
 
