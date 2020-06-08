@@ -10,4 +10,5 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     SPARQL
+    RCurl
 RoxygenNote: 7.1.0
