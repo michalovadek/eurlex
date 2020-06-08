@@ -2,9 +2,11 @@
 #'
 #' Generates pre-defined or manual SPARQL queries.
 #' Mainly to be called internally by other functions.
+#' List of available resource types: http://publications.europa.eu/resource/authority/resource-type
+#' Note that not all resource types are compatible with the pre-defined query
 #'
 #' @param resource_type Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"
-#' @param manual_type Define manually the type of resource to be retrieved, see \url(http://publications.europa.eu/resource/authority/resource-type)
+#' @param manual_type Define manually the type of resource to be retrieved
 #' @param include_corrigenda Should the query include corrigenda? Defaults to FALSE
 #' @param order Order results by ids, defaults to TRUE
 #' @keywords SPARQL
