@@ -16,7 +16,7 @@
 #' elx_make_query(resource_type = "decision")
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
 
-elx_make_query <- function(resource_type, manual_type, include_corrigenda = FALSE, order = TRUE){
+elx_make_query <- function(resource_type, manual_type = "", include_corrigenda = FALSE, order = TRUE){
 
   if (!resource_type %in% c("directive","regulation","decision","manual")) stop("'resource_type' must be defined")
 

@@ -6,7 +6,7 @@
 \usage{
 elx_make_query(
   resource_type,
-  manual_type,
+  manual_type = "",
   include_corrigenda = FALSE,
   order = TRUE
 )
