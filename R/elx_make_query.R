@@ -2,7 +2,7 @@
 #'
 #' Generates pre-defined or manual SPARQL queries.
 #' Mainly to be called internally by other functions.
-#' List of available resource types: http://publications.europa.eu/resource/authority/resource-type
+#' List of available resource types
 #' Note that not all resource types are compatible with the pre-defined query
 #'
 #' @param resource_type Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"
