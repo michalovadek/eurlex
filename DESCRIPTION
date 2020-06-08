@@ -1,0 +1,13 @@
+Package: eurlex
+Type: Package
+Title: Retrieve Data on European Union Laws
+Version: 0.1.0
+Author: Michal Ovadek
+Maintainer: Michal Ovadek <michal.ovadek@gmail.com>
+Description: Retrieve data on European Union laws from the Eur-Lex dataverse via pre-defined and customizable SPARQL queries.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+    SPARQL
+RoxygenNote: 7.1.0
