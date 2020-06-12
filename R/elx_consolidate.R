@@ -1,6 +1,6 @@
 #' Consolidate SPARQL results for preset queries
 #'
-#'@importFrom magrittr %>%
+#' @importFrom magrittr %>%
 #'
 
 elx_consolidate <- function(sparql_response){
@@ -14,7 +14,4 @@ elx_consolidate <- function(sparql_response){
            year = as.integer(stringr::str_extract(ids,"19[:digit:][:digit:]|20[:digit:][:digit:]")))
 
 }
-
-elx_consolidate(directives) %>%
-  ggplot(aes(x = year)) + geom_bar()
 
