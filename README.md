@@ -1,6 +1,9 @@
 # eurlex
 Convenience functions for retrieving official data on European Union law through R.
 
+## Installation
+The package is for the moment not available on CRAN. Install via `devtools::install_github("michalovadek/eurlex")`.
+
 ## Useful resources
 Guide to CELEX numbers: https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html
 
