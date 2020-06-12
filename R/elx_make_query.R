@@ -1,9 +1,9 @@
 #' Create SPARQL quries
 #'
-#' Generates pre-defined or manual SPARQL queries.
+#' Generates pre-defined or manual SPARQL queries to retrieve document ids from Cellar.
 #' Mainly to be called internally by other functions.
-#' List of available resource types: http://publications.europa.eu/resource/authority/resource-type
-#' Note that not all resource types are compatible with the pre-defined query
+#' List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
+#' Note that not all resource types are compatible with the pre-defined query.
 #'
 #' @param resource_type Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"
 #' @param manual_type Define manually the type of resource to be retrieved
@@ -18,7 +18,7 @@
 
 elx_make_query <- function(resource_type, manual_type = "", include_corrigenda = FALSE, order = TRUE){
 
-  if (!resource_type %in% c("directive","regulation","decision","manual")) stop("'resource_type' must be defined")
+  if (!resource_type %in% c("directive","regulation","decision","recommendation","manual")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){
     stop("manual SPARQL query undefined", call. = TRUE)
@@ -35,6 +35,17 @@ elx_make_query <- function(resource_type, manual_type = "", include_corrigenda =
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL>)", sep = " ")
+  }
+
+  if (resource_type == "recommendation"){
+    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/RECO>||
+                   ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_DEC>||
+                   ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_DIR>||
+                   ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_OPIN>||
+                   ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_RES>||
+                   ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_REG>||
+                   ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_RECO>||
+                   ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_DRAFT>)", sep = " ")
   }
 
   if (resource_type == "regulation"){
