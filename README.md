@@ -5,7 +5,7 @@ Convenience functions for retrieving official data on European Union law through
 The package is for the moment not available on CRAN. Install via `devtools::install_github("michalovadek/eurlex")`.
 
 ## Note
-This package nor its author are in any way affiliated with the EU Publications Office. Please pay attention to the data reuse[https://eur-lex.europa.eu/content/welcome/data-reuse.html] policies in place.
+This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable [data reuse](https://eur-lex.europa.eu/content/welcome/data-reuse.html) policies.
 
 ## Useful resources
 Guide to CELEX numbers: https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html
