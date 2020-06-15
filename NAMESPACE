@@ -2,3 +2,4 @@
 
 export(elx_make_query)
 export(elx_run_query)
+importFrom(magrittr,"%>%")

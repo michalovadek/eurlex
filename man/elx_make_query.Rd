@@ -5,30 +5,40 @@
 \title{Create SPARQL quries}
 \usage{
 elx_make_query(
-  resource_type,
+  resource_type = c("directive", "regulation", "decision", "recommendation", "caselaw",
+    "manual"),
   manual_type = "",
   include_corrigenda = FALSE,
-  order = TRUE
+  include_celex = TRUE,
+  include_date = FALSE,
+  include_force = FALSE,
+  order = FALSE
 )
 }
 \arguments{
-\item{resource_type}{Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"}
+\item{resource_type}{Type of resource to be retrieved via SPARQL query}
 
 \item{manual_type}{Define manually the type of resource to be retrieved}
 
-\item{include_corrigenda}{Should the query include corrigenda? Defaults to FALSE}
+\item{include_corrigenda}{If `TRUE`, results include corrigenda}
 
-\item{order}{Order results by ids, defaults to TRUE}
+\item{include_celex}{If `TRUE`, results include CELEX identifier for each resource URI}
+
+\item{include_date}{If `TRUE`, results include document date}
+
+\item{include_force}{If `TRUE`, results include whether legislation is in force}
+
+\item{order}{Order results by ids}
 }
 \description{
-Generates pre-defined or manual SPARQL queries.
+Generates pre-defined or manual SPARQL queries to retrieve document ids from Cellar.
 Mainly to be called internally by other functions.
-List of available resource types: http://publications.europa.eu/resource/authority/resource-type
-Note that not all resource types are compatible with the pre-defined query
+List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
+Note that not all resource types are compatible with the pre-defined query.
 }
 \examples{
-elx_make_query(resource_type = "directive")
-elx_make_query(resource_type = "regulation")
-elx_make_query(resource_type = "decision")
+elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
+elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
+elx_make_query(resource_type = "caselaw")
 elx_make_query(resource_type = "manual", manual_type = "SWD")
 }

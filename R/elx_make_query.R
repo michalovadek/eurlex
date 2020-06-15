@@ -5,31 +5,52 @@
 #' List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
 #' Note that not all resource types are compatible with the pre-defined query.
 #'
-#' @param resource_type Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"
+#' @param resource_type Type of resource to be retrieved via SPARQL query
 #' @param manual_type Define manually the type of resource to be retrieved
-#' @param include_corrigenda Should the query include corrigenda? Defaults to FALSE
-#' @param order Order results by ids, defaults to TRUE
+#' @param include_corrigenda If `TRUE`, results include corrigenda
+#' @param include_celex If `TRUE`, results include CELEX identifier for each resource URI
+#' @param include_date If `TRUE`, results include document date
+#' @param include_force If `TRUE`, results include whether legislation is in force
+#' @param order Order results by ids
 #' @export
 #' @examples
-#' elx_make_query(resource_type = "directive")
-#' elx_make_query(resource_type = "regulation")
-#' elx_make_query(resource_type = "decision")
+#' elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
+#' elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
+#' elx_make_query(resource_type = "caselaw")
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
 
-elx_make_query <- function(resource_type, manual_type = "", include_corrigenda = FALSE, order = TRUE){
+elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","caselaw","manual"),
+                           manual_type = "", include_corrigenda = FALSE, include_celex = TRUE,
+                           include_date = FALSE, include_force = FALSE, order = FALSE){
 
-  if (!resource_type %in% c("directive","regulation","decision","recommendation","manual")) stop("'resource_type' must be defined")
+  if (!resource_type %in% c("directive","regulation","decision","recommendation","caselaw","manual")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){
-    stop("manual SPARQL query undefined", call. = TRUE)
+    stop("Please specify resource type manually (e.g. 'DIR', 'REG', 'JUDG').", call. = TRUE)
   }
 
-  query <- "
-  prefix cdm: <http://publications.europa.eu/ontology/cdm#>
-  select distinct ?work str(?doc_id) ?type
-  where{
-  ?work cdm:work_has_resource-type ?type.
-  "
+  query <- "prefix cdm: <http://publications.europa.eu/ontology/cdm#>
+  select distinct ?work str(?doc_id) ?type"
+
+  if (include_celex == TRUE){
+
+    query <- paste(query, "?celex", sep = " ")
+
+  }
+
+  if (include_date == TRUE){
+
+    query <- paste(query, "str(?date)", sep = " ")
+
+  }
+
+  if (include_force == TRUE & resource_type!="caselaw"){
+
+    query <- paste(query, "?force", sep = " ")
+
+  }
+
+  query <- paste(query, "where{ ?work cdm:work_has_resource-type ?type.", sep = " ")
 
   if (resource_type == "directive"){
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||
@@ -51,6 +72,7 @@ elx_make_query <- function(resource_type, manual_type = "", include_corrigenda =
   if (resource_type == "regulation"){
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/REG>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_IMPL>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_FINANC>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_DEL>)", sep = " ")
   }
 
@@ -64,19 +86,49 @@ elx_make_query <- function(resource_type, manual_type = "", include_corrigenda =
   ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_NC>)", sep = " ")
   }
 
+  if (resource_type == "caselaw"){
+    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/JUDG>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/ORDER>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/OPIN_JUR>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/THIRDPARTY_PROCEED>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/GARNISHEE_ORDER>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/RULING>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/JUDG_EXTRACT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/VIEW_AG>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/OPIN_AG>)", sep = " ")
+  }
+
   if (nchar(manual_type) > 1 & resource_type == "manual"){
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/", manual_type, ">)", sep = "")
   }
 
-  if (include_corrigenda == FALSE){
+  if (include_corrigenda == FALSE & resource_type!="caselaw"){
     query <- paste(query,"FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>}", sep = " ")
   }
 
-  query <- paste(query, "?work cdm:work_id_document ?doc_id.}")
+  query <- paste(query, "?work cdm:work_id_document ?doc_id.")
+
+  if (include_celex == TRUE){
+
+    query <- paste(query, "?work cdm:resource_legal_id_celex ?celex.")
+
+  }
+
+  if (include_date == TRUE){
+
+    query <- paste(query, "?work cdm:work_date_document ?date.")
+
+  }
+
+  if (include_force == TRUE){
+
+    query <- paste(query, "?work cdm:resource_legal_in-force ?force.")
+
+  }
 
   if (order == TRUE){
-    query <- paste(query, "order by str(?doc_id)")
-  }
+    query <- paste(query, "} order by str(?date)")
+  } else {query <- paste(query, "}")}
 
   return(query)
 

@@ -4,15 +4,13 @@
 \alias{elx_run_query}
 \title{Execute SPARQL queries}
 \usage{
-elx_run_query(resource_type, manual_type = "")
+elx_run_query(query = "")
 }
 \arguments{
-\item{resource_type}{Type of resource to be retrieved via SPARQL query, presets include "directive", "regulation" and "decision"}
-
-\item{manual_type}{Define manually the type of resource to be retrieved}
+\item{query}{A valid SPARQL query specified by `elx_make_query` or manually}
 }
 \description{
-Wrapper around SPARQL::SPARQL with pre-defined endpoint of EU Publications Office
+Wrapper around SPARQL::SPARQL with pre-defined endpoint of EU Publications Office.
 Relies on elx_make_query to generate valid SPARQL queries
 }
 \examples{
