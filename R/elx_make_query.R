@@ -115,6 +115,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   ?type=<http://publications.europa.eu/resource/authority/resource-type/GARNISHEE_ORDER>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/RULING>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/JUDG_EXTRACT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/INFO_JUDICIAL>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/VIEW_AG>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/OPIN_AG>)", sep = " ")
   }
