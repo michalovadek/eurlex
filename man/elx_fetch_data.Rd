@@ -2,10 +2,19 @@
 % Please edit documentation in R/elx_fetch_data.R
 \name{elx_fetch_data}
 \alias{elx_fetch_data}
-\title{Retrieve metadata}
+\title{Retrieve additional data on EU documents}
 \usage{
 elx_fetch_data(url, type = c("title", "text", "ids"), language = "eng")
 }
+\arguments{
+\item{type}{The type of data to be retrieved}
+
+\item{language}{The language in which the data will be retrieved}
+}
 \description{
-Retrieve metadata
+Wraps httr::GET with pre-specified headers to retrieve data.
+}
+\examples{
+elx_fetch_data(url = cellar_uri, type = "text")
+elx_fetch_data(url = cellar_uri, type = "title")
 }

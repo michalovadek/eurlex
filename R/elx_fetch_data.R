@@ -1,5 +1,7 @@
 #' Retrieve additional data on EU documents
 #'
+#' Wraps httr::GET with pre-specified headers to retrieve data.
+#'
 #' @param type The type of data to be retrieved
 #' @param language The language in which the data will be retrieved
 #' @export
