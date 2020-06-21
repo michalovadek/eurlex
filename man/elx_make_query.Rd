@@ -5,11 +5,12 @@
 \title{Create SPARQL quries}
 \usage{
 elx_make_query(
-  resource_type = c("directive", "regulation", "decision", "recommendation", "caselaw",
-    "manual"),
+  resource_type = c("directive", "regulation", "decision", "recommendation", "intagr",
+    "caselaw", "manual"),
   manual_type = "",
   include_corrigenda = FALSE,
   include_celex = TRUE,
+  include_lbs = FALSE,
   include_date = FALSE,
   include_force = FALSE,
   order = FALSE
@@ -23,6 +24,8 @@ elx_make_query(
 \item{include_corrigenda}{If `TRUE`, results include corrigenda}
 
 \item{include_celex}{If `TRUE`, results include CELEX identifier for each resource URI}
+
+\item{include_lbs}{If `TRUE`, results include legal bases of legislation}
 
 \item{include_date}{If `TRUE`, results include document date}
 

@@ -7,5 +7,5 @@
 elx_fetch_data(url, type = c("title", "text", "ids"), language = "eng")
 }
 \description{
-Accept' = 'application/xhtml+xml'
+Retrieve metadata
 }

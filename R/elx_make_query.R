@@ -10,6 +10,7 @@
 #' @param include_corrigenda If `TRUE`, results include corrigenda
 #' @param include_celex If `TRUE`, results include CELEX identifier for each resource URI
 #' @param include_date If `TRUE`, results include document date
+#' @param include_lbs If `TRUE`, results include legal bases of legislation
 #' @param include_force If `TRUE`, results include whether legislation is in force
 #' @param order Order results by ids
 #' @export
@@ -19,18 +20,21 @@
 #' elx_make_query(resource_type = "caselaw")
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
 
-elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","caselaw","manual"),
-                           manual_type = "", include_corrigenda = FALSE, include_celex = TRUE,
+elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","intagr","caselaw","manual"),
+                           manual_type = "", include_corrigenda = FALSE, include_celex = TRUE, include_lbs = FALSE,
                            include_date = FALSE, include_force = FALSE, order = FALSE){
 
-  if (!resource_type %in% c("directive","regulation","decision","recommendation","caselaw","manual")) stop("'resource_type' must be defined")
+  if (!resource_type %in% c("directive","regulation","decision","recommendation","intagr","caselaw","manual")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){
     stop("Please specify resource type manually (e.g. 'DIR', 'REG', 'JUDG').", call. = TRUE)
   }
 
   query <- "prefix cdm: <http://publications.europa.eu/ontology/cdm#>
-  select distinct ?work str(?doc_id) ?type"
+  select distinct ?work ?type"
+
+  # cdm:resource_legal_date_end-of-validity	in_notice
+  # cdm:resource_legal_date_entry-into-force
 
   if (include_celex == TRUE){
 
@@ -41,6 +45,12 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   if (include_date == TRUE){
 
     query <- paste(query, "str(?date)", sep = " ")
+
+  }
+
+  if (include_lbs == TRUE & resource_type!="caselaw"){
+
+    query <- paste(query, "?lbs ?lbcelex", sep = " ")
 
   }
 
@@ -76,6 +86,17 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_DEL>)", sep = " ")
   }
 
+  if (resource_type == "intagr"){
+    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_INTERNATION>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/EXCH_LET>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_PROT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/ACT_ADOPT_INTERNATION>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/ARRANG>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/CONVENTION>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/MEMORANDUM_UNDERST>)", sep = " ")
+  }
+
   if (resource_type == "decision"){
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DEC>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_ENTSCHEID>||
@@ -103,10 +124,10 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   }
 
   if (include_corrigenda == FALSE & resource_type!="caselaw"){
-    query <- paste(query,"FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>}", sep = " ")
+    query <- paste(query,"\n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>}", sep = " ")
   }
 
-  query <- paste(query, "?work cdm:work_id_document ?doc_id.")
+  #query <- paste(query, "?work cdm:work_id_document ?doc_id.")
 
   if (include_celex == TRUE){
 
@@ -117,6 +138,14 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   if (include_date == TRUE){
 
     query <- paste(query, "?work cdm:work_date_document ?date.")
+
+  }
+
+  if (include_lbs == TRUE & resource_type!="caselaw"){
+
+    query <- paste(query, "?work cdm:resource_legal_based_on_resource_legal ?lbs.
+                   ?lbs cdm:resource_legal_id_celex ?lbcelex.",
+                   sep = " ")
 
   }
 

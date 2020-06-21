@@ -12,7 +12,7 @@ elx_run_query <- function(query = ""){
 
   endpoint <- "http://publications.europa.eu/webapi/rdf/sparql"
 
-  stopifnot(is.character(query), nchar(query) > 20, grep("cdm",query))
+  stopifnot(is.character(query), nchar(query) > 20, grepl("cdm",query))
 
   sparql_response <- SPARQL(endpoint,query)
 
