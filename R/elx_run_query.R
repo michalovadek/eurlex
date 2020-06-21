@@ -14,7 +14,8 @@ elx_run_query <- function(query = ""){
 
   stopifnot(is.character(query), nchar(query) > 20, grepl("cdm",query))
 
-  sparql_response <- SPARQL(endpoint,query)
+  sparql_response <- SPARQL(endpoint,query) %>%
+    dplyr::mutate_all(~stringr::str_remove_all(.,"<|>"))
 
   return(sparql_response$results)
 

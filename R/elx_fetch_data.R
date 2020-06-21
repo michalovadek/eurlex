@@ -2,6 +2,7 @@
 #'
 #' Wraps httr::GET with pre-specified headers to retrieve data.
 #'
+#' @param url A valid url, preferably to a Cellar work obtained through `elx_run_query`.
 #' @param type The type of data to be retrieved
 #' @param language The language in which the data will be retrieved
 #' @export
@@ -19,7 +20,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids"), language = "eng"
                           )
     )
 
-    if (status_code(response)==200){
+    if (httr::status_code(response)==200){
 
       out <- httr::content(response) %>%
           xml2::xml_children() %>%
@@ -27,7 +28,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids"), language = "eng"
           xml2::xml_find_first("VALUE") %>%
           xml2::xml_text()
 
-    } else {out <- status_code(response)}
+    } else {out <- httr::status_code(response)}
 
   }
 
@@ -39,13 +40,13 @@ elx_fetch_data <- function(url, type = c("title","text","ids"), language = "eng"
                    )
     )
 
-    if (status_code(response)==200){
+    if (httr::status_code(response)==200){
 
       out <- response %>%
         xml2::read_html() %>%
         rvest::html_text()
 
-    } else {out <- status_code(response)}
+    } else {out <- httr::status_code(response)}
 
   }
 
@@ -57,14 +58,14 @@ elx_fetch_data <- function(url, type = c("title","text","ids"), language = "eng"
                           )
     )
 
-    if (status_code(response)==200){
+    if (httr::status_code(response)==200){
 
       out <- httr::content(response) %>%
         xml2::xml_children() %>%
         xml2::xml_find_all(".//VALUE") %>%
         xml2::xml_text()
 
-    } else {out <- status_code(response)}
+    } else {out <- httr::status_code(response)}
 
   }
 

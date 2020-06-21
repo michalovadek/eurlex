@@ -7,6 +7,8 @@
 elx_fetch_data(url, type = c("title", "text", "ids"), language = "eng")
 }
 \arguments{
+\item{url}{A valid url, preferably to a Cellar work obtained through `elx_run_query`.}
+
 \item{type}{The type of data to be retrieved}
 
 \item{language}{The language in which the data will be retrieved}
