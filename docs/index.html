@@ -72,8 +72,43 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-Retrieve data on European Union laws from the Eur-Lex dataverse 
-    the right way and with minimal fuss, using pre-defined SPARQL queries and GET requests.
+<div id="eurlex" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#eurlex" class="anchor"></a>eurlex</h1></div>
+<p>An R package for retrieving official data on European Union law.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>The package is for the moment not available on CRAN. Install via <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("michalovadek/eurlex")</a></code>.</p>
+</div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Although at present it does not offer access to the same array of information as comprehensive web scraping might, the package provides simpler, more efficient and transparent access to data on European Union law.</p>
+<p>The <code>eurlex</code> package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: <code><a href="reference/elx_make_query.html">elx_make_query()</a></code> to create pre-defined or customized SPARQL queries; <code><a href="reference/elx_run_query.html">elx_run_query()</a></code> to execute the pre-made or any other manually input query; and <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> to fire GET requests for certain metadata to the REST API.</p>
+<p>The function <code>elx_make_query</code> takes as its first argument the type of resource to be retrieved (such as “directive”) from the semantic database that powers Eur-Lex (and other publications) called Cellar. If you are familiar with SPARQL, you can always specify your own queries and execute them with <code><a href="reference/elx_run_query.html">elx_run_query()</a></code>.</p>
+<p><code><a href="reference/elx_run_query.html">elx_run_query()</a></code> is a simple wrapper around <code><a href="https://rdrr.io/pkg/SPARQL/man/SPARQL.html">SPARQL::SPARQL()</a></code> with a pre-specified endpoint. It outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection. The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is CELEX, retrieved by default.</p>
+<p>The core contribution of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the <code>rvest</code> package), the function <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text (where available in html) of a document.</p>
+<p>See the vignette for a walkthrough on how to use the package.</p>
+</div>
+<div id="cite" class="section level2">
+<h2 class="hasAnchor">
+<a href="#cite" class="anchor"></a>Cite</h2>
+<p>Michal Ovádek (2020). eurlex: An R package for retrieving official data on European Union law</p>
+</div>
+<div id="note" class="section level2">
+<h2 class="hasAnchor">
+<a href="#note" class="anchor"></a>Note</h2>
+<p>This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable <a href="https://eur-lex.europa.eu/content/welcome/data-reuse.html">data reuse policies</a>.</p>
+</div>
+<div id="useful-resources" class="section level2">
+<h2 class="hasAnchor">
+<a href="#useful-resources" class="anchor"></a>Useful resources</h2>
+<p>Guide to CELEX numbers: <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html" class="uri">https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html</a></p>
+<p>List of resource types in Cellar: <a href="http://publications.europa.eu/resource/authority/resource-type" class="uri">http://publications.europa.eu/resource/authority/resource-type</a></p>
+<p>Indexation of data in Cellar: <a href="http://publications.europa.eu/resource/cellar/4874abcd-286a-11e8-b5fe-01aa75ed71a1.0001.03/DOC_1" class="uri">http://publications.europa.eu/resource/cellar/4874abcd-286a-11e8-b5fe-01aa75ed71a1.0001.03/DOC_1</a></p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -81,6 +116,12 @@ Retrieve data on European Union laws from the Eur-Lex dataverse
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+</ul>
+</div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing eurlex</a></li>
 </ul>
 </div>
 <div class="developers">
