@@ -1,0 +1,11 @@
+citHeader("To cite eurlex in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "eurlex: An R package for retrieving official data on European Union law",
+  author   = "Michal Ovadek",
+  year     = "2020",
+  textVersion = paste(
+
+  )
+)

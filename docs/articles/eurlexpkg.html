@@ -87,14 +87,205 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Dozens of political scientists and legal scholars use data on European Union laws in their research. The provenance of these data is rarely discussed, however. More often than not, researchers resort to the quick and dirty technique of scraping entire html pages from <code>eur-lex.europa.eu</code>. This is not the optimal, nor preferred (from the perspective of the server host) approach of retrieving data, however, especially as the Publication Office of the European Union, the public body behind Eur-Lex, operates several dedicated APIs for automated retrieval of its data.</p>
+<p>Dozens of political scientists and legal scholars use data on European Union laws in their research. The provenance of these data is rarely discussed. More often than not, researchers resort to the quick and dirty technique of scraping entire html pages from <code>eur-lex.europa.eu</code>. This is not the optimal, nor preferred (from the perspective of the server host) approach of retrieving data, however, especially as the Publication Office of the European Union, the public body behind Eur-Lex, operates several dedicated APIs for automated retrieval of its data.</p>
 <p>The allure of web scraping is completely understandable. Not only is it easier to download data that can be readily seen in a user-friendly manner through a browser, using the dedicated APIs requires technical knowledge of semantic web and Client URL technologies, which is not necessarily widespread among researchers. And why go through the pain of learning how to compile SPARQL queries when it is much easier to simply download the web page?</p>
 <p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using the SPARQL and REST APIs made available by the EU Publication Office. Although at present it does not offer access to the same array of information as comprehensive web scraping might, the package provides simpler, more efficient and transparent access to data on European Union law. This vignette gives a quick guide to the package and an even quicker introduction to the Eur-Lex dataverse.</p>
 </div>
-<div id="eu-laws-and-metadata" class="section level1">
+<div id="the-eurlex-package" class="section level1">
 <h1 class="hasAnchor">
-<a href="#eu-laws-and-metadata" class="anchor"></a>EU Laws and Metadata</h1>
-<p>The <code>eurlex</code> package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: <code>elx_make_query</code> to create pre-defined or customized SPARQL queries; <code>elx_run_query</code> to execute the pre-made or any other manually input query; and <code>elx_fetch_data</code> to fire GET requests for certain metadata to the REST API.</p>
+<a href="#the-eurlex-package" class="anchor"></a>The <code>eurlex</code> package</h1>
+<p>The <code>eurlex</code> package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: <code><a href="../reference/elx_make_query.html">elx_make_query()</a></code> to create pre-defined or customized SPARQL queries; <code><a href="../reference/elx_run_query.html">elx_run_query()</a></code> to execute the pre-made or any other manually input query; and <code><a href="../reference/elx_fetch_data.html">elx_fetch_data()</a></code> to fire GET requests for certain metadata to the REST API.</p>
+<div id="elx_make_query-generate-sparql-queries" class="section level2">
+<h2 class="hasAnchor">
+<a href="#elx_make_query-generate-sparql-queries" class="anchor"></a><code>elx_make_query()</code>: Generate SPARQL queries</h2>
+<p>The function <code>elx_make_query</code> takes as its first argument the type of resource to be retrieved from the semantic database that powers Eur-Lex (and other publications) called Cellar.</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">eurlex</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>) <span class="co"># my preference, not needed for the package</span>
+
+<span class="no">query_dir</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"directive"</span>)</pre></body></html></div>
+<p>Currently, it is possible to choose one of “directive”, “regulation”, “decision”, “recommendation”, “intagr” and even “caselaw”. It is also possible to manually specify a resource type from the <a href="http://publications.europa.eu/resource/authority/resource-type">eligible list</a>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>The choice of resource type is then reflected in the SPARQL query generated by the function:</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">query_dir</span> <span class="kw">%&gt;%</span>
+  <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>() <span class="co"># for nicer printing</span>
+<span class="co">#&gt; prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_DEL&gt;) </span>
+<span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. }</span>
+
+<span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"caselaw"</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
+<span class="co">#&gt; prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/JUDG&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/ORDER&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_JUR&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/THIRDPARTY_PROCEED&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/GARNISHEE_ORDER&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RULING&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/JUDG_EXTRACT&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/INFO_JUDICIAL&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/VIEW_AG&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_AG&gt;) ?work cdm:resource_legal_id_celex ?celex. }</span>
+
+<span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"manual"</span>, <span class="kw">manual_type</span> <span class="kw">=</span> <span class="st">"SWD"</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
+<span class="co">#&gt; prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type.FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/SWD&gt;) </span>
+<span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. }</span></pre></body></html></div>
+<p>There are various ways of querying the same information in the Cellar database due to the existence of several overlapping classes and identifiers describing the same resources. The queries generated by the function should offer a reliable way of obtaining exhaustive results, as they have been validated by the helpdesk of the Publication Office. At the same time, it is always possible there will be issues either on the query or the database side; please report any you encounter through Github.</p>
+<p>The other arguments in <code><a href="../reference/elx_make_query.html">elx_make_query()</a></code> relate to additional metadata to be returned. The results include by default the <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html">CELEX number</a> and exclude corrigenda (corrections of errors in legislation). Other data needs to be opted into. Make sure to select ones that are logically compatible (e.g. case law does not have a legal basis). More options should be added in the future.</p>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"directive"</span>, <span class="kw">include_date</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">include_force</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
+<span class="co">#&gt; prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   select distinct ?work ?type ?celex str(?date) ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL&gt;||</span>
+<span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_DEL&gt;) </span>
+<span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. ?work cdm:work_date_document ?date. ?work cdm:resource_legal_in-force ?force. }</span>
+
+<span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"recommendation"</span>, <span class="kw">include_date</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">include_lbs</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
+<span class="co">#&gt; prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   select distinct ?work ?type ?celex str(?date) ?lbs ?lbcelex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO&gt;||</span>
+<span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DEC&gt;||</span>
+<span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DIR&gt;||</span>
+<span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_OPIN&gt;||</span>
+<span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_RES&gt;||</span>
+<span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_REG&gt;||</span>
+<span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_RECO&gt;||</span>
+<span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DRAFT&gt;) </span>
+<span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. ?work cdm:work_date_document ?date. ?work cdm:resource_legal_based_on_resource_legal ?lbs.</span>
+<span class="co">#&gt;                    ?lbs cdm:resource_legal_id_celex ?lbcelex. }</span></pre></body></html></div>
+<p>Now that we have a query, we are ready to run it.</p>
+</div>
+<div id="elx_run_query-execute-sparql-queries" class="section level2">
+<h2 class="hasAnchor">
+<a href="#elx_run_query-execute-sparql-queries" class="anchor"></a><code>elx_run_query()</code>: Execute SPARQL queries</h2>
+<p><code><a href="../reference/elx_run_query.html">elx_run_query()</a></code> is a simple wrapper around <code><a href="https://rdrr.io/pkg/SPARQL/man/SPARQL.html">SPARQL::SPARQL()</a></code> with a pre-specified endpoint.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> The function takes the query string as the only argument, which means you can manually pass it any working SPARQL query (relevant to official EU publications).</p>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/elx_run_query.html">elx_run_query</a></span>(<span class="kw">query</span> <span class="kw">=</span> <span class="no">query_dir</span>)
+
+<span class="co"># the functions are compatible with piping</span>
+<span class="co"># </span>
+<span class="co"># elx_make_query("directive") %&gt;% </span>
+<span class="co">#   elx_run_query()</span></pre></body></html></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu">as_tibble</span>(<span class="no">results</span>)
+<span class="co">#&gt; # A tibble: 4,189 x 3</span>
+<span class="co">#&gt;   work                                   type                            celex  </span>
+<span class="co">#&gt;   &lt;chr&gt;                                  &lt;chr&gt;                           &lt;chr&gt;  </span>
+<span class="co">#&gt; 1 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31979L~</span>
+<span class="co">#&gt; 2 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31989L~</span>
+<span class="co">#&gt; 3 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31984L~</span>
+<span class="co">#&gt; 4 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31966L~</span>
+<span class="co">#&gt; # ... with 4,185 more rows</span></pre></body></html></div>
+<p>The function outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection.</p>
+<p>The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is CELEX, retrieved by default.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>One column you should always pay attention to is <code>type</code> (as in <code>resource_type</code>). The URIs contained there reflect the FILTER argument in the SPARQL query, which is manually pre-specified. All resources are indexed as being of one type or another. For example, when retrieving directives, the results are going to return also delegated directives, which might not be desirable, depending on your needs. You can filter results by <code>type</code> to make the necessary adjustments. The queries are expansive by default in the spirit of erring on the side of over-inclusiveness rather than vice versa.</p>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">results</span>$<span class="no">type</span>,<span class="fl">10</span>)
+<span class="co">#&gt;  [1] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [2] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [3] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [4] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [5] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [6] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [7] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [8] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt;  [9] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+<span class="co">#&gt; [10] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span>
+
+<span class="no">results</span> <span class="kw">%&gt;%</span>
+  <span class="fu">distinct</span>(<span class="no">type</span>)
+<span class="co">#&gt;                                                                      type</span>
+<span class="co">#&gt; 1      http://publications.europa.eu/resource/authority/resource-type/DIR</span>
+<span class="co">#&gt; 2 http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL</span>
+<span class="co">#&gt; 3  http://publications.europa.eu/resource/authority/resource-type/DIR_DEL</span></pre></body></html></div>
+</div>
+<div id="elx_fetch_data-fire-get-requests" class="section level2">
+<h2 class="hasAnchor">
+<a href="#elx_fetch_data-fire-get-requests" class="anchor"></a><code>elx_fetch_data()</code>: Fire GET requests</h2>
+<p>The core contribution of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the <code>rvest</code> package), the function <code><a href="../reference/elx_fetch_data.html">elx_fetch_data()</a></code> enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI).</p>
+<p>One of the most sought-after data in the Eur-Lex dataverse is the text. It is possible now to automate the pipeline for downloading html and plain texts from Eur-Lex. Similarly, you can retrieve the title of the document. Other options might be added in the future.</p>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># the function is not vectorized by default</span>
+<span class="fu"><a href="../reference/elx_fetch_data.html">elx_fetch_data</a></span>(<span class="no">results</span>$<span class="no">work</span>[<span class="fl">1</span>],<span class="st">"title"</span>)
+<span class="co">#&gt; [1] "Council Directive 79/173/EEC of 6 February 1979 on the programme for the acceleration and guidance of collective irrigation works in Corsica"</span>
+
+<span class="co"># we can use purrr::map() to play that role</span>
+<span class="no">dir_titles</span> <span class="kw">&lt;-</span> <span class="no">results</span>[<span class="fl">1</span>:<span class="fl">10</span>,] <span class="kw">%&gt;%</span> <span class="co"># take the first 10 directives only to save time</span>
+  <span class="fu">mutate</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="fu">map_chr</span>(<span class="no">work</span>,<span class="no">elx_fetch_data</span>, <span class="st">"title"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu">as_tibble</span>() <span class="kw">%&gt;%</span>
+  <span class="fu">select</span>(<span class="no">celex</span>, <span class="no">title</span>)
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">dir_titles</span>)
+<span class="co">#&gt; # A tibble: 10 x 2</span>
+<span class="co">#&gt;   celex      title                                                              </span>
+<span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;                                                              </span>
+<span class="co">#&gt; 1 31979L0173 Council Directive 79/173/EEC of 6 February 1979 on the programme f~</span>
+<span class="co">#&gt; 2 31989L0194 Council Directive 89/194/EEC of 13 March 1989 amending Directive 6~</span>
+<span class="co">#&gt; 3 31984L0378 Council Directive 84/378/EEC of 28 June 1984 amending the Annexes ~</span>
+<span class="co">#&gt; 4 31966L0683 Commission Directive 66/683/EEC of 7 November 1966 eliminating all~</span>
+<span class="co">#&gt; # ... with 6 more rows</span></pre></body></html></div>
+<p>Note that text requests are by far the most time-intensive; requesting the full text for thousands of documents is liable to extend the run-time into hours. Currently, no method for downloading text in non-html/plain formats is implemented, which means pdf-only texts will be missing from the results.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+</div>
+<div id="application" class="section level2">
+<h2 class="hasAnchor">
+<a href="#application" class="anchor"></a>Application</h2>
+<p>In this section I showcase a simple application of <code>eurlex</code> on making overviews of EU legislation. First, we collate data on directives.</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">dirs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"directive"</span>, <span class="kw">include_date</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">include_force</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/elx_run_query.html">elx_run_query</a></span>() <span class="kw">%&gt;%</span>
+  <span class="fu">rename</span>(<span class="kw">date</span> <span class="kw">=</span> <span class="no">callret.3</span>)</pre></body></html></div>
+<p>Let’s calculate the proportion of regulations currently in force in the entire set of regulations ever adopted. This variable offers a particularly good demonstration of the usefulness of the package to retrieve EU law data, because it changes every day, as new acts enter into force and old ones drop out. Regularly scraping webpages for this purpose and scale is simply impractical and disproportional.</p>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">dirs</span> <span class="kw">%&gt;%</span>
+  <span class="fu">count</span>(<span class="no">force</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">force</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">n</span>)) +
+  <span class="fu">geom_col</span>()</pre></body></html></div>
+<p><img src="eurlexpkg_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p>Regulations become naturally outdated with time. It might be all the more interesting to see which older acts are thus still surviving.</p>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">dirs</span> <span class="kw">%&gt;%</span>
+  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="no">date</span>), <span class="kw">y</span> <span class="kw">=</span> <span class="no">celex</span>)) +
+  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="no">force</span>), <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.1</span>) +
+  <span class="fu">theme</span>(<span class="kw">axis.text.y</span> <span class="kw">=</span> <span class="fu">element_blank</span>())</pre></body></html></div>
+<p><img src="eurlexpkg_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p>We want to know a bit more about the directives from 1970s that are still in force today. Their titles could give us a clue.</p>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">dirs_1970_title</span> <span class="kw">&lt;-</span> <span class="no">dirs</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="fu">between</span>(<span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="no">date</span>), <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"1970-01-01"</span>), <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"1980-01-01"</span>)),
+         <span class="no">force</span> <span class="kw">==</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="fu">map_chr</span>(<span class="no">work</span>,<span class="no">elx_fetch_data</span>,<span class="st">"title"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu">as_tibble</span>()
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">dirs_1970_title</span>)
+<span class="co">#&gt; # A tibble: 78 x 6</span>
+<span class="co">#&gt;   work                 type               celex  date  force title              </span>
+<span class="co">#&gt;   &lt;chr&gt;                &lt;chr&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              </span>
+<span class="co">#&gt; 1 http://publications~ http://publicatio~ 31975~ 1975~ TRUE  Council Directive ~</span>
+<span class="co">#&gt; 2 http://publications~ http://publicatio~ 31977~ 1977~ TRUE  First Commission D~</span>
+<span class="co">#&gt; 3 http://publications~ http://publicatio~ 31977~ 1977~ TRUE  Council Directive ~</span>
+<span class="co">#&gt; 4 http://publications~ http://publicatio~ 31973~ 1973~ TRUE  Council Directive ~</span>
+<span class="co">#&gt; # ... with 74 more rows</span></pre></body></html></div>
+<p>I will use the <code>tidytext</code> package to get a quick idea of what the legislation is about.</p>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidytext</span>)
+<span class="co">#&gt; Warning: package 'tidytext' was built under R version 3.6.3</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">wordcloud</span>)
+<span class="co">#&gt; Warning: package 'wordcloud' was built under R version 3.6.3</span>
+<span class="co">#&gt; Loading required package: RColorBrewer</span>
+
+<span class="no">dirs_1970_title</span> <span class="kw">%&gt;%</span>
+  <span class="fu">select</span>(<span class="no">celex</span>,<span class="no">title</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span>(<span class="no">word</span>, <span class="no">title</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">count</span>(<span class="no">celex</span>, <span class="no">word</span>, <span class="kw">sort</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(!<span class="fu">str_detect</span>(<span class="no">word</span>,<span class="st">"[:digit:]"</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/bind_tf_idf.html">bind_tf_idf</a></span>(<span class="no">word</span>, <span class="no">celex</span>, <span class="no">n</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/wordcloud/man/wordcloud.html">wordcloud</a></span>(<span class="no">word</span>, <span class="no">tf_idf</span>, <span class="kw">max.words</span> <span class="kw">=</span> <span class="fl">40</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.8</span>,<span class="fl">0.1</span>)))</pre></body></html></div>
+<p><img src="eurlexpkg_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p>I use term-frequency inverse-document frequency (tf-idf) to weight the importance of the words in the wordcloud. If we used pure frequencies, the wordcloud would largely consist of words conveying little meaning (“the”, “and”, …).</p>
+<p>This is an extremely basic application of the <code>eurlex</code> package. Much more sophisticated methods can be used to analyse both the content and metadata of European Union legislation. If the package is useful for your research, please consider citing it.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Note, however, that not all resource types will work properly with the pre-specified query.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>The package comes with an internal copy of the <code>SPARQL()</code> function with fixed namespaces.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Occasionally, you may encounter legal acts without CELEX numbers, especially when digging through older legislation. It is good to report these to the Eur-Lex helpdesk.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>It is worth pointing out that the html and pdf contents of older case law differs. Whereas typically the html file is only going to contain a summary and grounds of a judgment, the pdf should also contain background to the dispute.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
   </div>
 
