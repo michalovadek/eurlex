@@ -6,7 +6,9 @@
 #' @param query A valid SPARQL query specified by `elx_make_query` or manually
 #' @export
 #' @examples
-#' elx_run_query(resource_type = "directive")
+#' \donttest{
+#' elx_run_query(elx_make_query("directive", include_force = TRUE))
+#' }
 
 elx_run_query <- function(query = ""){
 

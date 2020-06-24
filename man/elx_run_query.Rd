@@ -14,5 +14,7 @@ Wrapper around SPARQL::SPARQL with pre-defined endpoint of EU Publications Offic
 Relies on elx_make_query to generate valid SPARQL queries
 }
 \examples{
-elx_run_query(resource_type = "directive")
+\donttest{
+elx_run_query(elx_make_query("directive", include_force = TRUE))
+}
 }

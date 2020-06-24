@@ -5,6 +5,8 @@
 #' List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
 #' Note that not all resource types are compatible with the pre-defined query.
 #'
+#' @importFrom magrittr %>%
+#'
 #' @param resource_type Type of resource to be retrieved via SPARQL query
 #' @param manual_type Define manually the type of resource to be retrieved
 #' @param include_corrigenda If `TRUE`, results include corrigenda
