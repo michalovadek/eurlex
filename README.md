@@ -18,6 +18,9 @@ The core contribution of the SPARQL requests is that we obtain a comprehensive l
 
 See the vignette for a walkthrough on how to use the package.
 
+## Cite
+Michal Ovádek (2020). eurlex: An R package for retrieving official data on European Union law
+
 ## Note
 This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable [data reuse policies](https://eur-lex.europa.eu/content/welcome/data-reuse.html).
 
