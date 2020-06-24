@@ -7,8 +7,10 @@
 #' @param language The language in which the data will be retrieved
 #' @export
 #' @examples
+#' \donttest{
 #' elx_fetch_data(url = cellar_uri, type = "text")
 #' elx_fetch_data(url = cellar_uri, type = "title")
+#' }
 
 elx_fetch_data <- function(url, type = c("title","text","ids"), language = "eng"){
 

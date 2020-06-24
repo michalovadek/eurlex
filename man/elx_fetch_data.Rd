@@ -17,6 +17,8 @@ elx_fetch_data(url, type = c("title", "text", "ids"), language = "eng")
 Wraps httr::GET with pre-specified headers to retrieve data.
 }
 \examples{
+\donttest{
 elx_fetch_data(url = cellar_uri, type = "text")
 elx_fetch_data(url = cellar_uri, type = "title")
+}
 }
