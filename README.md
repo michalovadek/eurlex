@@ -16,7 +16,7 @@ The function `elx_make_query` takes as its first argument the type of resource t
 
 The core contribution of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the `rvest` package), the function `elx_fetch_data()` enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text (where available in html) of a document.
 
-See the vignette for a walkthrough on how to use the package.
+See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package.
 
 ## Cite
 Michal Ovádek (2020). eurlex: An R package for retrieving official data on European Union law
