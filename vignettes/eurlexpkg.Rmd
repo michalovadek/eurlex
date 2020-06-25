@@ -10,7 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r, echo = FALSE, message = FALSE}
+```{r, echo = FALSE, message = FALSE, warning=FALSE, error=FALSE}
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4, tibble.print_max = 4)
 ```
