@@ -6,14 +6,19 @@
 \usage{
 elx_make_query(
   resource_type = c("directive", "regulation", "decision", "recommendation", "intagr",
-    "caselaw", "manual"),
+    "caselaw", "manual", "proposal", "national_impl"),
   manual_type = "",
   include_corrigenda = FALSE,
   include_celex = TRUE,
   include_lbs = FALSE,
   include_date = FALSE,
+  include_date_force = FALSE,
+  include_date_endvalid = FALSE,
+  include_date_transpos = FALSE,
   include_force = FALSE,
-  order = FALSE
+  include_eurovoc = FALSE,
+  order = FALSE,
+  limit = NULL
 )
 }
 \arguments{
@@ -29,9 +34,19 @@ elx_make_query(
 
 \item{include_date}{If `TRUE`, results include document date}
 
+\item{include_date_force}{If `TRUE`, results include date of entry into force}
+
+\item{include_date_endvalid}{If `TRUE`, results include date of end of validity}
+
+\item{include_date_transpos}{If `TRUE`, results include date of transposition deadline for directives}
+
 \item{include_force}{If `TRUE`, results include whether legislation is in force}
 
+\item{include_eurovoc}{If `TRUE`, results include EuroVoc descriptors of subject matter}
+
 \item{order}{Order results by ids}
+
+\item{limit}{Limit the number of results, for testing purposes mainly}
 }
 \description{
 Generates pre-defined or manual SPARQL queries to retrieve document ids from Cellar.

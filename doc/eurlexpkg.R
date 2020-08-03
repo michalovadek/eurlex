@@ -1,0 +1,149 @@
+## ---- echo = FALSE, message = FALSE, warning=FALSE, error=FALSE---------------
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+options(tibble.print_min = 4, tibble.print_max = 4)
+
+## ----makequery,warning=FALSE, message = FALSE---------------------------------
+library(eurlex)
+library(dplyr) # my preference, not needed for the package
+
+query_dir <- elx_make_query(resource_type = "directive")
+
+## ----precompute, include=FALSE------------------------------------------------
+dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
+  elx_run_query() %>% 
+  rename(date = `callret-3`)
+
+results <- dirs %>% select(-force,-date)
+
+## -----------------------------------------------------------------------------
+query_dir %>% 
+  glue::as_glue() # for nicer printing
+
+elx_make_query(resource_type = "caselaw") %>% 
+  glue::as_glue()
+
+elx_make_query(resource_type = "manual", manual_type = "SWD") %>% 
+  glue::as_glue()
+
+
+## -----------------------------------------------------------------------------
+elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
+  glue::as_glue()
+
+# minimal query: elx_make_query(resource_type = "directive")
+
+elx_make_query(resource_type = "recommendation", include_date = TRUE, include_lbs = TRUE) %>% 
+  glue::as_glue()
+
+# minimal query: elx_make_query(resource_type = "recommendation")
+
+
+## ----runquery, eval=FALSE-----------------------------------------------------
+#  results <- elx_run_query(query = query_dir)
+#  
+#  # the functions are compatible with piping
+#  #
+#  # elx_make_query("directive") %>%
+#  #   elx_run_query()
+
+## -----------------------------------------------------------------------------
+as_tibble(results)
+
+## -----------------------------------------------------------------------------
+head(results$type,5)
+
+results %>% 
+  distinct(type)
+
+## ----eurovoc------------------------------------------------------------------
+
+rec_eurovoc <- elx_make_query("recommendation", include_eurovoc = TRUE, limit = 10) %>% 
+  elx_run_query() # truncated results for sake of the example
+
+rec_eurovoc %>% 
+  select(celex, eurovoc)
+
+
+## ----eurovoctable-------------------------------------------------------------
+
+eurovoc_lookup <- elx_label_eurovoc(uri_eurovoc = rec_eurovoc$eurovoc)
+
+print(eurovoc_lookup)
+
+
+## ----appendlabs---------------------------------------------------------------
+
+rec_eurovoc %>% 
+  left_join(eurovoc_lookup)
+
+
+## -----------------------------------------------------------------------------
+
+eurovoc_lookup <- elx_label_eurovoc(uri_eurovoc = rec_eurovoc$eurovoc,
+                                    alt_labels = TRUE,
+                                    language = "sk")
+
+rec_eurovoc %>% 
+  left_join(eurovoc_lookup) %>% 
+  select(celex, eurovoc, labels)
+
+
+## -----------------------------------------------------------------------------
+# the function is not vectorized by default
+elx_fetch_data(results$work[1],"title")
+
+# we can use purrr::map() to play that role
+library(purrr)
+
+dir_titles <- results[1:10,] %>% # take the first 10 directives only to save time
+  mutate(title = map_chr(work,elx_fetch_data, "title")) %>% 
+  as_tibble() %>% 
+  select(celex, title)
+
+print(dir_titles)
+
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>%
+#    elx_run_query() %>%
+#    rename(date = `callret-3`)
+
+## -----------------------------------------------------------------------------
+library(ggplot2)
+
+dirs %>% 
+  count(force) %>% 
+  ggplot(aes(x = force, y = n)) +
+  geom_col()
+
+## -----------------------------------------------------------------------------
+dirs %>% 
+  ggplot(aes(x = as.Date(date), y = celex)) +
+  geom_point(aes(color = force), alpha = 0.1) +
+  theme(axis.text.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank())
+
+## -----------------------------------------------------------------------------
+dirs_1970_title <- dirs %>% 
+  filter(between(as.Date(date), as.Date("1970-01-01"), as.Date("1980-01-01")),
+         force == "true") %>% 
+  mutate(title = map_chr(work,elx_fetch_data,"title")) %>% 
+  as_tibble()
+
+print(dirs_1970_title)
+  
+
+## ----wordcloud, message = FALSE, warning=FALSE, error=FALSE-------------------
+library(tidytext)
+library(wordcloud)
+
+dirs_1970_title %>% 
+  select(celex,title) %>% 
+  unnest_tokens(word, title) %>% 
+  count(celex, word, sort = TRUE) %>% 
+  filter(!grepl("\\d", word)) %>% 
+  bind_tf_idf(word, celex, n) %>% 
+  with(wordcloud(word, tf_idf, max.words = 40, scale = c(1.8,0.1)))
+
+

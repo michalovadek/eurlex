@@ -75,7 +75,7 @@ Note that not all resource types are compatible with the pre-defined query." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -132,14 +132,19 @@ Note that not all resource types are compatible with the pre-defined query.</p>
 
     <pre class="usage"><span class='fu'>elx_make_query</span>(
   <span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"directive"</span>, <span class='st'>"regulation"</span>, <span class='st'>"decision"</span>, <span class='st'>"recommendation"</span>, <span class='st'>"intagr"</span>,
-    <span class='st'>"caselaw"</span>, <span class='st'>"manual"</span>),
+    <span class='st'>"caselaw"</span>, <span class='st'>"manual"</span>, <span class='st'>"proposal"</span>, <span class='st'>"national_impl"</span>),
   <span class='kw'>manual_type</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>include_corrigenda</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_celex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>include_lbs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_date</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>include_date_force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>include_date_endvalid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>include_date_transpos</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>include_eurovoc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -170,18 +175,38 @@ Note that not all resource types are compatible with the pre-defined query.</p>
       <td><p>If `TRUE`, results include document date</p></td>
     </tr>
     <tr>
+      <th>include_date_force</th>
+      <td><p>If `TRUE`, results include date of entry into force</p></td>
+    </tr>
+    <tr>
+      <th>include_date_endvalid</th>
+      <td><p>If `TRUE`, results include date of end of validity</p></td>
+    </tr>
+    <tr>
+      <th>include_date_transpos</th>
+      <td><p>If `TRUE`, results include date of transposition deadline for directives</p></td>
+    </tr>
+    <tr>
       <th>include_force</th>
       <td><p>If `TRUE`, results include whether legislation is in force</p></td>
+    </tr>
+    <tr>
+      <th>include_eurovoc</th>
+      <td><p>If `TRUE`, results include EuroVoc descriptors of subject matter</p></td>
     </tr>
     <tr>
       <th>order</th>
       <td><p>Order results by ids</p></td>
     </tr>
+    <tr>
+      <th>limit</th>
+      <td><p>Limit the number of results, for testing purposes mainly</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"directive"</span>, <span class='kw'>include_date</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>include_force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  select distinct ?work ?type ?celex str(?date) ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_DEL&gt;) \n FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. ?work cdm:work_date_document ?date. ?work cdm:resource_legal_in-force ?force. }"</div><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"regulation"</span>, <span class='kw'>include_corrigenda</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_IMPL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_FINANC&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_DEL&gt;) ?work cdm:resource_legal_id_celex ?celex. } order by str(?date)"</div><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"caselaw"</span>)</div><div class='output co'>#&gt; [1] "prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/JUDG&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/ORDER&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_JUR&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/THIRDPARTY_PROCEED&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/GARNISHEE_ORDER&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RULING&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/JUDG_EXTRACT&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/INFO_JUDICIAL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/VIEW_AG&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_AG&gt;) ?work cdm:resource_legal_id_celex ?celex. }"</div><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"manual"</span>, <span class='kw'>manual_type</span> <span class='kw'>=</span> <span class='st'>"SWD"</span>)</div><div class='output co'>#&gt; [1] "prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type.FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/SWD&gt;) \n FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. }"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"directive"</span>, <span class='kw'>include_date</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>include_force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex str(?date) ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_DEL&gt;) \n FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. ?work cdm:work_date_document ?date. ?work cdm:resource_legal_in-force ?force. }"</div><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"regulation"</span>, <span class='kw'>include_corrigenda</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_IMPL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_FINANC&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_DEL&gt;) ?work cdm:resource_legal_id_celex ?celex. } order by str(?date)"</div><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"caselaw"</span>)</div><div class='output co'>#&gt; [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/JUDG&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/ORDER&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_JUR&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/THIRDPARTY_PROCEED&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/GARNISHEE_ORDER&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RULING&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/JUDG_EXTRACT&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/INFO_JUDICIAL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/VIEW_AG&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_AG&gt;) ?work cdm:resource_legal_id_celex ?celex. }"</div><div class='input'><span class='fu'>elx_make_query</span>(<span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='st'>"manual"</span>, <span class='kw'>manual_type</span> <span class='kw'>=</span> <span class='st'>"SWD"</span>)</div><div class='output co'>#&gt; [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type.FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/SWD&gt;) \n FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. }"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

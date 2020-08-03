@@ -4,13 +4,18 @@
 \alias{elx_run_query}
 \title{Execute SPARQL queries}
 \usage{
-elx_run_query(query = "")
+elx_run_query(
+  query = "",
+  endpoint = "http://publications.europa.eu/webapi/rdf/sparql"
+)
 }
 \arguments{
 \item{query}{A valid SPARQL query specified by `elx_make_query` or manually}
+
+\item{endpoint}{SPARQL endpoint}
 }
 \description{
-Wrapper around SPARQL::SPARQL with pre-defined endpoint of EU Publications Office.
+Executes cURL request to a pre-defined endpoint of the EU Publications Office.
 Relies on elx_make_query to generate valid SPARQL queries
 }
 \examples{
