@@ -82,7 +82,10 @@ elx_curia_scraper <- function(url){
     dplyr::na_if("") %>%
     dplyr::filter(!is.na(.data$X1) & !is.na(.data$X2)) %>%
     dplyr::rename(case_id = .data$X1,
-                  case_info = .data$X2)
+                  case_info = .data$X2) %>%
+    dplyr::group_by(case_id) %>%
+    mutate(n_id = dplyr::row_number()) %>%
+    dplyr::ungroup()
 
   hrefs <- page %>%
     xml2::xml_find_all('//a[contains(@href, "numdoc")]')
@@ -94,11 +97,13 @@ elx_curia_scraper <- function(url){
     stringr::str_remove("\\'.*") %>%
     stringr::str_remove("numdoc=")
 
-  linked <- data.frame(linked_id, linked_celex, stringsAsFactors = FALSE)
+  linked <- data.frame(linked_id, linked_celex, stringsAsFactors = FALSE) %>%
+    dplyr::group_by(linked_id) %>%
+    mutate(n_id = dplyr::row_number()) %>%
+    dplyr::ungroup()
 
-  #return(dplyr::left_join(tab, linked, by = c("case_id"="linked_id")))
-
-  return(tab)
+  return(dplyr::left_join(tab, linked, by = c("case_id"="linked_id","n_id"="n_id")) %>%
+           dplyr::select(-n_id))
 
 }
 
