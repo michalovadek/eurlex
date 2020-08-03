@@ -2,7 +2,7 @@
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4, tibble.print_max = 4)
 
-## ----makequery,warning=FALSE, message = FALSE---------------------------------
+## ----makequery, message = FALSE, warning=FALSE, error=FALSE-------------------
 library(eurlex)
 library(dplyr) # my preference, not needed for the package
 
@@ -78,7 +78,6 @@ rec_eurovoc %>%
 
 
 ## -----------------------------------------------------------------------------
-
 eurovoc_lookup <- elx_label_eurovoc(uri_eurovoc = rec_eurovoc$eurovoc,
                                     alt_labels = TRUE,
                                     language = "sk")
@@ -88,7 +87,7 @@ rec_eurovoc %>%
   select(celex, eurovoc, labels)
 
 
-## -----------------------------------------------------------------------------
+## ----getdatapur, message = FALSE, warning=FALSE, error=FALSE------------------
 # the function is not vectorized by default
 elx_fetch_data(results$work[1],"title")
 
@@ -108,7 +107,7 @@ print(dir_titles)
 #    elx_run_query() %>%
 #    rename(date = `callret-3`)
 
-## -----------------------------------------------------------------------------
+## ----firstplot, message = FALSE, warning=FALSE, error=FALSE-------------------
 library(ggplot2)
 
 dirs %>% 

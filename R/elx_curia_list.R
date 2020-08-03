@@ -80,7 +80,7 @@ elx_curia_scraper <- function(url){
     rvest::html_node("table") %>%
     rvest::html_table(header = FALSE, fill = TRUE) %>%
     dplyr::na_if("") %>%
-    dplyr::filter_at(dplyr::vars(.data$X1,.data$X2), dplyr::all_vars(!is.na(.data))) %>%
+    dplyr::filter(!is.na(.data$X1) & !is.na(.data$X2)) %>%
     dplyr::rename(case_id = .data$X1,
                   case_info = .data$X2)
 
@@ -96,7 +96,9 @@ elx_curia_scraper <- function(url){
 
   linked <- data.frame(linked_id, linked_celex, stringsAsFactors = FALSE)
 
-  return(dplyr::left_join(tab, linked, by = c("case_id"="linked_id")))
+  #return(dplyr::left_join(tab, linked, by = c("case_id"="linked_id")))
+
+  return(tab)
 
 }
 

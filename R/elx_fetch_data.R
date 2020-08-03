@@ -14,7 +14,7 @@
 #' elx_fetch_data(url = "http://publications.europa.eu/resource/celex/32014R0001", type = "title")
 #' }
 
-elx_fetch_data <- function(url, type = c("title","text","ids","exper"),
+elx_fetch_data <- function(url, type = c("title","text","ids"),
                            language_1 = "en", language_2 = "fr", language_3 = "de"){
 
   language <- paste(language_1,", ",language_2,";q=0.8, ",language_3,";q=0.7", sep = "")
