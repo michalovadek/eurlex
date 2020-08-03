@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -124,7 +124,13 @@
     <p>Wraps httr::GET with pre-specified headers to retrieve data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>elx_fetch_data</span>(<span class='no'>url</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"title"</span>, <span class='st'>"text"</span>, <span class='st'>"ids"</span>), <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"eng"</span>)</pre>
+    <pre class="usage"><span class='fu'>elx_fetch_data</span>(
+  <span class='no'>url</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"title"</span>, <span class='st'>"text"</span>, <span class='st'>"ids"</span>, <span class='st'>"exper"</span>),
+  <span class='kw'>language_1</span> <span class='kw'>=</span> <span class='st'>"en"</span>,
+  <span class='kw'>language_2</span> <span class='kw'>=</span> <span class='st'>"fr"</span>,
+  <span class='kw'>language_3</span> <span class='kw'>=</span> <span class='st'>"de"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,15 +144,23 @@
       <td><p>The type of data to be retrieved</p></td>
     </tr>
     <tr>
-      <th>language</th>
-      <td><p>The language in which the data will be retrieved</p></td>
+      <th>language_1</th>
+      <td><p>The priority language in which the data will be attempted to be retrieved, in ISO 639 2-char code</p></td>
+    </tr>
+    <tr>
+      <th>language_2</th>
+      <td><p>If data not available in `language_1`, try `language_2`</p></td>
+    </tr>
+    <tr>
+      <th>language_3</th>
+      <td><p>If data not available in `language_2`, try `language_3`</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>elx_fetch_data</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='no'>cellar_uri</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"text"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in handle_url(handle, url, ...): object 'cellar_uri' not found</span></div><div class='input'><span class='fu'>elx_fetch_data</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='no'>cellar_uri</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"title"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in handle_url(handle, url, ...): object 'cellar_uri' not found</span></div><div class='input'># }
+<span class='fu'>elx_fetch_data</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='st'>".../resource/cellar/3f7ccca4-478c-4a95-8778-df4243e30d0e"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"text"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in curl::curl_fetch_memory(url, handle = handle): Could not resolve host: ...</span></div><div class='input'><span class='fu'>elx_fetch_data</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='st'>"http://publications.europa.eu/resource/celex/32014R0001"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"title"</span>)</div><div class='output co'>#&gt; [1] "Commission Delegated Regulation (EU) No 1/2014 of 28 August 2013 establishing Annex III to Regulation (EU) No 978/2012 of the European Parliament and of the Council applying a scheme of generalised tariff preferences"</div><div class='input'># }
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

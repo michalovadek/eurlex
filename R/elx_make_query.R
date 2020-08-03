@@ -12,9 +12,14 @@
 #' @param include_corrigenda If `TRUE`, results include corrigenda
 #' @param include_celex If `TRUE`, results include CELEX identifier for each resource URI
 #' @param include_date If `TRUE`, results include document date
+#' @param include_date_force If `TRUE`, results include date of entry into force
+#' @param include_date_endvalid If `TRUE`, results include date of end of validity
+#' @param include_date_transpos If `TRUE`, results include date of transposition deadline for directives
 #' @param include_lbs If `TRUE`, results include legal bases of legislation
 #' @param include_force If `TRUE`, results include whether legislation is in force
+#' @param include_eurovoc If `TRUE`, results include EuroVoc descriptors of subject matter
 #' @param order Order results by ids
+#' @param limit Limit the number of results, for testing purposes mainly
 #' @export
 #' @examples
 #' elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
@@ -22,21 +27,31 @@
 #' elx_make_query(resource_type = "caselaw")
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
 
-elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","intagr","caselaw","manual"),
+elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl"),
                            manual_type = "", include_corrigenda = FALSE, include_celex = TRUE, include_lbs = FALSE,
-                           include_date = FALSE, include_force = FALSE, order = FALSE){
+                           include_date = FALSE, include_date_force = FALSE, include_date_endvalid = FALSE,
+                           include_date_transpos = FALSE, include_force = FALSE, include_eurovoc = FALSE,
+                           order = FALSE, limit = NULL){
 
-  if (!resource_type %in% c("directive","regulation","decision","recommendation","intagr","caselaw","manual")) stop("'resource_type' must be defined")
+  # for the moment, 'councilvotes' is not an operational resource type
+
+  if (!resource_type %in% c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl","councilvotes")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){
     stop("Please specify resource type manually (e.g. 'DIR', 'REG', 'JUDG').", call. = TRUE)
   }
 
-  query <- "prefix cdm: <http://publications.europa.eu/ontology/cdm#>
-  select distinct ?work ?type"
+  if (include_date_transpos == TRUE & resource_type!="directive"){
+    stop("Transposition date currently only available for directives.", call. = TRUE)
+  }
 
-  # cdm:resource_legal_date_end-of-validity	in_notice
-  # cdm:resource_legal_date_entry-into-force
+  query <- "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+  PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+  PREFIX dc:<http://purl.org/dc/elements/1.1/>
+  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
+  PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX owl:<http://www.w3.org/2002/07/owl#>
+  select distinct ?work ?type"
 
   if (include_celex == TRUE){
 
@@ -50,15 +65,47 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   }
 
-  if (include_lbs == TRUE & resource_type!="caselaw"){
+  if (include_date_force == TRUE){
+
+    query <- paste(query, "str(?dateforce)", sep = " ")
+
+  }
+
+  if (include_date_endvalid == TRUE){
+
+    query <- paste(query, "str(?dateendvalid)", sep = " ")
+
+  }
+
+  if (include_date_transpos == TRUE){
+
+    query <- paste(query, "str(?datetranspos)", sep = " ")
+
+  }
+
+  if (include_lbs == TRUE){
+
+    if (resource_type %in% c("caselaw","councilvotes")){
+      stop("Legal basis variable incompatible with requested resource type", call. = TRUE)
+    }
 
     query <- paste(query, "?lbs ?lbcelex", sep = " ")
 
   }
 
-  if (include_force == TRUE & resource_type!="caselaw"){
+  if (include_force == TRUE){
+
+    if (resource_type %in% c("caselaw","councilvotes")){
+      stop("Force variable incompatible with requested resource type", call. = TRUE)
+    }
 
     query <- paste(query, "?force", sep = " ")
+
+  }
+
+  if (include_eurovoc == TRUE){
+
+    query <- paste(query, "?eurovoc", sep = " ")
 
   }
 
@@ -96,6 +143,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   ?type=<http://publications.europa.eu/resource/authority/resource-type/ACT_ADOPT_INTERNATION>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/ARRANG>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/CONVENTION>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_AMEND>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/MEMORANDUM_UNDERST>)", sep = " ")
   }
 
@@ -122,6 +170,62 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   ?type=<http://publications.europa.eu/resource/authority/resource-type/OPIN_AG>)", sep = " ")
   }
 
+  if (resource_type == "proposal"){
+    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DIR>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_REG>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DEC>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DEC_IMPL>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_REG_IMPL>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DIR_IMPL>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_RECO>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/JOINT_PROP_DEC>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/JOINT_PROP_ACTION>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/JOINT_PROP_REG>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/JOINT_PROP_DIR>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_RES>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_AMEND>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_OPIN>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DECLAR>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DEC_FRAMW>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_DEL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/RES_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_IMPL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_IMPL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_DEL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/ACT_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/ACT_DEL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/ACT_IMPL_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DECLAR_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_FRAMW_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/JOINT_ACTION_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROT_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/COMMUNIC_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_EUMS_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_INTERINSTIT_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_INTERNATION_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_UBEREINKOM_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/BUDGET_DRAFT>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/BUDGET_DRAFT_PRELIM>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/BUDGET_DRAFT_PRELIM_SUPPL>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/BUDGET_DRAFT_SUPPL_AMEND>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AMEND_PROP>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AMEND_PROP_DIR>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AMEND_PROP_REG>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/AMEND_PROP_DEC>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/PROP_DEC_NO_ADDRESSEE>)", sep = " ")
+  }
+
+  if (resource_type == "national_impl"){
+    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/MEAS_NATION_IMPL>", sep = " ")
+  }
+
   if (nchar(manual_type) > 1 & resource_type == "manual"){
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/", manual_type, ">)", sep = "")
   }
@@ -144,6 +248,24 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   }
 
+  if (include_date_force == TRUE){
+
+    query <- paste(query, "?work cdm:resource_legal_date_entry-into-force ?dateforce.")
+
+  }
+
+  if (include_date_endvalid == TRUE){
+
+    query <- paste(query, "?work cdm:resource_legal_date_end-of-validity ?dateendvalid.")
+
+  }
+
+  if (include_date_transpos == TRUE){
+
+    query <- paste(query, "?work cdm:directive_date_transposition ?datetranspos.")
+
+  }
+
   if (include_lbs == TRUE & resource_type!="caselaw"){
 
     query <- paste(query, "?work cdm:resource_legal_based_on_resource_legal ?lbs.
@@ -158,9 +280,56 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   }
 
+  if (include_eurovoc == TRUE){
+
+    query <- paste(query, '?work cdm:work_is_about_concept_eurovoc ?eurovoc. graph ?gs
+    { ?eurovoc skos:prefLabel ?subjectLabel filter (lang(?subjectLabel)="en") }.')
+
+  }
+
   if (order == TRUE){
     query <- paste(query, "} order by str(?date)")
   } else {query <- paste(query, "}")}
+
+  if (!is.null(limit) & is.integer(as.integer(limit))){
+    query <- paste(query, "limit", limit, sep = " ")
+  }
+
+  if (resource_type == "councilvotes"){
+
+    query <- "SELECT ?observation ?act ?country ?vote ?area ?title ?date ?rule
+    where {
+    ?observation
+    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
+    ?act
+    .
+    ?observation
+    <http://data.consilium.europa.eu/data/public_voting/qb/measureproperty/vote>
+    ?vote
+    .
+    ?observation
+    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/country>
+    ?country
+    .
+    ?act
+    skos:definition
+    ?title
+    .
+    ?observation
+    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate>
+    ?date
+    .
+    ?observation
+    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea>
+    ?area
+    .
+    ?observation
+    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/votingrule>
+    ?rule
+    .
+    }"
+
+  }
 
   return(query)
 
