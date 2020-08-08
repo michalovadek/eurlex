@@ -1,4 +1,4 @@
-# eurlex
+# eurlex <img src="man/figures/logo.png" align="right" width="120" />
 An R package for retrieving official data on European Union law.
 
 ## Installation
