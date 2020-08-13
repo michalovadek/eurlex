@@ -34,7 +34,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   # for the moment, 'councilvotes' is not an operational resource type
 
-  if (!resource_type %in% c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl","councilvotes")) stop("'resource_type' must be defined")
+  if (!resource_type %in% c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){
     stop("Please specify resource type manually (e.g. 'DIR', 'REG', 'JUDG').", call. = TRUE)
@@ -84,7 +84,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   if (include_lbs == TRUE){
 
-    if (resource_type %in% c("caselaw","councilvotes")){
+    if (resource_type %in% c("caselaw")){
       stop("Legal basis variable incompatible with requested resource type", call. = TRUE)
     }
 
@@ -94,7 +94,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   if (include_force == TRUE){
 
-    if (resource_type %in% c("caselaw","councilvotes")){
+    if (resource_type %in% c("caselaw")){
       stop("Force variable incompatible with requested resource type", call. = TRUE)
     }
 
@@ -292,42 +292,6 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   if (!is.null(limit) & is.integer(as.integer(limit))){
     query <- paste(query, "limit", limit, sep = " ")
-  }
-
-  if (resource_type == "councilvotes"){
-
-    query <- "SELECT ?observation ?act ?country ?vote ?area ?title ?date ?rule
-    where {
-    ?observation
-    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/act>
-    ?act
-    .
-    ?observation
-    <http://data.consilium.europa.eu/data/public_voting/qb/measureproperty/vote>
-    ?vote
-    .
-    ?observation
-    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/country>
-    ?country
-    .
-    ?act
-    skos:definition
-    ?title
-    .
-    ?observation
-    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/actdate>
-    ?date
-    .
-    ?observation
-    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/policyarea>
-    ?area
-    .
-    ?observation
-    <http://data.consilium.europa.eu/data/public_voting/qb/dimensionproperty/votingrule>
-    ?rule
-    .
-    }"
-
   }
 
   return(query)

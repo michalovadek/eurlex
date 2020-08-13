@@ -13,20 +13,21 @@
 
 elx_run_query <- function(query = "", endpoint = "http://publications.europa.eu/webapi/rdf/sparql"){
 
-  stopifnot(is.character(query), nchar(query) > 20, grepl("cdm|consilium|eurovoc",query))
-
-  if (grepl("data.consilium",query)){
-
-    endpoint <- "https://data.consilium.europa.eu/sparql"
-
-  }
+  stopifnot(is.character(query), nchar(query) > 20, grepl("cdm|eurovoc",query))
 
   curlready <- paste(endpoint,"?query=",gsub("\\+","%2B", utils::URLencode(query, reserved = TRUE)), sep = "")
 
-  sparql_response <- RCurl::getURL(url = curlready)
+  #sparql_response <- RCurl::getURL(url = curlready)
+  sparql_response <- httr::GET(url = curlready,
+                               httr::add_headers('Accept' = 'application/sparql-results+xml')
+  )
 
-  sparql_response_parsed <- elx_parse_xml(sparql_response)
+  sparql_response_parsed <- sparql_response %>%
+      httr::content(type = "text", encoding = "UTF-8") %>%
+      elx_parse_xml()
 
   return(sparql_response_parsed)
 
+
 }
+
