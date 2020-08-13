@@ -1,23 +1,19 @@
 Package: eurlex
 Type: Package
-Title: Retrieve Data on European Union Laws
-Version: 0.2.0
-Author: Michal Ovadek
+Title: Retrieve Data on European Union Law
+Version: 0.2.2
 Authors@R: c(person(given = "Michal",
              family = "Ovadek",
              role = c("aut", "cre", "cph"),
              email = "michal.ovadek@gmail.com",
              comment = c(ORCID = "0000-0002-2552-2580")))
-Maintainer: Michal Ovadek <michal.ovadek@gmail.com>
-Description: Retrieve data on European Union laws from the Eur-Lex dataverse 
-    the right way and with minimal fuss, using pre-defined SPARQL queries and GET requests.
+Description: Access to data on European Union laws and court decisions made easy with pre-defined 'SPARQL' queries and 'GET' requests.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
     R (>= 3.4.0)
 Imports:
-    RCurl,
     magrittr,
     dplyr,
     xml2,
@@ -25,7 +21,8 @@ Imports:
     httr,
     rvest,
     rlang,
-    stringr
+    stringr,
+    readr
 RoxygenNote: 7.1.0
 Suggests:
     knitr,

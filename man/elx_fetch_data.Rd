@@ -6,7 +6,7 @@
 \usage{
 elx_fetch_data(
   url,
-  type = c("title", "text", "ids", "exper"),
+  type = c("title", "text", "ids"),
   language_1 = "en",
   language_2 = "fr",
   language_3 = "de"

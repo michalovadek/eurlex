@@ -50,7 +50,6 @@ elx_make_query(
 }
 \description{
 Generates pre-defined or manual SPARQL queries to retrieve document ids from Cellar.
-Mainly to be called internally by other functions.
 List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
 Note that not all resource types are compatible with the pre-defined query.
 }
