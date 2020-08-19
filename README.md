@@ -2,7 +2,9 @@
 An R package for retrieving official data on European Union law.
 
 ## Installation
-The package is for the moment not available on CRAN. Install via `remotes::install_github("michalovadek/eurlex")`.
+Install from CRAN via `install.packages("eurlex")`.
+
+The development version is available via `remotes::install_github("michalovadek/eurlex")`.
 
 ## Usage
 
