@@ -1,4 +1,7 @@
 # eurlex <img src="man/figures/logo.png" align="right" width="150" />
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/eurlex)](https://cran.r-project.org/package=eurlex)
+[![CRAN\_Downloads](http://cranlogs.r-pkg.org/badges/grand-total/eurlex)](https://cran.r-project.org/package=eurlex)
+
 An R package for retrieving official data on European Union law.
 
 ## Installation
