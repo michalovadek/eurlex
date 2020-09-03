@@ -3,7 +3,8 @@
 #' Harvests data from lists of EU court cases from curia.europa.eu.
 #' CELEX identifiers are extracted from hyperlinks where available.
 #'
-#' @param data Data to be scraped from three separate lists of cases maintained by Curia, defaults to "all"
+#' @param data Data to be scraped from four separate lists of cases maintained by Curia, defaults to "all"
+#' which contains cases from Court of Justice, General Court and Civil Service Tribunal.
 #'
 #' @importFrom rlang .data
 #' @export
@@ -12,11 +13,12 @@
 #' elx_curia_list(data = "gc_all")
 #' }
 
-elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all")){
+elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all","cst_all")){
 
   url_c1 <- "https://curia.europa.eu/en/content/juris/c1_juris.htm"
-  url_c2 <- "https://curia.europa.eu/en/content/juris/c2.htm"
+  url_c2 <- "https://curia.europa.eu/en/content/juris/c2_juris.htm"
   url_t2 <- "https://curia.europa.eu/en/content/juris/t2_juris.htm"
+  url_f1 <- "https://curia.europa.eu/en/content/juris/f1_juris.htm"
 
   if (missing(data)){
 
@@ -32,8 +34,9 @@ elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all")){
     res_c1 <- elx_curia_scraper(url_c1)
     res_c2 <- elx_curia_scraper(url_c2)
     res_t2 <- elx_curia_scraper(url_t2)
+    res_f1 <- elx_curia_scraper(url_f1)
 
-    return(rbind(res_c1, res_c2, res_t2))
+    return(rbind(res_c1, res_c2, res_t2, res_f1))
 
   }
 
@@ -58,6 +61,14 @@ elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all")){
     res_t2 <- elx_curia_scraper(url_t2)
 
     return(res_t2)
+
+  }
+
+  else if (data == "cst_all"){
+
+    res_f1 <- elx_curia_scraper(url_f1)
+
+    return(res_f1)
 
   }
 
