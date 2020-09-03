@@ -13,13 +13,17 @@
 
 elx_label_eurovoc <- function(uri_eurovoc = "", alt_labels = FALSE, language = "en"){
 
-  uri_eurovoc <- paste0(paste("<",unique(uri_eurovoc),">", sep = ""), collapse = " ")
-
   getlabs <- "skos:prefLabel"
 
   if (alt_labels == TRUE){
     getlabs <- "skos:prefLabel skos:altLabel"
   }
+
+  uniq <- paste("<",unique(uri_eurovoc),">", sep = "")
+
+  uniq_chunks <- split(uniq, ceiling(seq_along(uniq)/150))
+
+  uri_eurovoc_chunks <- purrr::map_chr(uniq_chunks,paste0,collapse = " ")
 
   query <- paste("PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
   SELECT DISTINCT (group_concat(distinct ?subject;separator=',') as ?eurovoc)
@@ -27,7 +31,7 @@ elx_label_eurovoc <- function(uri_eurovoc = "", alt_labels = FALSE, language = "
   from <http://eurovoc.europa.eu/100141>
   where{
   VALUES ?subject { ",
-                 uri_eurovoc,
+                 uri_eurovoc_chunks,
   " }",
   "VALUES ?searchLang { '",
                  language,
@@ -41,7 +45,7 @@ elx_label_eurovoc <- function(uri_eurovoc = "", alt_labels = FALSE, language = "
   } GROUP BY ?subject",
                  sep = "")
 
-  out <- elx_run_query(query)
+  out <- purrr::map_df(query,elx_run_query)
 
   return(out)
 
