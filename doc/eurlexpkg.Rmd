@@ -88,7 +88,7 @@ Now that we have a query, we are ready to run it.
 
 ## `elx_run_query()`: Execute SPARQL queries
 
-`elx_run_query()` uses `RCurl` to send SPARQL queries to a pre-specified endpoint. The function takes the query string as the main argument, which means you can manually pass it any working SPARQL query (relevant to official EU publications).
+`elx_run_query()` sends SPARQL queries to a pre-specified endpoint. The function takes the query string as the main argument, which means you can manually pass it any working SPARQL query (relevant to official EU publications).
 
 ```{r runquery, eval=FALSE}
 results <- elx_run_query(query = query_dir)

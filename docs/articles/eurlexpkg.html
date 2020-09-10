@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>eurlex: Retrieve data on European Union law in R • eurlex</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -14,6 +20,7 @@
 <script src="../pkgdown.js"></script><meta property="og:title" content="eurlex: Retrieve data on European Union law in R">
 <meta property="og:description" content="Retrieve efficiently tidy data on European Union law in R with pre-defined SPARQL and REST queries.
 ">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -32,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -190,7 +197,7 @@
 <div id="elx_run_query-execute-sparql-queries" class="section level2">
 <h2 class="hasAnchor">
 <a href="#elx_run_query-execute-sparql-queries" class="anchor"></a><code>elx_run_query()</code>: Execute SPARQL queries</h2>
-<p><code><a href="../reference/elx_run_query.html">elx_run_query()</a></code> uses <code>RCurl</code> to send SPARQL queries to a pre-specified endpoint. The function takes the query string as the main argument, which means you can manually pass it any working SPARQL query (relevant to official EU publications).</p>
+<p><code><a href="../reference/elx_run_query.html">elx_run_query()</a></code> sends SPARQL queries to a pre-specified endpoint. The function takes the query string as the main argument, which means you can manually pass it any working SPARQL query (relevant to official EU publications).</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">results</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/elx_run_query.html">elx_run_query</a></span>(<span class="kw">query</span> <span class="kw">=</span> <span class="no">query_dir</span>)
 
 <span class="co"># the functions are compatible with piping</span>
@@ -198,14 +205,14 @@
 <span class="co"># elx_make_query("directive") %&gt;% </span>
 <span class="co">#   elx_run_query()</span></pre></body></html></div>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(<span class="no">results</span>)
-<span class="co">#&gt; # A tibble: 4,190 x 3</span>
+<span class="co">#&gt; # A tibble: 4,192 x 3</span>
 <span class="co">#&gt;   work                                   type                            celex  </span>
 <span class="co">#&gt;   &lt;chr&gt;                                  &lt;chr&gt;                           &lt;chr&gt;  </span>
 <span class="co">#&gt; 1 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31979L~</span>
 <span class="co">#&gt; 2 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31989L~</span>
 <span class="co">#&gt; 3 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31984L~</span>
 <span class="co">#&gt; 4 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31966L~</span>
-<span class="co">#&gt; # ... with 4,186 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # ... with 4,188 more rows</span></pre></body></html></div>
 <p>The function outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection.</p>
 <p>The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is CELEX, retrieved by default.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>One column you should always pay attention to is <code>type</code> (as in <code>resource_type</code>). The URIs contained there reflect the FILTER argument in the SPARQL query, which is manually pre-specified. All resources are indexed as being of one type or another. For example, when retrieving directives, the results are going to return also delegated directives, which might not be desirable, depending on your needs. You can filter results by <code>type</code> to make the necessary adjustments. The queries are expansive by default in the spirit of erring on the side of over-inclusiveness rather than vice versa.</p>

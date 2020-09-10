@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' \donttest{
-#' elx_curia_list(data = "gc_all")
+#' elx_curia_list(data = "cst_all")
 #' }
 
 elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all","cst_all")){

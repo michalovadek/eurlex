@@ -1,7 +1,7 @@
 Package: eurlex
 Type: Package
 Title: Retrieve Data on European Union Law
-Version: 0.2.3
+Version: 0.3.0
 Authors@R: c(person(given = "Michal",
              family = "Ovadek",
              role = c("aut", "cre", "cph"),
@@ -22,7 +22,9 @@ Imports:
     rvest,
     rlang,
     stringr,
-    readr
+    readr,
+    pdftools,
+    antiword
 RoxygenNote: 7.1.0
 Suggests:
     knitr,
