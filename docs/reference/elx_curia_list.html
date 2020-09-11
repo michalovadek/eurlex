@@ -81,7 +81,7 @@ CELEX identifiers are extracted from hyperlinks where available." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -107,6 +107,9 @@ CELEX identifiers are extracted from hyperlinks where available." />
       <a href="../articles/eurlexpkg.html">eurlex: Retrieve data on European Union law in R</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -149,20 +152,20 @@ which contains cases from Court of Justice, General Court and Civil Service Trib
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>elx_curia_list</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='st'>"gc_all"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 17,427 x 3</span><span>
+<span class='fu'>elx_curia_list</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='st'>"cst_all"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1,759 x 3</span><span>
 #&gt;    case_id   case_info                                              linked_celex
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       
-#&gt; </span><span style='color: #555555;'> 1</span><span> T-1/89    Order of 15 November 1990, Rhône-Poulenc and others /~ 61989TO0001 
-#&gt; </span><span style='color: #555555;'> 2</span><span> T-1/89    Judgment of 24 October 1991, Rhône-Poulenc / Commissi~ 61989TJ0001 
-#&gt; </span><span style='color: #555555;'> 3</span><span> T-2/89    Petrofina / Commission (T-2/89) , see Case  T-1/89     61989TJ0002 
-#&gt; </span><span style='color: #555555;'> 4</span><span> T-2/89    Judgment of 24 October 1991, Petrofina / Commission (~ </span><span style='color: #BB0000;'>NA</span><span>          
-#&gt; </span><span style='color: #555555;'> 5</span><span> T-3/89    Atochem / Commission (T-3/89) , see Case  T-1/89       61989TJ0003 
-#&gt; </span><span style='color: #555555;'> 6</span><span> T-3/89    Judgment of 24 October 1991, Atochem / Commission (T-~ </span><span style='color: #BB0000;'>NA</span><span>          
-#&gt; </span><span style='color: #555555;'> 7</span><span> T-4/89    BASF / Commission (T-4/89) , see Case  T-1/89          61989TJ0004 
-#&gt; </span><span style='color: #555555;'> 8</span><span> T-4/89    Judgment of 17 December 1991, BASF / Commission (T-4/~ </span><span style='color: #BB0000;'>NA</span><span>          
-#&gt; </span><span style='color: #555555;'> 9</span><span> T-4/89 R~ Order of 26 March 1992, BASF / Commission (T-4/89 REV~ 61989TO0004 
-#&gt; </span><span style='color: #555555;'>10</span><span> T-5/89    Removed from the register on 13 February 1990, Rydalm~ </span><span style='color: #BB0000;'>NA</span><span>          
-#&gt; </span><span style='color: #555555;'># ... with 17,417 more rows</span><span></div><div class='input'># }
+#&gt; </span><span style='color: #555555;'> 1</span><span> F-1/05 *  Judgment of 26 October 2006, Landgren / ETF (F-1/05, ~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 2</span><span> F-1/05    Order of 22 May 2007, Landgren / ETF (F-1/05, ECR-SC ~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 3</span><span> F-1/05 I~ Order of 13 July 2007, Landgren / ETF (F-1/05 INT, EC~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 4</span><span> F-1/05    Order of 9 November 2010, Landgren / ETF (F-1/05, unp~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 5</span><span> F-2/05    Removed from the register on 18 June 2008, Kröppelin ~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 6</span><span> F-3/05    Order of 15 May 2006, Schmit / Commission (F-3/05, EC~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 7</span><span> F-4/05    Removed from the register on 18 June 2008, Huober / C~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 8</span><span> F-5/05 *  Judgment of 28 April 2009, Violetti and others / Comm~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'> 9</span><span> F-6/05    Removed from the register on 18 June 2008, Kröppelin ~ </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'>10</span><span> F-7/05    Schmit / Commission (F-7/05) , see Case  F-5/05        </span><span style='color: #BB0000;'>NA</span><span>          
+#&gt; </span><span style='color: #555555;'># ... with 1,749 more rows</span><span></div><div class='input'># }
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -1,3 +1,9 @@
+# eurlex 0.3.1
+
+## Minor changes
+
+- `elx_fetch_data()` now prefers CELEX-based URLs (instead of Cellar URIs) as input, as they appear to yield fewer missing documents
+
 # eurlex 0.3.0
 
 ## Major changes
@@ -12,6 +18,7 @@
 ## Minor changes
 
 - fixed serious bugs in `elx_curia_list()`
+- fixed bug in `elx_label_eurovoc()`
 
 # eurlex 0.2.2
 
@@ -23,4 +30,19 @@
 
 ## Minor changes
 
-- optimization, reduce dependencies, switch from XML to xml2, etc.
+- optimization, reducing dependencies, etc.
+
+# eurlex 0.2.0
+
+## Major changes
+
+- addition of proposals and national implementing laws to possible SPARQL queries
+- EuroVoc topics, retrievable in all EU languages, can now be included in SPARQL results
+- new date options (force, end of validity, transposition)
+- added `elx_curia_list()` to retrieve full list of EU court cases
+
+## Minor changes
+
+- switch from XML to xml2
+- SPARQL package dependency removed
+- cascading language options for `elx_fetch_data()`

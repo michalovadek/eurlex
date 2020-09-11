@@ -2,7 +2,7 @@
 #'
 #' Wraps httr::GET with pre-specified headers to retrieve data.
 #'
-#' @param url A valid url, preferably to a Cellar work obtained through `elx_run_query`.
+#' @param url A valid url based on a resource identifier such as CELEX or Cellar URI.
 #' @param type The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text.
 #' @param language_1 The priority language in which the data will be attempted to be retrieved, in ISO 639 2-char code
 #' @param language_2 If data not available in `language_1`, try `language_2`
@@ -11,7 +11,6 @@
 #' @export
 #' @examples
 #' \donttest{
-#' elx_fetch_data(url = ".../resource/cellar/3f7ccca4-478c-4a95-8778-df4243e30d0e", type = "text")
 #' elx_fetch_data(url = "http://publications.europa.eu/resource/celex/32014R0001", type = "title")
 #' }
 
@@ -85,7 +84,10 @@ elx_fetch_data <- function(url, type = c("title","text","ids"),
 
           multiout <- paste0(multiout, collapse = " ---documentbreak--- ")
 
-        } else {multiout <- NA_character_}
+        } else {
+          multiout <- NA_character_
+          names(multiout) <- "missingdoc"
+          }
 
       }
 
@@ -199,20 +201,4 @@ elx_read_text <- function(http_response){
   return(out)
 
 }
-
-# testing
-# dat <- eurlex::elx_make_query("proposal") %>% eurlex::elx_run_query()
-#
-# smpl <- sample_n(dat,100)
-#
-# new <- map(smpl$work,possibly(elx_fetch_data, otherwise = NA_character_),"text")
-# smpl[which(map((new),function(x) sum(is.na(x)))==1),3] %>% print(n=100)
-#
-# unlist(new) %>% enframe() %>% mutate(celex = smpl$celex) %>% filter(name=="multidocs") %>% print(n=150)
-#
-# multi_url <- smpl[43,1] %>% deframe()
-#
-# for (i in 150:nrow(smpl)){
-#   elx_fetch_data(smpl$work[i],"text")
-# }
 

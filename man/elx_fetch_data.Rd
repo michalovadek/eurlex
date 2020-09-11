@@ -14,7 +14,7 @@ elx_fetch_data(
 )
 }
 \arguments{
-\item{url}{A valid url, preferably to a Cellar work obtained through `elx_run_query`.}
+\item{url}{A valid url based on a resource identifier such as CELEX or Cellar URI.}
 
 \item{type}{The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text.}
 
@@ -31,7 +31,6 @@ Wraps httr::GET with pre-specified headers to retrieve data.
 }
 \examples{
 \donttest{
-elx_fetch_data(url = ".../resource/cellar/3f7ccca4-478c-4a95-8778-df4243e30d0e", type = "text")
 elx_fetch_data(url = "http://publications.europa.eu/resource/celex/32014R0001", type = "title")
 }
 }

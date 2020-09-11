@@ -2,7 +2,7 @@
 title: "eurlex: Retrieve data on European Union law in R"
 output: rmarkdown::html_vignette
 description: >
-  Retrieve efficiently tidy data on European Union law in R with
+  Retrieve data on European Union law in R with
   pre-defined SPARQL and REST queries.
 vignette: >
   %\VignetteIndexEntry{eurlex: Retrieve data on European Union law in R}
@@ -186,7 +186,7 @@ print(dir_titles)
 
 ```
 
-Note that text requests are by far the most time-intensive; requesting the full text for thousands of documents is liable to extend the run-time into hours. Currently, no method for downloading text in non-html/plain formats is implemented, which means pdf-only texts will be missing from the results.^[It is worth pointing out that the html and pdf contents of older case law differs. Whereas typically the html file is only going to contain a summary and grounds of a judgment, the pdf should also contain background to the dispute.]
+Note that text requests are by far the most time-intensive; requesting the full text for thousands of documents is liable to extend the run-time into hours. Texts are retrieved from html by priority, but methods for pdfs and .docs are also implemented.^[It is worth pointing out that the html and pdf contents of older case law differs. Whereas typically the html file is only going to contain a summary and grounds of a judgment, the pdf should also contain background to the dispute.] The function even handles multi-document resources (by pasting them together).
 
 # Application
 
