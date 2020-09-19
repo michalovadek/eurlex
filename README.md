@@ -17,18 +17,18 @@ The `eurlex` package currently envisions the typical use-case to consist of gett
 
 The function `elx_make_query` takes as its first argument the type of resource to be retrieved (such as "directive") from the semantic database that powers Eur-Lex (and other publications) called Cellar. If you are familiar with SPARQL, you can always specify your own queries and execute them with `elx_run_query()`.
 
-For the moment, it is recommended to retrieve metadata one variable at a time. For example, if you wish to obtain the legal bases of directives and the date of transposition, you should run separate calls:
-
-0. ids <- `elx_make_query("directive")`
-1. lbs <- `elx_make_query("directive", include_lbs = TRUE)`
-2. dates <- `elx_make_query("directive", include_date_transpos = TRUE)`
-3. `ids %>% dplyr::left_join(lbs) %>% dplyr::left_join(dates)`
-
-rather than elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE). The reason is that observations with missing data on any variable are currently dropped when cumulating variable requests.
+rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. The reason is that observations with missing data on any variable are currently dropped entirely when cumulating variable requests. By separating the calls, you are at least able to identify the missing data.
 
 `elx_run_query()` executes SPARQL queries on a pre-specified endpoint of the EU Publication Office. It outputs a `data.frame` where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection. The first column always contains the unique URI of a "work" (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each "work" but the most useful one is CELEX, retrieved by default.
 
-The core contribution of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the `rvest` package), the function `elx_fetch_data()` enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text (where available in html) of a document.
+For the moment, it is recommended to retrieve metadata one variable at a time. For example, if you wish to obtain the legal bases of directives and the date of transposition, you should run separate calls:
+
+0. `ids <- elx_make_query("directive") %>% elx_run_query()`
+1. `lbs <- elx_make_query("directive", include_lbs = TRUE) %>% elx_run_query()`
+2. `dates <- elx_make_query("directive", include_date_transpos = TRUE) %>% elx_run_query()`
+3. `ids %>% dplyr::left_join(lbs) %>% dplyr::left_join(dates)`
+
+One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the `rvest` package), the function `elx_fetch_data()` enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.
 
 See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package.
 
