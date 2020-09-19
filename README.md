@@ -28,6 +28,8 @@ For the moment, it is recommended to retrieve metadata one variable at a time. F
 2. `dates <- elx_make_query("directive", include_date_transpos = TRUE) %>% elx_run_query()`
 3. `ids %>% dplyr::left_join(lbs) %>% dplyr::left_join(dates)`
 
+rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. The reason is that observations with missing data on any variable are currently dropped entirely when cumulating variable requests. By separating the calls, you are able to at least identify the missing data.
+
 One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the `rvest` package), the function `elx_fetch_data()` enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.
 
 See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package.
