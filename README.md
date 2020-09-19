@@ -17,8 +17,6 @@ The `eurlex` package currently envisions the typical use-case to consist of gett
 
 The function `elx_make_query` takes as its first argument the type of resource to be retrieved (such as "directive") from the semantic database that powers Eur-Lex (and other publications) called Cellar. If you are familiar with SPARQL, you can always specify your own queries and execute them with `elx_run_query()`.
 
-rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. The reason is that observations with missing data on any variable are currently dropped entirely when cumulating variable requests. By separating the calls, you are at least able to identify the missing data.
-
 `elx_run_query()` executes SPARQL queries on a pre-specified endpoint of the EU Publication Office. It outputs a `data.frame` where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection. The first column always contains the unique URI of a "work" (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each "work" but the most useful one is CELEX, retrieved by default.
 
 For the moment, it is recommended to retrieve metadata one variable at a time. For example, if you wish to obtain the legal bases of directives and the date of transposition, you should run separate calls:
