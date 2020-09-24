@@ -5,6 +5,9 @@
 #'
 #' @param query A valid SPARQL query specified by `elx_make_query` or manually
 #' @param endpoint SPARQL endpoint
+#' @return
+#' A data frame containing the results of the SPARQL query.
+#' Column `work` contains the Cellar URI of the resource. Rows with even one missing variable are dropped.
 #' @export
 #' @examples
 #' \donttest{

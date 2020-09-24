@@ -14,7 +14,7 @@ elx_fetch_data(
 )
 }
 \arguments{
-\item{url}{A valid url based on a resource identifier such as CELEX or Cellar URI.}
+\item{url}{A valid url as character vector of length one based on a resource identifier such as CELEX or Cellar URI.}
 
 \item{type}{The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text.}
 
@@ -25,6 +25,9 @@ elx_fetch_data(
 \item{language_3}{If data not available in `language_2`, try `language_3`}
 
 \item{include_breaks}{If TRUE, text includes tags showing where pages ("---pagebreak---", for pdfs) and documents ("---documentbreak---") were concatenated}
+}
+\value{
+A character vector of length one containing the result.
 }
 \description{
 Wraps httr::GET with pre-specified headers to retrieve data.

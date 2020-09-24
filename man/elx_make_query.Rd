@@ -48,6 +48,9 @@ elx_make_query(
 
 \item{limit}{Limit the number of results, for testing purposes mainly}
 }
+\value{
+A character string containing the SPARQL query
+}
 \description{
 Generates pre-defined or manual SPARQL queries to retrieve document ids from Cellar.
 List of available resource types: http://publications.europa.eu/resource/authority/resource-type .

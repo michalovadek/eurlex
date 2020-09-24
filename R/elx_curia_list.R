@@ -5,7 +5,8 @@
 #'
 #' @param data Data to be scraped from four separate lists of cases maintained by Curia, defaults to "all"
 #' which contains cases from Court of Justice, General Court and Civil Service Tribunal.
-#'
+#' @return
+#' A data frame containing case identifiers and information as character columns.
 #' @importFrom rlang .data
 #' @export
 #' @examples

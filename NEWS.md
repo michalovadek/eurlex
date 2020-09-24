@@ -1,3 +1,15 @@
+# eurlex 0.3.2
+
+## Major changes
+
+- improvement to legal basis harvesting thanks to help from Eur-Lex insiders
+- legal basis results are now slightly more comprehensive and correct
+- legal basis results now include a new column detailing the "suffix" (paragraph, subparagraph, etc.) in string form
+
+## Minor changes
+
+- minor updates to documentation
+
 # eurlex 0.3.1
 
 ## Minor changes

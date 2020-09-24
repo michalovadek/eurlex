@@ -3,6 +3,8 @@
 #' Executes a SPARQL query to the Council's endpoint.
 #'
 #' @importFrom rlang .data
+#' @return
+#' A data frame with Council votes on EU acts.
 #' @export
 #' @examples
 #' \donttest{

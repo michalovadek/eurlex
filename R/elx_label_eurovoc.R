@@ -5,6 +5,8 @@
 #' @param uri_eurovoc Character vector with valid EuroVoc URIs
 #' @param alt_labels If `TRUE`, results include comma-separated alternative labels in addition to the preferred label
 #' @param language Language in which to return the labels, in ISO 639 2-char code
+#' @return
+#' A `tibble` containing EuroVoc unique concept identifiers and labels.
 #' @export
 #' @examples
 #' elx_label_eurovoc(uri_eurovoc = "http://eurovoc.europa.eu/5760", alt_labels = TRUE, language = "fr")

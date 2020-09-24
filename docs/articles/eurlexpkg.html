@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -118,6 +118,7 @@
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">query_dir</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>() <span class="co"># for nicer printing</span>
 <span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span>
 <span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span>
 <span class="co">#&gt;   PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;</span>
 <span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
@@ -131,6 +132,7 @@
 <span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"caselaw"</span>) <span class="kw">%&gt;%</span>
   <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
 <span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span>
 <span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span>
 <span class="co">#&gt;   PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;</span>
 <span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
@@ -150,6 +152,7 @@
 <span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"manual"</span>, <span class="kw">manual_type</span> <span class="kw">=</span> <span class="st">"SWD"</span>) <span class="kw">%&gt;%</span>
   <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
 <span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span>
 <span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span>
 <span class="co">#&gt;   PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;</span>
 <span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
@@ -163,6 +166,7 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"directive"</span>, <span class="kw">include_date</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">include_force</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
   <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
 <span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span>
 <span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span>
 <span class="co">#&gt;   PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;</span>
 <span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
@@ -178,12 +182,13 @@
 <span class="fu"><a href="../reference/elx_make_query.html">elx_make_query</a></span>(<span class="kw">resource_type</span> <span class="kw">=</span> <span class="st">"recommendation"</span>, <span class="kw">include_date</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">include_lbs</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
   <span class="kw pkg">glue</span><span class="kw ns">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/as_glue.html">as_glue</a></span>()
 <span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span>
+<span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span>
 <span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span>
 <span class="co">#&gt;   PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;</span>
 <span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
 <span class="co">#&gt;   PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span>
 <span class="co">#&gt;   PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;</span>
-<span class="co">#&gt;   select distinct ?work ?type ?celex str(?date) ?lbs ?lbcelex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO&gt;||</span>
+<span class="co">#&gt;   select distinct ?work ?type ?celex str(?date) ?lbs ?lbcelex ?lbsuffix where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO&gt;||</span>
 <span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DEC&gt;||</span>
 <span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DIR&gt;||</span>
 <span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_OPIN&gt;||</span>
@@ -191,8 +196,12 @@
 <span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_REG&gt;||</span>
 <span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_RECO&gt;||</span>
 <span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DRAFT&gt;) </span>
-<span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. ?work cdm:work_date_document ?date. ?work cdm:resource_legal_based_on_resource_legal ?lbs.</span>
-<span class="co">#&gt;                    ?lbs cdm:resource_legal_id_celex ?lbcelex. }</span>
+<span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} ?work cdm:resource_legal_id_celex ?celex. ?work cdm:work_date_document ?date. OPTIONAL{?work cdm:resource_legal_based_on_resource_legal ?lbs.</span>
+<span class="co">#&gt;     ?lbs cdm:resource_legal_id_celex ?lbcelex.</span>
+<span class="co">#&gt;     OPTIONAL{?bn owl:annotatedSource ?work.</span>
+<span class="co">#&gt;     ?bn owl:annotatedProperty &lt;http://publications.europa.eu/ontology/cdm#resource_legal_based_on_resource_legal&gt;.</span>
+<span class="co">#&gt;     ?bn owl:annotatedTarget ?lbs.</span>
+<span class="co">#&gt;     ?bn annot:comment_on_legal_basis ?lbsuffix}} }</span>
 
 <span class="co"># minimal query: elx_make_query(resource_type = "recommendation")</span></pre></body></html></div>
 <p>Now that we have a query, we are ready to run it.</p>

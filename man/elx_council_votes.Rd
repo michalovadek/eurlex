@@ -6,6 +6,9 @@
 \usage{
 elx_council_votes()
 }
+\value{
+A data frame with Council votes on EU acts.
+}
 \description{
 Executes a SPARQL query to the Council's endpoint.
 }

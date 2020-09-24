@@ -14,6 +14,10 @@ elx_run_query(
 
 \item{endpoint}{SPARQL endpoint}
 }
+\value{
+A data frame containing the results of the SPARQL query.
+Column `work` contains the Cellar URI of the resource. Rows with even one missing variable are dropped.
+}
 \description{
 Executes cURL request to a pre-defined endpoint of the EU Publications Office.
 Relies on elx_make_query to generate valid SPARQL queries

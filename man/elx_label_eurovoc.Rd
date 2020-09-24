@@ -13,6 +13,9 @@ elx_label_eurovoc(uri_eurovoc = "", alt_labels = FALSE, language = "en")
 
 \item{language}{Language in which to return the labels, in ISO 639 2-char code}
 }
+\value{
+A `tibble` containing EuroVoc unique concept identifiers and labels.
+}
 \description{
 Create a look-up table with labels for EuroVoc concept URIs. Only unique identifiers are returned.
 }

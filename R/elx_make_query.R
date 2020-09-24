@@ -19,6 +19,8 @@
 #' @param include_eurovoc If `TRUE`, results include EuroVoc descriptors of subject matter
 #' @param order Order results by ids
 #' @param limit Limit the number of results, for testing purposes mainly
+#' @return
+#' A character string containing the SPARQL query
 #' @export
 #' @examples
 #' elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
@@ -45,6 +47,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   }
 
   query <- "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+  PREFIX annot: <http://publications.europa.eu/ontology/annotation#>
   PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
   PREFIX dc:<http://purl.org/dc/elements/1.1/>
   PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
@@ -88,7 +91,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
       stop("Legal basis variable incompatible with requested resource type", call. = TRUE)
     }
 
-    query <- paste(query, "?lbs ?lbcelex", sep = " ")
+    query <- paste(query, "?lbs ?lbcelex ?lbsuffix", sep = " ")
 
   }
 
@@ -267,8 +270,12 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   if (include_lbs == TRUE & resource_type!="caselaw"){
 
-    query <- paste(query, "?work cdm:resource_legal_based_on_resource_legal ?lbs.
-                   ?lbs cdm:resource_legal_id_celex ?lbcelex.",
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_based_on_resource_legal ?lbs.
+    ?lbs cdm:resource_legal_id_celex ?lbcelex.
+    OPTIONAL{?bn owl:annotatedSource ?work.
+    ?bn owl:annotatedProperty <http://publications.europa.eu/ontology/cdm#resource_legal_based_on_resource_legal>.
+    ?bn owl:annotatedTarget ?lbs.
+    ?bn annot:comment_on_legal_basis ?lbsuffix}}",
                    sep = " ")
 
   }
