@@ -1,3 +1,9 @@
+# eurlex 0.3.3
+
+## Minor changes
+
+- hotfix for critical bug in xml parsing that scrambled column with legal basis where this was requested
+
 # eurlex 0.3.2
 
 ## Major changes

@@ -19,9 +19,16 @@ elx_parse_xml <- function(sparql_response = ""){
   res_cols <- res_binding %>%
     xml2::xml_attr("name")
 
-  out <- data.frame(res_cols, res_text, stringsAsFactors = FALSE) %>%
-    dplyr::group_by(res_cols) %>%
-    dplyr::mutate(triplet = dplyr::row_number()) %>%
+  unique(res_cols)
+
+  out <- dplyr::tibble(res_cols, res_text) %>%
+    dplyr::mutate(is_work = ifelse(res_cols=="work", T, NA)) %>%
+    dplyr::group_by(is_work) %>%
+    dplyr::mutate(triplet = dplyr::row_number(),
+                  triplet = ifelse(is_work==T, triplet, NA)) %>%
+    dplyr::ungroup() %>%
+    tidyr::fill(triplet) %>%
+    dplyr::select(-.data$is_work) %>%
     tidyr::pivot_wider(names_from = res_cols, values_from = res_text) %>%
     dplyr::select(-.data$triplet)
 

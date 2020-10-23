@@ -155,8 +155,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_IMPL>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_DEL>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_FRAMW>||
-  ?type=<http://publications.europa.eu/resource/authority/resource-type/JOINT_DEC>||
-  ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_NC>)", sep = " ")
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/JOINT_DEC>)", sep = " ")
   }
 
   if (resource_type == "caselaw"){
