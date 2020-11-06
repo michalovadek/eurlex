@@ -1,3 +1,10 @@
+# eurlex 0.3.4
+
+## Major changes
+
+- new feature: request citations referenced in target resource with elx_make_query(include_citations = TRUE); retrieved in CELEX form
+- new feature: request document author(s) with elx_make_query(include_author = TRUE)
+
 # eurlex 0.3.3
 
 ## Minor changes
