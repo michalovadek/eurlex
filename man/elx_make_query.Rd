@@ -17,6 +17,8 @@ elx_make_query(
   include_date_transpos = FALSE,
   include_force = FALSE,
   include_eurovoc = FALSE,
+  include_author = FALSE,
+  include_citations = FALSE,
   order = FALSE,
   limit = NULL
 )
@@ -43,6 +45,10 @@ elx_make_query(
 \item{include_force}{If `TRUE`, results include whether legislation is in force}
 
 \item{include_eurovoc}{If `TRUE`, results include EuroVoc descriptors of subject matter}
+
+\item{include_author}{If `TRUE`, results include document author(s)}
+
+\item{include_citations}{If `TRUE`, results include citations (CELEX-labelled)}
 
 \item{order}{Order results by ids}
 

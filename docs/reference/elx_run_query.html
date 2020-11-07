@@ -81,7 +81,7 @@ Relies on elx_make_query to generate valid SPARQL queries" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -162,21 +162,21 @@ Column `work` contains the Cellar URI of the resource. Rows with even one missin
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>elx_run_query</span>(<span class='fu'><a href='elx_make_query.html'>elx_make_query</a></span>(<span class='st'>"directive"</span>, <span class='kw'>include_force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; # A tibble: 4,192 x 4
+<span class='fu'>elx_run_query</span>(<span class='fu'><a href='elx_make_query.html'>elx_make_query</a></span>(<span class='st'>"directive"</span>, <span class='kw'>include_force</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4,303 x 4</span><span>
 #&gt;    work                               type                          celex  force
-#&gt;    &lt;chr&gt;                              &lt;chr&gt;                         &lt;chr&gt;  &lt;chr&gt;
-#&gt;  1 http://publications.europa.eu/res~ http://publications.europa.e~ 31979~ false
-#&gt;  2 http://publications.europa.eu/res~ http://publications.europa.e~ 31989~ false
-#&gt;  3 http://publications.europa.eu/res~ http://publications.europa.e~ 31984~ false
-#&gt;  4 http://publications.europa.eu/res~ http://publications.europa.e~ 31966~ true 
-#&gt;  5 http://publications.europa.eu/res~ http://publications.europa.e~ 31993~ false
-#&gt;  6 http://publications.europa.eu/res~ http://publications.europa.e~ 31992~ false
-#&gt;  7 http://publications.europa.eu/res~ http://publications.europa.e~ 31983~ false
-#&gt;  8 http://publications.europa.eu/res~ http://publications.europa.e~ 31966~ false
-#&gt;  9 http://publications.europa.eu/res~ http://publications.europa.e~ 31974~ false
-#&gt; 10 http://publications.europa.eu/res~ http://publications.europa.e~ 31982~ false
-#&gt; # ... with 4,182 more rows</div><div class='input'># }
-</div></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31979~ false
+#&gt; </span><span style='color: #555555;'> 2</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31989~ false
+#&gt; </span><span style='color: #555555;'> 3</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31984~ false
+#&gt; </span><span style='color: #555555;'> 4</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31966~ true 
+#&gt; </span><span style='color: #555555;'> 5</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31993~ false
+#&gt; </span><span style='color: #555555;'> 6</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31992~ false
+#&gt; </span><span style='color: #555555;'> 7</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31983~ false
+#&gt; </span><span style='color: #555555;'> 8</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31966~ false
+#&gt; </span><span style='color: #555555;'> 9</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31974~ false
+#&gt; </span><span style='color: #555555;'>10</span><span> http://publications.europa.eu/res~ http://publications.europa.e~ 31982~ false
+#&gt; </span><span style='color: #555555;'># ... with 4,293 more rows</span><span></div><div class='input'># }
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
