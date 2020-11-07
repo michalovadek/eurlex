@@ -119,7 +119,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   if (include_citations == TRUE){
 
-    query <- paste(query, "?citation ?citationcelex", sep = " ")
+    query <- paste(query, "?citationcelex", sep = " ")
 
   }
 

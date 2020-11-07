@@ -18,7 +18,7 @@ elx_parse_xml <- function(sparql_response = ""){
   res_cols <- res_binding %>%
     xml2::xml_attr("name")
 
-  if (sum(unique(res_cols) == c("eurovoc","labels")) == 2){ # for use in elx_label_eurovoc
+  if (identical(res_cols, c("eurovoc","labels"))){ # for use in elx_label_eurovoc
 
     out <- dplyr::tibble(res_cols, res_text) %>%
       dplyr::mutate(is_work = dplyr::if_else(res_cols=="eurovoc", T, NA)) %>%
