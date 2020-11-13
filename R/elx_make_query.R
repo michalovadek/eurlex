@@ -14,11 +14,13 @@
 #' @param include_date_force If `TRUE`, results include date of entry into force
 #' @param include_date_endvalid If `TRUE`, results include date of end of validity
 #' @param include_date_transpos If `TRUE`, results include date of transposition deadline for directives
+#' @param include_date_lodged If `TRUE`, results include date a court case was lodged with the court
 #' @param include_lbs If `TRUE`, results include legal bases of legislation
 #' @param include_force If `TRUE`, results include whether legislation is in force
 #' @param include_eurovoc If `TRUE`, results include EuroVoc descriptors of subject matter
 #' @param include_author If `TRUE`, results include document author(s)
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
+#' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
 #' @param order Order results by ids
 #' @param limit Limit the number of results, for testing purposes mainly
 #' @return
@@ -33,13 +35,19 @@
 elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl"),
                            manual_type = "", include_corrigenda = FALSE, include_celex = TRUE, include_lbs = FALSE,
                            include_date = FALSE, include_date_force = FALSE, include_date_endvalid = FALSE,
-                           include_date_transpos = FALSE, include_force = FALSE, include_eurovoc = FALSE,
-                           include_author = FALSE, include_citations = FALSE, order = FALSE, limit = NULL){
+                           include_date_transpos = FALSE, include_date_lodged = FALSE,
+                           include_force = FALSE, include_eurovoc = FALSE, include_author = FALSE,
+                           include_citations = FALSE, include_court_procedure = FALSE,
+                           order = FALSE, limit = NULL){
 
   if (!resource_type %in% c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){
     stop("Please specify resource type manually (e.g. 'DIR', 'REG', 'JUDG').", call. = TRUE)
+  }
+
+  if (!resource_type %in% c("caselaw","manual") & include_court_procedure == TRUE){
+    stop("Resource and variable requested are incompatible.", call. = TRUE)
   }
 
   if (include_date_transpos == TRUE & resource_type!="directive"){
@@ -85,6 +93,12 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   }
 
+  if (include_date_lodged == TRUE){
+
+    query <- paste(query, "str(?datelodged)", sep = " ")
+
+  }
+
   if (include_lbs == TRUE){
 
     if (resource_type %in% c("caselaw")){
@@ -108,6 +122,12 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   if (include_eurovoc == TRUE){
 
     query <- paste(query, "?eurovoc", sep = " ")
+
+  }
+
+  if (include_court_procedure == TRUE){
+
+    query <- paste(query, "?courtprocedure", sep = " ")
 
   }
 
@@ -277,6 +297,12 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   }
 
+  if (include_date_lodged == TRUE){
+
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_date_request_opinion ?datelodged.}")
+
+  }
+
   if (include_lbs == TRUE & resource_type!="caselaw"){
 
     query <- paste(query, "OPTIONAL{?work cdm:resource_legal_based_on_resource_legal ?lbs.
@@ -311,6 +337,13 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   if (include_citations == TRUE){
 
     query <- paste(query, "OPTIONAL{?work cdm:work_cites_work ?citation. ?citation cdm:resource_legal_id_celex ?citationcelex.}")
+
+  }
+
+  if (include_court_procedure == TRUE){
+
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_has_type_procedure_concept_type_procedure ?proc.
+           ?proc skos:prefLabel ?courtprocedure. FILTER(lang(?courtprocedure)='en')}.")
 
   }
 
