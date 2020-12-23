@@ -2,7 +2,7 @@
 [![CRAN\_Downloads](http://cranlogs.r-pkg.org/badges/grand-total/eurlex)](https://cran.r-project.org/package=eurlex)
 # eurlex <img src="man/figures/logo.png" align="right" width="150" />
 
-An R package for retrieving official data on European Union law.
+An R package for retrieving official data on European Union law and policy.
 
 ## Installation
 Install from CRAN via `install.packages("eurlex")`.
@@ -33,7 +33,7 @@ One of the main contributions of the SPARQL requests is that we obtain a compreh
 See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features.
 
 ## Cite
-Michal Ovádek (2020). eurlex: An R package for retrieving official data on European Union law
+Michal Ovádek (2021). Facilitating access to data on European Union laws. Political Research Exchange
 
 ## Note
 This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable [data reuse policies](https://eur-lex.europa.eu/content/welcome/data-reuse.html).
