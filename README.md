@@ -11,7 +11,7 @@ The development version is available via `remotes::install_github("michalovadek/
 
 ## Usage
 
-The `eurlex` R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Although at present it does not offer access to the same array of information as comprehensive web scraping might, the package provides simpler, more efficient and transparent access to data on European Union law.
+The `eurlex` R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Compared to web-scraping, the package provides simpler, more efficient and transparent access to data on European Union laws and policies.
 
 The `eurlex` package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: `elx_make_query()` to create pre-defined or customized SPARQL queries; `elx_run_query()` to execute the pre-made or any other manually input query; and `elx_fetch_data()` to fire GET requests for certain metadata to the REST API.
 
