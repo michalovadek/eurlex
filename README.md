@@ -33,7 +33,7 @@ One of the main contributions of the SPARQL requests is that we obtain a compreh
 See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features.
 
 ## Cite
-Michal Ovádek (2021). Facilitating access to data on European Union laws. Political Research Exchange
+Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
 
 ## Note
 This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable [data reuse policies](https://eur-lex.europa.eu/content/welcome/data-reuse.html).
