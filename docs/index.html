@@ -87,7 +87,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#eurlex-" class="anchor"></a>eurlex <img src="reference/figures/logo.png" align="right" width="150">
 </h1></div>
-<p>An R package for retrieving official data on European Union law.</p>
+<p>An R package for retrieving official data on European Union law and policy.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -97,7 +97,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Although at present it does not offer access to the same array of information as comprehensive web scraping might, the package provides simpler, more efficient and transparent access to data on European Union law.</p>
+<p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Compared to web-scraping, the package provides simpler, more efficient and transparent access to data on European Union laws and policies.</p>
 <p>The <code>eurlex</code> package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: <code><a href="reference/elx_make_query.html">elx_make_query()</a></code> to create pre-defined or customized SPARQL queries; <code><a href="reference/elx_run_query.html">elx_run_query()</a></code> to execute the pre-made or any other manually input query; and <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> to fire GET requests for certain metadata to the REST API.</p>
 <p>The function <code>elx_make_query</code> takes as its first argument the type of resource to be retrieved (such as “directive”) from the semantic database that powers Eur-Lex (and other publications) called Cellar. If you are familiar with SPARQL, you can always specify your own queries and execute them with <code><a href="reference/elx_run_query.html">elx_run_query()</a></code>.</p>
 <p><code><a href="reference/elx_run_query.html">elx_run_query()</a></code> executes SPARQL queries on a pre-specified endpoint of the EU Publication Office. It outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several hours, depending also on your connection. The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html">CELEX</a>, retrieved by default.</p>
@@ -115,7 +115,7 @@
 <div id="cite" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cite" class="anchor"></a>Cite</h2>
-<p>Michal Ovádek (2020). eurlex: An R package for retrieving official data on European Union law</p>
+<p>Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150">10.1080/2474736X.2020.1870150</a></p>
 </div>
 <div id="note" class="section level2">
 <h2 class="hasAnchor">
@@ -129,7 +129,8 @@
 <p>Guide to CELEX numbers: <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html" class="uri">https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html</a></p>
 <p>List of resource types in Cellar (NAL): <a href="http://publications.europa.eu/resource/authority/resource-type" class="uri">http://publications.europa.eu/resource/authority/resource-type</a></p>
 <p>NAL of corporate bodies: <a href="http://publications.europa.eu/resource/authority/corporate-body" class="uri">http://publications.europa.eu/resource/authority/corporate-body</a></p>
-<p>Indexation of data in Cellar: <a href="http://publications.europa.eu/resource/cellar/4874abcd-286a-11e8-b5fe-01aa75ed71a1.0001.03/DOC_1" class="uri">http://publications.europa.eu/resource/cellar/4874abcd-286a-11e8-b5fe-01aa75ed71a1.0001.03/DOC_1</a></p>
+<p>Query builder: <a href="https://op.europa.eu/en/advanced-sparql-query-editor" class="uri">https://op.europa.eu/en/advanced-sparql-query-editor</a></p>
+<p>SPARQL endpoint: <a href="http://publications.europa.eu/webapi/rdf/sparql" class="uri">http://publications.europa.eu/webapi/rdf/sparql</a></p>
 </div>
 </div>
 

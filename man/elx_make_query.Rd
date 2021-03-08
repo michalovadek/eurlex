@@ -6,8 +6,10 @@
 \usage{
 elx_make_query(
   resource_type = c("directive", "regulation", "decision", "recommendation", "intagr",
-    "caselaw", "manual", "proposal", "national_impl"),
+    "caselaw", "manual", "proposal", "national_impl", "any"),
   manual_type = "",
+  directory = NULL,
+  sector = NULL,
   include_corrigenda = FALSE,
   include_celex = TRUE,
   include_lbs = FALSE,
@@ -15,10 +17,14 @@ elx_make_query(
   include_date_force = FALSE,
   include_date_endvalid = FALSE,
   include_date_transpos = FALSE,
+  include_date_lodged = FALSE,
   include_force = FALSE,
   include_eurovoc = FALSE,
   include_author = FALSE,
   include_citations = FALSE,
+  include_court_procedure = FALSE,
+  include_directory = FALSE,
+  include_sector = FALSE,
   order = FALSE,
   limit = NULL
 )
@@ -27,6 +33,10 @@ elx_make_query(
 \item{resource_type}{Type of resource to be retrieved via SPARQL query}
 
 \item{manual_type}{Define manually the type of resource to be retrieved}
+
+\item{directory}{Restrict the results to a given directory code}
+
+\item{sector}{Restrict the results to a given sector code}
 
 \item{include_corrigenda}{If `TRUE`, results include corrigenda}
 
@@ -42,6 +52,8 @@ elx_make_query(
 
 \item{include_date_transpos}{If `TRUE`, results include date of transposition deadline for directives}
 
+\item{include_date_lodged}{If `TRUE`, results include date a court case was lodged with the court}
+
 \item{include_force}{If `TRUE`, results include whether legislation is in force}
 
 \item{include_eurovoc}{If `TRUE`, results include EuroVoc descriptors of subject matter}
@@ -49,6 +61,12 @@ elx_make_query(
 \item{include_author}{If `TRUE`, results include document author(s)}
 
 \item{include_citations}{If `TRUE`, results include citations (CELEX-labelled)}
+
+\item{include_court_procedure}{If `TRUE`, results include type of court procedure and outcome}
+
+\item{include_directory}{If `TRUE`, results include the Eur-Lex directory code}
+
+\item{include_sector}{If `TRUE`, results include the Eur-Lex sector code}
 
 \item{order}{Order results by ids}
 

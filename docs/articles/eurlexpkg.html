@@ -217,14 +217,14 @@
 <span class="co"># elx_make_query("directive") %&gt;% </span>
 <span class="co">#   elx_run_query()</span></pre></body></html></div>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(<span class="no">results</span>)
-<span class="co">#&gt; # A tibble: 4,303 x 3</span>
+<span class="co">#&gt; # A tibble: 4,316 x 3</span>
 <span class="co">#&gt;   work                                   type                            celex  </span>
 <span class="co">#&gt;   &lt;chr&gt;                                  &lt;chr&gt;                           &lt;chr&gt;  </span>
 <span class="co">#&gt; 1 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31979L~</span>
 <span class="co">#&gt; 2 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31989L~</span>
 <span class="co">#&gt; 3 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31984L~</span>
 <span class="co">#&gt; 4 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31966L~</span>
-<span class="co">#&gt; # ... with 4,299 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # ... with 4,312 more rows</span></pre></body></html></div>
 <p>The function outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection.</p>
 <p>The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is CELEX, retrieved by default.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>One column you should always pay attention to is <code>type</code> (as in <code>resource_type</code>). The URIs contained there reflect the FILTER argument in the SPARQL query, which is manually pre-specified. All resources are indexed as being of one type or another. For example, when retrieving directives, the results are going to return also delegated directives, which might not be desirable, depending on your needs. You can filter results by <code>type</code> to make the necessary adjustments. The queries are expansive by default in the spirit of erring on the side of over-inclusiveness rather than vice versa.</p>
@@ -263,8 +263,7 @@
 <span class="co">#&gt; 4 31996H0592 http://eurovoc.europa.eu/1076</span>
 <span class="co">#&gt; # ... with 6 more rows</span></pre></body></html></div>
 <p>By default, the endpoint returns the EuroVoc concept codes rather than the labels (keywords). The function <code><a href="../reference/elx_label_eurovoc.html">elx_label_eurovoc()</a></code> needs to be called to obtain a look-up table with the labels.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">
-<span class="no">eurovoc_lookup</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/elx_label_eurovoc.html">elx_label_eurovoc</a></span>(<span class="kw">uri_eurovoc</span> <span class="kw">=</span> <span class="no">rec_eurovoc</span>$<span class="no">eurovoc</span>)
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">eurovoc_lookup</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/elx_label_eurovoc.html">elx_label_eurovoc</a></span>(<span class="kw">uri_eurovoc</span> <span class="kw">=</span> <span class="no">rec_eurovoc</span>$<span class="no">eurovoc</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">eurovoc_lookup</span>)
 <span class="co">#&gt; # A tibble: 9 x 2</span>
@@ -276,8 +275,7 @@
 <span class="co">#&gt; 4 http://eurovoc.europa.eu/1318 Germany        </span>
 <span class="co">#&gt; # ... with 5 more rows</span></pre></body></html></div>
 <p>The results include labels only for unique identifiers, but with <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">dplyr::left_join()</a></code> it is straightforward to append the labels to the entire dataset.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r">
-<span class="no">rec_eurovoc</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">rec_eurovoc</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="no">eurovoc_lookup</span>)
 <span class="co">#&gt; Joining, by = "eurovoc"</span>
 <span class="co">#&gt; # A tibble: 10 x 5</span>
@@ -367,14 +365,14 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>()
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">dirs_1970_title</span>)
-<span class="co">#&gt; # A tibble: 78 x 6</span>
+<span class="co">#&gt; # A tibble: 70 x 6</span>
 <span class="co">#&gt;   work                 type               celex  date  force title              </span>
 <span class="co">#&gt;   &lt;chr&gt;                &lt;chr&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              </span>
 <span class="co">#&gt; 1 http://publications~ http://publicatio~ 31975~ 1975~ true  Council Directive ~</span>
 <span class="co">#&gt; 2 http://publications~ http://publicatio~ 31977~ 1977~ true  First Commission D~</span>
 <span class="co">#&gt; 3 http://publications~ http://publicatio~ 31977~ 1977~ true  Council Directive ~</span>
 <span class="co">#&gt; 4 http://publications~ http://publicatio~ 31973~ 1973~ true  Council Directive ~</span>
-<span class="co">#&gt; # ... with 74 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # ... with 66 more rows</span></pre></body></html></div>
 <p>I will use the <code>tidytext</code> package to get a quick idea of what the legislation is about.</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidytext</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">wordcloud</span>)

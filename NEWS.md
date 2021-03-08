@@ -1,9 +1,24 @@
+# eurlex 0.3.5
+
+## Major changes
+
+- it is now possible to select all resource types available with `elx_make_query(resource_type = "any")`. Since there are nearly 1 million CELEX codes, use with discretion and expect long execution times
+- results can be restricted to a particular directory code with `elx_make_query(directory = "18")` (directory code "18" denotes Common Foreign and Security Policy)
+- results can be restricted to a particular sector with `elx_make_query(sector = 2)` (sector code 3 denotes EU international agreements)
+
+## Minor changes
+
+- new feature: request date of court case submission `elx_make_query(include_date_lodged = TRUE)`
+- new feature: request type of court procedure and outcome `elx_make_query(include_court_procedure = TRUE)`
+- new feature: request directory code of legal act `elx_make_query(include_directory = TRUE)`
+- `elx_curia_list()` has a new default parameter `parse = TRUE` which creates separate columns for `ecli`, `see_case`, `appeal` applying regular expressions on `case_info`
+
 # eurlex 0.3.4
 
 ## Major changes
 
 - new feature: request citations referenced in target resource with elx_make_query(include_citations = TRUE); retrieved in CELEX form
-- new feature: request document author(s) with elx_make_query(include_author = TRUE)
+- new feature: request document author(s) with `elx_make_query(include_author = TRUE)`
 - XML parsing is now more efficient due to utilising (rather than stripping) namespaces (but still room for improvement)
 
 ## Minor changes

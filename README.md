@@ -48,4 +48,8 @@ List of resource types in Cellar (NAL): http://publications.europa.eu/resource/a
 NAL of corporate bodies:
 http://publications.europa.eu/resource/authority/corporate-body
 
-Indexation of data in Cellar: http://publications.europa.eu/resource/cellar/4874abcd-286a-11e8-b5fe-01aa75ed71a1.0001.03/DOC_1
+Query builder:
+https://op.europa.eu/en/advanced-sparql-query-editor
+
+SPARQL endpoint:
+http://publications.europa.eu/webapi/rdf/sparql

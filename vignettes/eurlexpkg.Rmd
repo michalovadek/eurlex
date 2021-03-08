@@ -135,11 +135,9 @@ rec_eurovoc %>%
 By default, the endpoint returns the EuroVoc concept codes rather than the labels (keywords). The function `elx_label_eurovoc()` needs to be called to obtain a look-up table with the labels.
 
 ```{r eurovoctable}
-
 eurovoc_lookup <- elx_label_eurovoc(uri_eurovoc = rec_eurovoc$eurovoc)
 
 print(eurovoc_lookup)
-
 ```
 
 The results include labels only for unique identifiers, but with `dplyr::left_join()` it is straightforward to append the labels to the entire dataset.

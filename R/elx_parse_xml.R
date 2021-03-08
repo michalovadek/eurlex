@@ -22,11 +22,11 @@ elx_parse_xml <- function(sparql_response = ""){
 
     out <- dplyr::tibble(res_cols, res_text) %>%
       dplyr::mutate(is_work = dplyr::if_else(res_cols=="eurovoc", T, NA)) %>%
-      dplyr::group_by(is_work) %>%
+      dplyr::group_by(.data$is_work) %>%
       dplyr::mutate(triplet = dplyr::row_number(),
-                    triplet = dplyr::if_else(is_work==T, triplet, NA_integer_)) %>%
+                    triplet = dplyr::if_else(.data$is_work==T, .data$triplet, NA_integer_)) %>%
       dplyr::ungroup() %>%
-      tidyr::fill(triplet) %>%
+      tidyr::fill(.data$triplet) %>%
       dplyr::select(-.data$is_work) %>%
       tidyr::pivot_wider(names_from = res_cols, values_from = res_text) %>%
       dplyr::select(-.data$triplet)
@@ -35,11 +35,11 @@ elx_parse_xml <- function(sparql_response = ""){
 
     out <- dplyr::tibble(res_cols, res_text) %>%
       dplyr::mutate(is_work = dplyr::if_else(res_cols=="work", T, NA)) %>%
-      dplyr::group_by(is_work) %>%
+      dplyr::group_by(.data$is_work) %>%
       dplyr::mutate(triplet = dplyr::row_number(),
-                    triplet = dplyr::if_else(is_work==T, triplet, NA_integer_)) %>%
+                    triplet = dplyr::if_else(.data$is_work==T, .data$triplet, NA_integer_)) %>%
       dplyr::ungroup() %>%
-      tidyr::fill(triplet) %>%
+      tidyr::fill(.data$triplet) %>%
       dplyr::select(-.data$is_work) %>%
       tidyr::pivot_wider(names_from = res_cols, values_from = res_text) %>%
       dplyr::select(-.data$triplet)

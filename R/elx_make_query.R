@@ -8,6 +8,8 @@
 #'
 #' @param resource_type Type of resource to be retrieved via SPARQL query
 #' @param manual_type Define manually the type of resource to be retrieved
+#' @param directory Restrict the results to a given directory code
+#' @param sector Restrict the results to a given sector code
 #' @param include_corrigenda If `TRUE`, results include corrigenda
 #' @param include_celex If `TRUE`, results include CELEX identifier for each resource URI
 #' @param include_date If `TRUE`, results include document date
@@ -21,6 +23,8 @@
 #' @param include_author If `TRUE`, results include document author(s)
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
 #' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
+#' @param include_directory If `TRUE`, results include the Eur-Lex directory code
+#' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param order Order results by ids
 #' @param limit Limit the number of results, for testing purposes mainly
 #' @return
@@ -32,15 +36,17 @@
 #' elx_make_query(resource_type = "caselaw")
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
 
-elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl"),
-                           manual_type = "", include_corrigenda = FALSE, include_celex = TRUE, include_lbs = FALSE,
+elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl","any"),
+                           manual_type = "", directory = NULL, sector = NULL,
+                           include_corrigenda = FALSE, include_celex = TRUE, include_lbs = FALSE,
                            include_date = FALSE, include_date_force = FALSE, include_date_endvalid = FALSE,
                            include_date_transpos = FALSE, include_date_lodged = FALSE,
                            include_force = FALSE, include_eurovoc = FALSE, include_author = FALSE,
                            include_citations = FALSE, include_court_procedure = FALSE,
+                           include_directory = FALSE, include_sector = FALSE,
                            order = FALSE, limit = NULL){
 
-  if (!resource_type %in% c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl")) stop("'resource_type' must be defined")
+  if (!resource_type %in% c("any","directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){
     stop("Please specify resource type manually (e.g. 'DIR', 'REG', 'JUDG').", call. = TRUE)
@@ -143,7 +149,54 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
   }
 
-  query <- paste(query, "where{ ?work cdm:work_has_resource-type ?type.", sep = " ")
+  if (include_directory == TRUE){
+
+    query <- paste(query, "?directory", sep = " ")
+
+  }
+
+  if (include_sector == TRUE){
+
+    query <- paste(query, "?sector", sep = " ")
+
+  }
+
+  if (resource_type == "any"){
+    query <- paste(query, "where{", sep = " ")
+  }
+
+  if (resource_type != "any"){
+    query <- paste(query, "where{ ?work cdm:work_has_resource-type ?type.", sep = " ")
+  }
+
+  if (!missing(directory)){
+    if (!is.character(directory)) stop("Directory code must be of character type", call. = TRUE)
+
+    query <- paste(query, "
+    VALUES (?value)
+    { (<http://publications.europa.eu/resource/authority/fd_555/",directory,">)
+      (<http://publications.europa.eu/resource/authority/dir-eu-legal-act/",directory,">)
+    }
+    {?work cdm:resource_legal_is_about_concept_directory-code ?value.
+    }
+    UNION
+    {?work cdm:resource_legal_is_about_concept_directory-code ?directory.
+      ?value skos:narrower+ ?directory.
+    }
+    ", sep = "")
+
+  }
+
+  if (!missing(sector)){
+    if (!sector %in% 0:9) stop("Sector code must be an integer between 0 and 9", call. = TRUE)
+
+    query <- paste(query, "
+    ?work cdm:resource_legal_id_sector ?sector.
+    FILTER(str(?sector)='", sector, "')
+    ",
+                   sep = "")
+
+  }
 
   if (resource_type == "directive"){
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||
@@ -178,6 +231,9 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   ?type=<http://publications.europa.eu/resource/authority/resource-type/ARRANG>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/CONVENTION>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/AGREE_AMEND>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/RECO_ADOPT_INTERNATION>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_ADOPT_INTERNATION>||
+  ?type=<http://publications.europa.eu/resource/authority/resource-type/DEC_ADOPT_INTERNATION>||
   ?type=<http://publications.europa.eu/resource/authority/resource-type/MEMORANDUM_UNDERST>)", sep = " ")
   }
 
@@ -344,6 +400,18 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
     query <- paste(query, "OPTIONAL{?work cdm:case-law_has_type_procedure_concept_type_procedure ?proc.
            ?proc skos:prefLabel ?courtprocedure. FILTER(lang(?courtprocedure)='en')}.")
+
+  }
+
+  if (include_directory == TRUE){
+
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_is_about_concept_directory-code ?directory.}")
+
+  }
+
+  if (include_sector == TRUE){
+
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_id_sector ?sector.}")
 
   }
 

@@ -129,22 +129,52 @@
       
     </div>
 
-    <div id="eurlex-034" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.4">
-<a href="#eurlex-034" class="anchor"></a>eurlex 0.3.4<small> Unreleased </small>
+    <div id="eurlex-035" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.5">
+<a href="#eurlex-035" class="anchor"></a>eurlex 0.3.5<small> Unreleased </small>
 </h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>new feature: request citations referenced in target resource with elx_make_query(include_citations = TRUE); retrieved in CELEX form</li>
-<li>new feature: request document author(s) with elx_make_query(include_author = TRUE)</li>
-<li>XML parsing is now more efficient due to utilising (rather than stripping) namespaces (but still room for improvement)</li>
+<li>it is now possible to select all resource types available with <code><a href="../reference/elx_make_query.html">elx_make_query(resource_type = "any")</a></code>. Since there are nearly 1 million CELEX codes, use with discretion and expect long execution times</li>
+<li>results can be restricted to a particular directory code with <code><a href="../reference/elx_make_query.html">elx_make_query(directory = "18")</a></code> (directory code “18” denotes Common Foreign and Security Policy)</li>
+<li>results can be restricted to a particular sector with <code><a href="../reference/elx_make_query.html">elx_make_query(sector = 2)</a></code> (sector code 3 denotes EU international agreements)</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>new feature: request date of court case submission <code><a href="../reference/elx_make_query.html">elx_make_query(include_date_lodged = TRUE)</a></code>
+</li>
+<li>new feature: request type of court procedure and outcome <code><a href="../reference/elx_make_query.html">elx_make_query(include_court_procedure = TRUE)</a></code>
+</li>
+<li>new feature: request directory code of legal act <code><a href="../reference/elx_make_query.html">elx_make_query(include_directory = TRUE)</a></code>
+</li>
+<li>
+<code><a href="../reference/elx_curia_list.html">elx_curia_list()</a></code> has a new default parameter <code>parse = TRUE</code> which creates separate columns for <code>ecli</code>, <code>see_case</code>, <code>appeal</code> applying regular expressions on <code>case_info</code>
+</li>
+</ul>
+</div>
+</div>
+    <div id="eurlex-034" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.4">
+<a href="#eurlex-034" class="anchor"></a>eurlex 0.3.4<small> 2020-11-08 </small>
+</h1>
+<div id="major-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<ul>
+<li>new feature: request citations referenced in target resource with elx_make_query(include_citations = TRUE); retrieved in CELEX form</li>
+<li>new feature: request document author(s) with <code><a href="../reference/elx_make_query.html">elx_make_query(include_author = TRUE)</a></code>
+</li>
+<li>XML parsing is now more efficient due to utilising (rather than stripping) namespaces (but still room for improvement)</li>
+</ul>
+</div>
+<div id="minor-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>fixed bug in elx_label_eurovoc whereby resulting data frames contained list-columns</li>
 </ul>
@@ -154,9 +184,9 @@
 <h1 class="page-header" data-toc-text="0.3.3">
 <a href="#eurlex-033" class="anchor"></a>eurlex 0.3.3<small> Unreleased </small>
 </h1>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>hotfix for critical bug in xml parsing that scrambled column with legal basis where this was requested</li>
 </ul>
@@ -166,18 +196,18 @@
 <h1 class="page-header" data-toc-text="0.3.2">
 <a href="#eurlex-032" class="anchor"></a>eurlex 0.3.2<small> Unreleased </small>
 </h1>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
 <ul>
 <li>improvement to legal basis harvesting thanks to help from Eur-Lex insiders</li>
 <li>legal basis results are now slightly more comprehensive and correct</li>
 <li>legal basis results now include a new column detailing the “suffix” (paragraph, subparagraph, etc.) in string form</li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>minor updates to documentation</li>
 </ul>
@@ -187,9 +217,9 @@
 <h1 class="page-header" data-toc-text="0.3.1">
 <a href="#eurlex-031" class="anchor"></a>eurlex 0.3.1<small> 2020-09-11 </small>
 </h1>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code><a href="../reference/elx_fetch_data.html">elx_fetch_data()</a></code> now prefers CELEX-based URLs (instead of Cellar URIs) as input, as they appear to yield fewer missing documents</li>
@@ -200,9 +230,9 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#eurlex-030" class="anchor"></a>eurlex 0.3.0<small> Unreleased </small>
 </h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
 <ul>
 <li>
 <code><a href="../reference/elx_fetch_data.html">elx_fetch_data("text")</a></code> now retrieves plain text from html, pdf and MS Word documents</li>
@@ -216,9 +246,9 @@
 <h1 class="page-header" data-toc-text="0.2.3">
 <a href="#eurlex-023" class="anchor"></a>eurlex 0.2.3<small> Unreleased </small>
 </h1>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>fixed serious bugs in <code><a href="../reference/elx_curia_list.html">elx_curia_list()</a></code>
 </li>
@@ -231,9 +261,9 @@
 <h1 class="page-header" data-toc-text="0.2.2">
 <a href="#eurlex-022" class="anchor"></a>eurlex 0.2.2<small> Unreleased </small>
 </h1>
-<div id="major-changes-3" class="section level2">
+<div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
 <ul>
 <li>
 <code><a href="../reference/elx_council_votes.html">elx_council_votes()</a></code> made fully operational</li>
@@ -244,9 +274,9 @@
 <h1 class="page-header" data-toc-text="0.2.1">
 <a href="#eurlex-021" class="anchor"></a>eurlex 0.2.1<small> 2020-08-19 </small>
 </h1>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>optimization, reducing dependencies, etc.</li>
 </ul>
@@ -256,9 +286,9 @@
 <h1 class="page-header" data-toc-text="0.2.0">
 <a href="#eurlex-020" class="anchor"></a>eurlex 0.2.0<small> Unreleased </small>
 </h1>
-<div id="major-changes-4" class="section level2">
+<div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major changes</h2>
+<a href="#major-changes-5" class="anchor"></a>Major changes</h2>
 <ul>
 <li>addition of proposals and national implementing laws to possible SPARQL queries</li>
 <li>EuroVoc topics, retrievable in all EU languages, can now be included in SPARQL results</li>
@@ -266,9 +296,9 @@
 <li>added <code><a href="../reference/elx_curia_list.html">elx_curia_list()</a></code> to retrieve full list of EU court cases</li>
 </ul>
 </div>
-<div id="minor-changes-6" class="section level2">
+<div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>switch from XML to xml2</li>
 <li>SPARQL package dependency removed</li>

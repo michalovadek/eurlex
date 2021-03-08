@@ -159,16 +159,14 @@
     <p>A `tibble` containing EuroVoc unique concept identifiers and labels.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>elx_label_eurovoc</span>(<span class='kw'>uri_eurovoc</span> <span class='kw'>=</span> <span class='st'>"http://eurovoc.europa.eu/5760"</span>, <span class='kw'>alt_labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"fr"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 2</span><span>
+    <pre class="examples"><div class='input'><span class='fu'>elx_label_eurovoc</span>(<span class='kw'>uri_eurovoc</span> <span class='kw'>=</span> <span class='st'>"http://eurovoc.europa.eu/5760"</span>, <span class='kw'>alt_labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"fr"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   eurovoc                       labels                        
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                         
-#&gt; </span><span style='color: #555555;'>1</span><span> http://eurovoc.europa.eu/5760 oiseau,oiseau migrateur,rapace</div><div class='input'><span class='fu'>elx_label_eurovoc</span>(<span class='kw'>uri_eurovoc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"http://eurovoc.europa.eu/5760"</span>,<span class='st'>"http://eurovoc.europa.eu/576"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Values are not uniquely identified; output will contain list-cols.</span>
-#&gt; <span class='warning'>* Use `values_fn = list` to suppress this warning.</span>
-#&gt; <span class='warning'>* Use `values_fn = length` to identify where the duplicates arise</span>
-#&gt; <span class='warning'>* Use `values_fn = {summary_fun}` to summarise duplicates</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
-#&gt;   eurovoc   labels   
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>   
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>&lt;chr [2]&gt;</span><span> </span><span style='color: #555555;'>&lt;chr [2]&gt;</span><span></div></span></pre>
+#&gt;   &lt;chr&gt;                         &lt;chr&gt;                         
+#&gt; 1 http://eurovoc.europa.eu/5760 oiseau,oiseau migrateur,rapace</div><div class='input'><span class='fu'>elx_label_eurovoc</span>(<span class='kw'>uri_eurovoc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"http://eurovoc.europa.eu/5760"</span>,<span class='st'>"http://eurovoc.europa.eu/576"</span>))</div><div class='output co'>#&gt; # A tibble: 2 x 2
+#&gt;   eurovoc                       labels     
+#&gt;   &lt;chr&gt;                         &lt;chr&gt;      
+#&gt; 1 http://eurovoc.europa.eu/5760 bird       
+#&gt; 2 http://eurovoc.europa.eu/576  private law</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

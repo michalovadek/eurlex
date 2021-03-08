@@ -4,14 +4,20 @@
 \alias{elx_curia_list}
 \title{Scrape list of court cases from Curia}
 \usage{
-elx_curia_list(data = c("all", "ecj_old", "ecj_new", "gc_all", "cst_all"))
+elx_curia_list(
+  data = c("all", "ecj_old", "ecj_new", "gc_all", "cst_all"),
+  parse = TRUE
+)
 }
 \arguments{
 \item{data}{Data to be scraped from four separate lists of cases maintained by Curia, defaults to "all"
 which contains cases from Court of Justice, General Court and Civil Service Tribunal.}
+
+\item{parse}{If `TRUE`, references to cases and appeals are parsed out from `case_info` into separate columns}
 }
 \value{
-A data frame containing case identifiers and information as character columns.
+A data frame containing case identifiers and information as character columns. Where the case id
+contains a hyperlink to Eur-Lex, the CELEX identifier is retrieved as well.
 }
 \description{
 Harvests data from lists of EU court cases from curia.europa.eu.
