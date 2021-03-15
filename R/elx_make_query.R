@@ -1,8 +1,8 @@
-#' Create SPARQL quries
+#' Create SPARQL queries
 #'
 #' Generates pre-defined or manual SPARQL queries to retrieve document ids from Cellar.
 #' List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
-#' Note that not all resource types are compatible with the pre-defined query.
+#' Note that not all resource types are compatible with default parameter values.
 #'
 #' @importFrom magrittr %>%
 #'
@@ -46,6 +46,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
                            include_directory = FALSE, include_sector = FALSE,
                            order = FALSE, limit = NULL){
 
+  if (missing(resource_type)) stop("'resource_type' must be defined")
   if (!resource_type %in% c("any","directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl")) stop("'resource_type' must be defined")
 
   if (resource_type == "manual" & nchar(manual_type) < 2){

@@ -82,7 +82,7 @@ Note that not all resource types are compatible with the pre-defined query." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -141,8 +141,10 @@ Note that not all resource types are compatible with the pre-defined query.</p>
 
     <pre class="usage"><span class='fu'>elx_make_query</span>(
   <span class='kw'>resource_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"directive"</span>, <span class='st'>"regulation"</span>, <span class='st'>"decision"</span>, <span class='st'>"recommendation"</span>, <span class='st'>"intagr"</span>,
-    <span class='st'>"caselaw"</span>, <span class='st'>"manual"</span>, <span class='st'>"proposal"</span>, <span class='st'>"national_impl"</span>),
+    <span class='st'>"caselaw"</span>, <span class='st'>"manual"</span>, <span class='st'>"proposal"</span>, <span class='st'>"national_impl"</span>, <span class='st'>"any"</span>),
   <span class='kw'>manual_type</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>directory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sector</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>include_corrigenda</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_celex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>include_lbs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -150,10 +152,14 @@ Note that not all resource types are compatible with the pre-defined query.</p>
   <span class='kw'>include_date_force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_date_endvalid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_date_transpos</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>include_date_lodged</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_eurovoc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_author</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include_citations</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>include_court_procedure</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>include_directory</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>include_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>limit</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
@@ -168,6 +174,14 @@ Note that not all resource types are compatible with the pre-defined query.</p>
     <tr>
       <th>manual_type</th>
       <td><p>Define manually the type of resource to be retrieved</p></td>
+    </tr>
+    <tr>
+      <th>directory</th>
+      <td><p>Restrict the results to a given directory code</p></td>
+    </tr>
+    <tr>
+      <th>sector</th>
+      <td><p>Restrict the results to a given sector code</p></td>
     </tr>
     <tr>
       <th>include_corrigenda</th>
@@ -198,6 +212,10 @@ Note that not all resource types are compatible with the pre-defined query.</p>
       <td><p>If `TRUE`, results include date of transposition deadline for directives</p></td>
     </tr>
     <tr>
+      <th>include_date_lodged</th>
+      <td><p>If `TRUE`, results include date a court case was lodged with the court</p></td>
+    </tr>
+    <tr>
       <th>include_force</th>
       <td><p>If `TRUE`, results include whether legislation is in force</p></td>
     </tr>
@@ -212,6 +230,18 @@ Note that not all resource types are compatible with the pre-defined query.</p>
     <tr>
       <th>include_citations</th>
       <td><p>If `TRUE`, results include citations (CELEX-labelled)</p></td>
+    </tr>
+    <tr>
+      <th>include_court_procedure</th>
+      <td><p>If `TRUE`, results include type of court procedure and outcome</p></td>
+    </tr>
+    <tr>
+      <th>include_directory</th>
+      <td><p>If `TRUE`, results include the Eur-Lex directory code</p></td>
+    </tr>
+    <tr>
+      <th>include_sector</th>
+      <td><p>If `TRUE`, results include the Eur-Lex sector code</p></td>
     </tr>
     <tr>
       <th>order</th>

@@ -32,7 +32,6 @@ Suggests:
     tidytext,
     wordcloud,
     purrr,
-    ggplot2,
-    glue
+    ggplot2
 URL: https://michalovadek.github.io/eurlex/
 VignetteBuilder: knitr

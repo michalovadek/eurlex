@@ -4,7 +4,7 @@
 
 - it is now possible to select all resource types available with `elx_make_query(resource_type = "any")`. Since there are nearly 1 million CELEX codes, use with discretion and expect long execution times
 - results can be restricted to a particular directory code with `elx_make_query(directory = "18")` (directory code "18" denotes Common Foreign and Security Policy)
-- results can be restricted to a particular sector with `elx_make_query(sector = 2)` (sector code 3 denotes EU international agreements)
+- results can be restricted to a particular sector with `elx_make_query(sector = 2)` (sector code 2 denotes EU international agreements)
 
 ## Minor changes
 

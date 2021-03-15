@@ -2,7 +2,7 @@
 % Please edit documentation in R/elx_make_query.R
 \name{elx_make_query}
 \alias{elx_make_query}
-\title{Create SPARQL quries}
+\title{Create SPARQL queries}
 \usage{
 elx_make_query(
   resource_type = c("directive", "regulation", "decision", "recommendation", "intagr",
@@ -78,7 +78,7 @@ A character string containing the SPARQL query
 \description{
 Generates pre-defined or manual SPARQL queries to retrieve document ids from Cellar.
 List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
-Note that not all resource types are compatible with the pre-defined query.
+Note that not all resource types are compatible with default parameter values.
 }
 \examples{
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)

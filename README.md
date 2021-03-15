@@ -26,11 +26,11 @@ For the moment, it is recommended to retrieve metadata one variable at a time. F
 2. `dates <- elx_make_query("directive", include_date_transpos = TRUE) %>% elx_run_query()`
 3. `ids %>% dplyr::left_join(lbs) %>% dplyr::left_join(dates)`
 
-rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. This approach should make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data.
+rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. This approach should make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the `work` and `celex` columns identify rows uniquely or not.
 
 One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the `rvest` package), the function `elx_fetch_data()` enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.
 
-See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features.
+See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features. Example use cases are shown in this [paper](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150).
 
 ## Cite
 Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
@@ -39,6 +39,19 @@ Michal Ovádek (2021) Facilitating access to data on European Union laws, Politi
 This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable [data reuse policies](https://eur-lex.europa.eu/content/welcome/data-reuse.html).
 
 Please consider contributing to the maintanance and development of the package by reporting bugs or suggesting new features.
+
+## Latest changes
+
+### eurlex 0.3.5
+
+- it is now possible to select all resource types available with `elx_make_query(resource_type = "any")`. Since there are nearly 1 million CELEX codes, use with discretion and expect long execution times
+- results can be restricted to a particular directory code with `elx_make_query(directory = "18")` (directory code "18" denotes Common Foreign and Security Policy)
+- results can be restricted to a particular sector with `elx_make_query(sector = 2)` (sector code 2 denotes EU international agreements)
+
+- new feature: request date of court case submission `elx_make_query(include_date_lodged = TRUE)`
+- new feature: request type of court procedure and outcome `elx_make_query(include_court_procedure = TRUE)`
+- new feature: request directory code of legal act `elx_make_query(include_directory = TRUE)`
+- `elx_curia_list()` has a new default parameter `parse = TRUE` which creates separate columns for `ecli`, `see_case`, `appeal` applying regular expressions on `case_info`
 
 ## Useful resources
 Guide to CELEX numbers: https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html
