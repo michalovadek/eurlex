@@ -17,7 +17,8 @@ which contains cases from Court of Justice, General Court and Civil Service Trib
 }
 \value{
 A data frame containing case identifiers and information as character columns. Where the case id
-contains a hyperlink to Eur-Lex, the CELEX identifier is retrieved as well.
+contains a hyperlink to Eur-Lex, the CELEX identifier is retrieved as well. Hyperlinks to Eur-Lex
+disappeared from more recent cases.
 }
 \description{
 Harvests data from lists of EU court cases from curia.europa.eu.

@@ -20,14 +20,58 @@ elx_run_query <- function(query = "", endpoint = "http://publications.europa.eu/
 
   curlready <- paste(endpoint,"?query=",gsub("\\+","%2B", utils::URLencode(query, reserved = TRUE)), sep = "")
 
-  sparql_response <- httr::GET(url = curlready,
-                               httr::add_headers('Accept' = 'application/sparql-results+xml')
-  )
+  sparql_response <- graceful_http(curlready)
 
   sparql_response_parsed <- sparql_response %>%
     elx_parse_xml()
 
   return(sparql_response_parsed)
+
+}
+
+#' Fail http call gracefully
+#'
+#' @importFrom rlang .data
+#'
+#' @noRd
+#'
+
+graceful_http <- function(remote_file) {
+
+  try_GET <- function(x, ...) {
+    tryCatch(
+      httr::GET(url = x,
+                #httr::timeout(1000000000),
+                httr::add_headers('Accept' = 'application/sparql-results+xml')),
+      error = function(e) conditionMessage(e),
+      warning = function(w) conditionMessage(w)
+    )
+  }
+
+  is_response <- function(x) {
+    class(x) == "response"
+  }
+
+  # First check internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection.")
+    return(invisible(NULL))
+  }
+
+  # Then try for timeout problems
+  resp <- try_GET(remote_file)
+  if (!is_response(resp)) {
+    message(resp)
+    return(invisible(NULL))
+  }
+
+  # Then stop if status > 400
+  if (httr::http_error(resp)) {
+    httr::message_for_status(resp)
+    return(invisible(NULL))
+  }
+
+  return(resp)
 
 }
 

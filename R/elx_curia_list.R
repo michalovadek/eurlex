@@ -8,7 +8,8 @@
 #' @param parse If `TRUE`, references to cases and appeals are parsed out from `case_info` into separate columns
 #' @return
 #' A data frame containing case identifiers and information as character columns. Where the case id
-#' contains a hyperlink to Eur-Lex, the CELEX identifier is retrieved as well.
+#' contains a hyperlink to Eur-Lex, the CELEX identifier is retrieved as well. Hyperlinks to Eur-Lex
+#' disappeared from more recent cases.
 #' @importFrom rlang .data
 #' @export
 #' @examples

@@ -1,3 +1,14 @@
+# eurlex 0.3.6
+
+## Major changes
+
+- `elx_run_query()` now fails gracefully in presence of internet/server problems
+- `elx_fetch_data()` now automatically fixes urls with parentheses (e.g. "32019H1115(01)" used to fail)
+
+## Minor changes
+
+- minor fixes to vignette
+
 # eurlex 0.3.5
 
 ## Major changes

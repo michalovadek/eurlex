@@ -22,6 +22,19 @@ elx_fetch_data <- function(url, type = c("title","text","ids"),
 
   language <- paste(language_1,", ",language_2,";q=0.8, ",language_3,";q=0.7", sep = "")
 
+  if (stringr::str_detect(url,"celex")){
+
+    clx <- stringr::str_extract(url, "(?<=celex\\/).*") %>%
+      stringr::str_replace_all("\\(","%28") %>%
+      stringr::str_replace_all("\\)","%29") %>%
+      stringr::str_replace_all("\\/","%2F")
+
+    url <- paste("http://publications.europa.eu/resource/celex/",
+                 clx,
+                 sep = "")
+
+  }
+
   if (type == "title"){
 
     response <- httr::GET(url=url,

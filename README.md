@@ -42,6 +42,12 @@ Please consider contributing to the maintanance and development of the package b
 
 ## Latest changes
 
+### eurlex 0.3.6
+
+- `elx_run_query()` now fails gracefully in presence of internet/server problems
+- `elx_fetch_data()` now automatically fixes urls with parentheses (e.g. "32019H1115(01)" used to fail)
+- minor fixes to vignette
+
 ### eurlex 0.3.5
 
 - it is now possible to select all resource types available with `elx_make_query(resource_type = "any")`. Since there are nearly 1 million CELEX codes, use with discretion and expect long execution times

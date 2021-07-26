@@ -1,7 +1,7 @@
 Package: eurlex
 Type: Package
 Title: Retrieve Data on European Union Law
-Version: 0.3.5
+Version: 0.3.6
 Authors@R: c(person(given = "Michal",
              family = "Ovadek",
              role = c("aut", "cre", "cph"),
@@ -10,7 +10,6 @@ Authors@R: c(person(given = "Michal",
 Description: Access to data on European Union laws and court decisions made easy with pre-defined 'SPARQL' queries and 'GET' requests.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Depends:
     R (>= 3.4.0)
 Imports:
@@ -19,6 +18,7 @@ Imports:
     xml2,
     tidyr,
     httr,
+    curl,
     rvest,
     rlang,
     stringr,
