@@ -8,6 +8,7 @@
 ## Minor changes
 
 - minor fixes to vignette
+- `elx_parse_xml` no longer an exported function
 
 # eurlex 0.3.5
 
