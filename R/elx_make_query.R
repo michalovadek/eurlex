@@ -23,6 +23,7 @@
 #' @param include_author If `TRUE`, results include document author(s)
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
 #' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
+#' @param include_ecli If `TRUE`, results include the ECLI identifier for court documents
 #' @param include_directory If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param order Order results by ids
@@ -44,6 +45,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
                            include_force = FALSE, include_eurovoc = FALSE, include_author = FALSE,
                            include_citations = FALSE, include_court_procedure = FALSE,
                            include_directory = FALSE, include_sector = FALSE,
+                           include_ecli = FALSE,
                            order = FALSE, limit = NULL){
 
   if (missing(resource_type)) stop("'resource_type' must be defined")
@@ -53,7 +55,7 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
     stop("Please specify resource type manually (e.g. 'DIR', 'REG', 'JUDG').", call. = TRUE)
   }
 
-  if (!resource_type %in% c("caselaw","manual") & include_court_procedure == TRUE){
+  if (!resource_type %in% c("caselaw","manual","any") & include_court_procedure == TRUE){
     stop("Resource and variable requested are incompatible.", call. = TRUE)
   }
 
@@ -135,6 +137,12 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
   if (include_court_procedure == TRUE){
 
     query <- paste(query, "?courtprocedure", sep = " ")
+
+  }
+
+  if (include_ecli == TRUE){
+
+    query <- paste(query, "?ecli", sep = " ")
 
   }
 
@@ -401,6 +409,12 @@ elx_make_query <- function(resource_type = c("directive","regulation","decision"
 
     query <- paste(query, "OPTIONAL{?work cdm:case-law_has_type_procedure_concept_type_procedure ?proc.
            ?proc skos:prefLabel ?courtprocedure. FILTER(lang(?courtprocedure)='en')}.")
+
+  }
+
+  if (include_ecli == TRUE){
+
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_ecli ?ecli.}")
 
   }
 
