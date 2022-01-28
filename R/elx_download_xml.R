@@ -1,6 +1,8 @@
 #' Download XML notice associated with a URL
 #'
 #' Downloads an XML notice of a given type associated with a Cellar resource.
+#' 
+#' To retrieve all identifiers associated with a url, use elx_fetch_data(type = "ids").
 #'
 #' @param url A valid url as character vector of length one based on a resource identifier such as CELEX or Cellar URI.
 #' @param file A character string with the name where the downloaded file is saved.
@@ -10,14 +12,14 @@
 #' @param language_3 If data not available in `language_2`, try `language_3`
 #' @param mode A character string specifying the mode with which to write the file. Useful values are "w", "wb" (binary), "a" (append) and "ab".
 #' @return
-#' Path of downloaded file (invisibly) if server validates request (http status code has to be 200).
+#' Path of downloaded file (invisibly) if server validates request (http status code has to be 200). For more information about notices, see Cellar documentation.
 #' @export
 #' @examples
 #' \donttest{
-#' elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "branch")
+#' elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "object")
 #' }
 
-elx_download_xml <- function(url, file = basename(url), notice = c("branch", "object"),
+elx_download_xml <- function(url, file = basename(url), notice = c("tree","branch", "object"),
                              language_1 = "en", language_2 = "fr", language_3 = "de",
                              mode = "wb"){
   
@@ -29,9 +31,9 @@ elx_download_xml <- function(url, file = basename(url), notice = c("branch", "ob
   
   if (stringr::str_detect(url,"celex.*[\\(|\\)|\\/]")){
     
-    clx <- stringr::str_extract(url, "(?<=celex\\/).*") |> 
-      stringr::str_replace_all("\\(","%28") |> 
-      stringr::str_replace_all("\\)","%29") |> 
+    clx <- stringr::str_extract(url, "(?<=celex\\/).*") %>% 
+      stringr::str_replace_all("\\(","%28") %>% 
+      stringr::str_replace_all("\\)","%29") %>% 
       stringr::str_replace_all("\\/","%2F")
     
     url <- paste("http://publications.europa.eu/resource/celex/",
@@ -50,7 +52,7 @@ elx_download_xml <- function(url, file = basename(url), notice = c("branch", "ob
                                                     'Accept' = accept_header),
                         verb = "HEAD")
   
-  stopifnot("Unsuccessful http request (status code != 200" = head$status_code == 200)
+  stopifnot("Unsuccessful http request (status code != 200)" = head$status_code == 200)
   
   utils::download.file(url = head$url,
                        destfile = file,

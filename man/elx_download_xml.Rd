@@ -7,7 +7,7 @@
 elx_download_xml(
   url,
   file = basename(url),
-  notice = c("branch", "object"),
+  notice = c("tree", "branch", "object"),
   language_1 = "en",
   language_2 = "fr",
   language_3 = "de",
@@ -30,13 +30,16 @@ elx_download_xml(
 \item{mode}{A character string specifying the mode with which to write the file. Useful values are "w", "wb" (binary), "a" (append) and "ab".}
 }
 \value{
-Path of downloaded file (invisibly) if server validates request (http status code has to be 200).
+Path of downloaded file (invisibly) if server validates request (http status code has to be 200). For more information about notices, see Cellar documentation.
 }
 \description{
 Downloads an XML notice of a given type associated with a Cellar resource.
 }
+\details{
+To retrieve all identifiers associated with a url, use elx_fetch_data(type = "ids").
+}
 \examples{
 \donttest{
-elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "branch")
+elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "object")
 }
 }
