@@ -1,2 +1,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^docs$
+^_pkgdown\.yml$
+^doc$
+^pkgdown$
+^README\.Rmd$
+^codecov\.yml$
+^CODE_OF_CONDUCT\.md$
+^LICENSE\.md$
+^\.github$
