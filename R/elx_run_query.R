@@ -1,7 +1,8 @@
 #' Execute SPARQL queries
 #'
 #' Executes cURL request to a pre-defined endpoint of the EU Publications Office.
-#' Relies on elx_make_query to generate valid SPARQL queries
+#' Relies on elx_make_query to generate valid SPARQL queries.
+#' Results are capped at 1 million rows.
 #'
 #' @param query A valid SPARQL query specified by `elx_make_query()` or manually
 #' @param endpoint SPARQL endpoint

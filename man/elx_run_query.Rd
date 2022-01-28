@@ -10,7 +10,7 @@ elx_run_query(
 )
 }
 \arguments{
-\item{query}{A valid SPARQL query specified by `elx_make_query` or manually}
+\item{query}{A valid SPARQL query specified by `elx_make_query()` or manually}
 
 \item{endpoint}{SPARQL endpoint}
 }
@@ -20,7 +20,8 @@ Column `work` contains the Cellar URI of the resource. Rows with even one missin
 }
 \description{
 Executes cURL request to a pre-defined endpoint of the EU Publications Office.
-Relies on elx_make_query to generate valid SPARQL queries
+Relies on elx_make_query to generate valid SPARQL queries.
+Results are capped at 1 million rows.
 }
 \examples{
 \donttest{
