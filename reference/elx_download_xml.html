@@ -60,7 +60,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">elx_download_xml</span><span class="op">(</span>
   <span class="va">url</span>,
   file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span>,
-  notice <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"branch"</span>, <span class="st">"object"</span><span class="op">)</span>,
+  notice <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tree"</span>, <span class="st">"branch"</span>, <span class="st">"object"</span><span class="op">)</span>,
   language_1 <span class="op">=</span> <span class="st">"en"</span>,
   language_2 <span class="op">=</span> <span class="st">"fr"</span>,
   language_3 <span class="op">=</span> <span class="st">"de"</span>,
@@ -87,13 +87,17 @@
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Path of downloaded file (invisibly) if server validates request (http status code has to be 200).</p>
+    <p>Path of downloaded file (invisibly) if server validates request (http status code has to be 200). For more information about notices, see Cellar documentation.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>To retrieve all identifiers associated with a url, use elx_fetch_data(type = "ids").</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">elx_download_xml</span><span class="op">(</span>url <span class="op">=</span> <span class="st">"http://publications.europa.eu/resource/celex/32014R0001"</span>, notice <span class="op">=</span> <span class="st">"branch"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">elx_download_xml</span><span class="op">(</span>url <span class="op">=</span> <span class="st">"http://publications.europa.eu/resource/celex/32014R0001"</span>, notice <span class="op">=</span> <span class="st">"object"</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
