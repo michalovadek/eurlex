@@ -45,15 +45,15 @@ elx_download_xml <- function(url, file = basename(url), notice = c("branch", "ob
                          sep = "")
   
   # generate url with desired notice type and check validity
-  head <- graceful_http(url = url,
+  head <- graceful_http(url,
                         headers = httr::add_headers('Accept-Language' = language,
                                                     'Accept' = accept_header),
                         verb = "HEAD")
   
   stopifnot("Unsuccessful http request (status code != 200" = head$status_code == 200)
   
-  download.file(url = head$url,
-                destfile = file,
-                mode = mode)
+  utils::download.file(url = head$url,
+                       destfile = file,
+                       mode = mode)
 
 }

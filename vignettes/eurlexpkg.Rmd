@@ -262,6 +262,6 @@ dirs_1970_title %>%
 
 I use term-frequency inverse-document frequency (tf-idf) to weight the importance of the words in the wordcloud. If we used pure frequencies, the wordcloud would largely consist of words conveying little meaning ("the", "and", ...).
 
-This is an extremely basic application of the `eurlex` package. Much more sophisticated methods can be used to analyse both the content and metadata of European Union legislation. If the package is useful for your research, please consider citing the [accompanying paper](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150).^[Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)]
+This is an extremely basic application of the `eurlex` package. Much more sophisticated methods can be used to analyse both the content and metadata of European Union legislation. If the package is useful for your research, please cite the [accompanying paper](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150).^[Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)]
 
 

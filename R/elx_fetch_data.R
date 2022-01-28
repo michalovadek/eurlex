@@ -41,7 +41,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   if (type == "title"){
     
-    response <- graceful_http(url = url,
+    response <- graceful_http(url,
                               headers = httr::add_headers('Accept-Language' = language,
                                                           'Accept' = 'application/xml; notice=object'),
                               verb = "GET")
@@ -59,7 +59,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   if (type == "text"){
     
-    response <- graceful_http(url = url,
+    response <- graceful_http(url,
                               headers = httr::add_headers('Accept-Language' = language,
                                                           'Content-Language' = language,
                                                           'Accept' = 'text/html, text/html;type=simplified, text/plain, application/xhtml+xml, application/xhtml+xml;type=simplified, application/pdf, application/pdf;type=pdf1x, application/pdf;type=pdfa1a, application/pdf;type=pdfx, application/pdf;type=pdfa1b, application/msword'),
@@ -87,7 +87,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
       for (q in 1:length(links)){
         
-        multiresponse <- graceful_http(url = links[q],
+        multiresponse <- graceful_http(links[q],
                                        headers = httr::add_headers('Accept-Language' = language,
                                                               'Content-Language' = language,
                                                               'Accept' = 'text/html, text/html;type=simplified, text/plain, application/xhtml+xml, application/xhtml+xml;type=simplified, application/pdf, application/pdf;type=pdf1x, application/pdf;type=pdfa1a, application/pdf;type=pdfx, application/pdf;type=pdfa1b, application/msword'),
@@ -130,7 +130,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   if (type == "ids"){
     
-    response <- graceful_http(url = url,
+    response <- graceful_http(url,
                               headers = httr::add_headers('Accept-Language' = language,
                                                           'Accept' = 'application/xml; notice=identifiers'),
                               verb = "GET")
@@ -148,7 +148,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
   
   if (type == "notice"){
     
-    response <- graceful_http(url = url,
+    response <- graceful_http(url,
                               headers = httr::add_headers('Accept-Language' = language,
                                                           'Accept' = 'application/xml; notice=branch'),
                               verb = "GET")
