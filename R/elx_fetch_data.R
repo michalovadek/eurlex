@@ -28,9 +28,9 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   if (stringr::str_detect(url,"celex.*[\\(|\\)|\\/]")){
 
-    clx <- stringr::str_extract(url, "(?<=celex\\/).*") |> 
-      stringr::str_replace_all("\\(","%28") |> 
-      stringr::str_replace_all("\\)","%29") |> 
+    clx <- stringr::str_extract(url, "(?<=celex\\/).*") %>% 
+      stringr::str_replace_all("\\(","%28") %>% 
+      stringr::str_replace_all("\\)","%29") %>% 
       stringr::str_replace_all("\\/","%2F")
 
     url <- paste("http://publications.europa.eu/resource/celex/",
@@ -48,9 +48,9 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
     if (httr::status_code(response)==200){
 
-      out <- httr::content(response) |> 
-          xml2::xml_find_first("//EXPRESSION_TITLE") |> 
-          xml2::xml_find_first("VALUE") |> 
+      out <- httr::content(response) %>% 
+          xml2::xml_find_first("//EXPRESSION_TITLE") %>% 
+          xml2::xml_find_first("VALUE") %>% 
           xml2::xml_text()
 
     } else {out <- httr::status_code(response)}
@@ -73,12 +73,12 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
     else if (httr::status_code(response)==300){
 
-      links <- response |>
-        httr::content(as = "text") |>
-        xml2::read_html() |>
-        rvest::html_node("body") |>
-        rvest::html_nodes("a") |>
-        rvest::html_attrs() |> 
+      links <- response %>%
+        httr::content(as = "text") %>%
+        xml2::read_html() %>%
+        rvest::html_node("body") %>%
+        rvest::html_nodes("a") %>%
+        rvest::html_attrs() %>% 
         unlist()
 
       names(links) <- NULL
@@ -137,9 +137,9 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
     if (httr::status_code(response)==200){
 
-      out <- httr::content(response) |>
-        xml2::xml_children() |>
-        xml2::xml_find_all(".//VALUE") |>
+      out <- httr::content(response) %>%
+        xml2::xml_children() %>%
+        xml2::xml_find_all(".//VALUE") %>%
         xml2::xml_text()
 
     } else {out <- httr::status_code(response)}
@@ -177,10 +177,10 @@ elx_read_text <- function(http_response){
 
     if (stringr::str_detect(http_response$headers$`content-type`,"html")){
 
-      out <- http_response |>
-        xml2::read_html() |>
-        rvest::html_node("body") |>
-        rvest::html_text() |>
+      out <- http_response %>%
+        xml2::read_html() %>%
+        rvest::html_node("body") %>%
+        rvest::html_text() %>%
         paste0(collapse = " ---pagebreak--- ")
 
       names(out) <- "html"
@@ -189,8 +189,8 @@ elx_read_text <- function(http_response){
 
     else if (stringr::str_detect(http_response$headers$`content-type`,"pdf")){
 
-      out <- http_response$url |>
-        pdftools::pdf_text() |>
+      out <- http_response$url %>%
+        pdftools::pdf_text() %>%
         paste0(collapse = " ---pagebreak--- ")
 
       names(out) <- "pdf"
@@ -199,8 +199,8 @@ elx_read_text <- function(http_response){
 
     else if (stringr::str_detect(http_response$headers$`content-type`,"msword")){
 
-      out <- http_response$url |>
-        antiword::antiword() |>
+      out <- http_response$url %>%
+        antiword::antiword() %>%
         paste0(collapse = " ---pagebreak--- ")
 
       names(out) <- "word"

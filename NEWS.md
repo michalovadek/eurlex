@@ -8,6 +8,8 @@
 ## Minor changes
 
 - host of smaller code improvements in `elx_fetch_data()`
+- more consistent and strict error generation across all server-interacting functions
+- started adding unit tests
 
 # eurlex 0.3.6
 
