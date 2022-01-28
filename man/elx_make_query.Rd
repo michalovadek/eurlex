@@ -5,8 +5,8 @@
 \title{Create SPARQL queries}
 \usage{
 elx_make_query(
-  resource_type = c("directive", "regulation", "decision", "recommendation", "intagr",
-    "caselaw", "manual", "proposal", "national_impl", "any"),
+  resource_type = c("any", "directive", "regulation", "decision", "recommendation",
+    "intagr", "caselaw", "manual", "proposal", "national_impl"),
   manual_type = "",
   directory = NULL,
   sector = NULL,
@@ -25,6 +25,7 @@ elx_make_query(
   include_court_procedure = FALSE,
   include_directory = FALSE,
   include_sector = FALSE,
+  include_ecli = FALSE,
   order = FALSE,
   limit = NULL
 )
@@ -67,6 +68,8 @@ elx_make_query(
 \item{include_directory}{If `TRUE`, results include the Eur-Lex directory code}
 
 \item{include_sector}{If `TRUE`, results include the Eur-Lex sector code}
+
+\item{include_ecli}{If `TRUE`, results include the ECLI identifier for court documents}
 
 \item{order}{Order results by ids}
 

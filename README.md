@@ -26,7 +26,7 @@ For the moment, it is recommended to retrieve metadata one variable at a time. F
 2. `dates <- elx_make_query("directive", include_date_transpos = TRUE) %>% elx_run_query()`
 3. `ids %>% dplyr::left_join(lbs) %>% dplyr::left_join(dates)`
 
-rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. This approach should make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the `work` and `celex` columns identify rows uniquely or not.
+rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. This approach is usually faster and should also make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the `work` and `celex` columns identify rows uniquely or not.
 
 One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the `rvest` package), the function `elx_fetch_data()` enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.
 
@@ -38,9 +38,14 @@ Michal Ovádek (2021) Facilitating access to data on European Union laws, Politi
 ## Note
 This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable [data reuse policies](https://eur-lex.europa.eu/content/welcome/data-reuse.html).
 
-Please consider contributing to the maintanance and development of the package by reporting bugs or suggesting new features.
+Please consider contributing to the maintenance and development of the package by reporting bugs or suggesting new features.
 
 ## Latest changes
+
+### eurlex 0.4.0
+
+- download XML notices associated with Cellar URLs with `elx_download_xml()`
+- retrieve European Case Law Identifier (ECLI) with `elx_make_query(include_ecli = TRUE)`
 
 ### eurlex 0.3.6
 

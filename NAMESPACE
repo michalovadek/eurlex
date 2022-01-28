@@ -2,6 +2,7 @@
 
 export(elx_council_votes)
 export(elx_curia_list)
+export(elx_download_xml)
 export(elx_fetch_data)
 export(elx_label_eurovoc)
 export(elx_make_query)

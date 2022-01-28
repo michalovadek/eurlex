@@ -6,7 +6,7 @@
 \usage{
 elx_fetch_data(
   url,
-  type = c("title", "text", "ids"),
+  type = c("title", "text", "ids", "notice"),
   language_1 = "en",
   language_2 = "fr",
   language_3 = "de",
@@ -16,7 +16,7 @@ elx_fetch_data(
 \arguments{
 \item{url}{A valid url as character vector of length one based on a resource identifier such as CELEX or Cellar URI.}
 
-\item{type}{The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text.}
+\item{type}{The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text. When type = "notice", the results return the full XML branch notice associated withe the url.}
 
 \item{language_1}{The priority language in which the data will be attempted to be retrieved, in ISO 639 2-char code}
 
@@ -27,10 +27,10 @@ elx_fetch_data(
 \item{include_breaks}{If TRUE, text includes tags showing where pages ("---pagebreak---", for pdfs) and documents ("---documentbreak---") were concatenated}
 }
 \value{
-A character vector of length one containing the result.
+A character vector of length one containing the result. When `type = "text"`, named character vector where the name contains the source of the text.
 }
 \description{
-Wraps httr::GET with pre-specified headers to retrieve data.
+Wraps httr::GET with pre-specified headers and parses retrieved data.
 }
 \examples{
 \donttest{

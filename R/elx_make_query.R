@@ -37,7 +37,7 @@
 #' elx_make_query(resource_type = "caselaw")
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
 
-elx_make_query <- function(resource_type = c("directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl","any"),
+elx_make_query <- function(resource_type = c("any","directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl"),
                            manual_type = "", directory = NULL, sector = NULL,
                            include_corrigenda = FALSE, include_celex = TRUE, include_lbs = FALSE,
                            include_date = FALSE, include_date_force = FALSE, include_date_endvalid = FALSE,
