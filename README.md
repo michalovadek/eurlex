@@ -42,6 +42,12 @@ Please consider contributing to the maintenance and development of the package b
 
 ## Latest changes
 
+### eurlex 0.4.1
+
+- `elx_fetch_data(type = "notice", notice = c("tree","branch", "object"))` now mirrors the behaviour of `elx_download_xml()` but instead of saving to path givess access to XML notice in R
+- fixed bug in `elx_download_xml()` parameter checking
+- `elx_download_xml(notice = "object")` now retrieves metadata correctly
+
 ### eurlex 0.4.0
 
 - download XML notices associated with Cellar URLs with `elx_download_xml()`

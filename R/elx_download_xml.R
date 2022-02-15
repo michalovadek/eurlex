@@ -19,13 +19,14 @@
 #' elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "object")
 #' }
 
-elx_download_xml <- function(url, file = basename(url), notice = c("tree","branch", "object"),
+elx_download_xml <- function(url, file = paste(basename(url), ".xml", sep = ""),
+                             notice = c("tree","branch", "object"),
                              language_1 = "en", language_2 = "fr", language_3 = "de",
                              mode = "wb"){
   
   stopifnot("url must be specified" = !missing(url),
             "notice type must be specified" = !missing(notice),
-            "notice type must be correctly specified" = notice %in% c("branch", "object"))
+            "notice type must be correctly specified" = notice %in% c("branch", "object","tree"))
   
   language <- paste(language_1,", ",language_2,";q=0.8, ",language_3,";q=0.7", sep = "")
   
@@ -46,16 +47,42 @@ elx_download_xml <- function(url, file = basename(url), notice = c("tree","branc
                          notice,
                          sep = "")
   
-  # generate url with desired notice type and check validity
-  head <- graceful_http(url,
-                        headers = httr::add_headers('Accept-Language' = language,
-                                                    'Accept' = accept_header),
-                        verb = "HEAD")
+  # if object notice, no language header
+  if (notice == "object"){
+    
+    # generate url with desired notice type
+    head <- graceful_http(url,
+                          headers = httr::add_headers('Accept' = accept_header),
+                          verb = "HEAD")
+    
+  }
   
+  else {
+    
+    # generate url with desired notice type
+    head <- graceful_http(url,
+                          headers = httr::add_headers('Accept-Language' = language,
+                                                      'Accept' = accept_header),
+                          verb = "HEAD") 
+    
+  }
+  
+  # check validity
   stopifnot("Unsuccessful http request (status code != 200)" = head$status_code == 200)
   
+  # download file
   utils::download.file(url = head$url,
                        destfile = file,
                        mode = mode)
 
 }
+
+
+get <- graceful_http(url,
+                      headers = httr::add_headers('Accept' = accept_header),
+                      verb = "GET")
+
+get |> 
+  httr::content() |> 
+  as.character()
+

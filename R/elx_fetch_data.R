@@ -17,12 +17,15 @@
 #' }
 
 elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
+                           notice = c("tree","branch", "object"),
                            language_1 = "en", language_2 = "fr", language_3 = "de",
                            include_breaks = TRUE){
   
   stopifnot("url must be specified" = !missing(url),
             "type must be specified" = !missing(type),
             "type must be correctly specified" = type %in% c("title","text","ids","notice"))
+  
+  if (type == "notice" & missing(notice)){stop("notice type must be given")}
 
   language <- paste(language_1,", ",language_2,";q=0.8, ",language_3,";q=0.7", sep = "")
 
@@ -148,10 +151,27 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
   
   if (type == "notice"){
     
-    response <- graceful_http(url,
-                              headers = httr::add_headers('Accept-Language' = language,
-                                                          'Accept' = 'application/xml; notice=branch'),
-                              verb = "GET")
+    accept_header <- paste('application/xml; notice=',
+                           notice,
+                           sep = "")
+    
+    # if object notice, no language header
+    if (notice == "object"){
+      
+      response <- graceful_http(url,
+                            headers = httr::add_headers('Accept' = accept_header),
+                            verb = "GET")
+      
+    }
+    
+    else {
+      
+      response <- graceful_http(url,
+                            headers = httr::add_headers('Accept-Language' = language,
+                                                        'Accept' = accept_header),
+                            verb = "GET") 
+      
+    }
     
     if (httr::status_code(response)==200){
       
