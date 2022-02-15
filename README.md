@@ -1,5 +1,6 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/eurlex)](https://cran.r-project.org/package=eurlex)
 [![CRAN\_Downloads](http://cranlogs.r-pkg.org/badges/grand-total/eurlex)](https://cran.r-project.org/package=eurlex)
+[![R-CMD-check](https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml)
 # eurlex <img src="man/figures/logo.png" align="right" width="150" />
 
 An R package for retrieving official data on European Union law and policy.
