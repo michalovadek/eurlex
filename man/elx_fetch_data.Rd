@@ -7,6 +7,7 @@
 elx_fetch_data(
   url,
   type = c("title", "text", "ids", "notice"),
+  notice = c("tree", "branch", "object"),
   language_1 = "en",
   language_2 = "fr",
   language_3 = "de",

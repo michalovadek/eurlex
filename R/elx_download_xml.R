@@ -76,13 +76,3 @@ elx_download_xml <- function(url, file = paste(basename(url), ".xml", sep = ""),
                        mode = mode)
 
 }
-
-
-get <- graceful_http(url,
-                      headers = httr::add_headers('Accept' = accept_header),
-                      verb = "GET")
-
-get |> 
-  httr::content() |> 
-  as.character()
-

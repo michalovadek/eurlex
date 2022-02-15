@@ -4,6 +4,7 @@
 #'
 #' @param url A valid url as character vector of length one based on a resource identifier such as CELEX or Cellar URI.
 #' @param type The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text. When type = "notice", the results return the full XML branch notice associated withe the url.
+#' @param notice If type = "notice", controls what kind of metadata are returned by the notice.
 #' @param language_1 The priority language in which the data will be attempted to be retrieved, in ISO 639 2-char code
 #' @param language_2 If data not available in `language_1`, try `language_2`
 #' @param language_3 If data not available in `language_2`, try `language_3`

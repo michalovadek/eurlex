@@ -16,7 +16,7 @@ elx_run_query(
 }
 \value{
 A data frame containing the results of the SPARQL query.
-Column `work` contains the Cellar URI of the resource. Rows with even one missing variable are dropped.
+Column `work` contains the Cellar URI of the resource.
 }
 \description{
 Executes cURL request to a pre-defined endpoint of the EU Publications Office.

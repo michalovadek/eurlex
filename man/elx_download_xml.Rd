@@ -6,7 +6,7 @@
 \usage{
 elx_download_xml(
   url,
-  file = basename(url),
+  file = paste(basename(url), ".xml", sep = ""),
   notice = c("tree", "branch", "object"),
   language_1 = "en",
   language_2 = "fr",
