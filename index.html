@@ -80,6 +80,7 @@
 
 <p><a href="https://cran.r-project.org/package=eurlex" class="external-link"><img src="http://www.r-pkg.org/badges/version/eurlex" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/package=eurlex" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/eurlex" alt="CRAN_Downloads"></a> <a href="https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml" class="external-link"><img src="https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml/badge.svg" alt="R-CMD-check"></a> # eurlex <img src="reference/figures/logo.png" align="right" width="150"></p>
 <p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office and other EU institutions. Compared to pure web-scraping, the package provides more efficient and transparent access to data on European Union laws and policies.</p>
+<p>See the <a href="https://michalovadek.github.io/eurlex/articles/eurlexpkg.html" class="external-link">vignette</a> for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features. Example use cases are shown in this <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">paper</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -92,7 +93,7 @@
 <p>Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">10.1080/2474736X.2020.1870150</a></p>
 </div>
 <div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+<h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
 <p>The <code>eurlex</code> package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: <code><a href="reference/elx_make_query.html">elx_make_query()</a></code> to create pre-defined or customized SPARQL queries; <code><a href="reference/elx_run_query.html">elx_run_query()</a></code> to execute the pre-made or any other manually input query; and <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> to fire GET requests for certain metadata to the REST API.</p>
 <p>The function <code>elx_make_query</code> takes as its first argument the type of resource to be retrieved (such as “directive”) from the semantic database that powers Eur-Lex (and other publications) called Cellar. If you are familiar with SPARQL, you can always specify your own queries and execute them with <code><a href="reference/elx_run_query.html">elx_run_query()</a></code>.</p>
@@ -106,7 +107,6 @@
 </ol>
 <p>rather than <code>elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)</code>. This approach is usually faster and should also make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the <code>work</code> and <code>celex</code> columns identify rows uniquely or not.</p>
 <p>One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the <code>rvest</code> package), the function <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.</p>
-<p>See the <a href="https://michalovadek.github.io/eurlex/articles/eurlexpkg.html" class="external-link">vignette</a> for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features. Example use cases are shown in this <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">paper</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a>
