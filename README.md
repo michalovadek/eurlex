@@ -13,7 +13,7 @@ Install from CRAN via `install.packages("eurlex")`.
 The development version is available via `remotes::install_github("michalovadek/eurlex")`.
 
 ## Cite
-Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
+Michal Ovádek (2021) **Facilitating access to data on European Union laws**, *Political Research Exchange*, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
 
 ## Basic usage
 
