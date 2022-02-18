@@ -10,6 +10,9 @@ Install from CRAN via `install.packages("eurlex")`.
 
 The development version is available via `remotes::install_github("michalovadek/eurlex")`.
 
+## Cite
+Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
+
 ## Usage
 
 The `eurlex` R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Compared to web-scraping, the package provides simpler, more efficient and transparent access to data on European Union laws and policies.
@@ -32,9 +35,6 @@ rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transp
 One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the `rvest` package), the function `elx_fetch_data()` enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.
 
 See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features. Example use cases are shown in this [paper](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150).
-
-## Cite
-Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
 
 ## Note
 This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable [data reuse policies](https://eur-lex.europa.eu/content/welcome/data-reuse.html).
