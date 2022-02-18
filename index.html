@@ -87,6 +87,11 @@
 <p>The development version is available via <code>remotes::install_github("michalovadek/eurlex")</code>.</p>
 </div>
 <div class="section level2">
+<h2 id="cite">Cite<a class="anchor" aria-label="anchor" href="#cite"></a>
+</h2>
+<p>Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">10.1080/2474736X.2020.1870150</a></p>
+</div>
+<div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Compared to web-scraping, the package provides simpler, more efficient and transparent access to data on European Union laws and policies.</p>
@@ -103,11 +108,6 @@
 <p>rather than <code>elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)</code>. This approach is usually faster and should also make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the <code>work</code> and <code>celex</code> columns identify rows uniquely or not.</p>
 <p>One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the <code>rvest</code> package), the function <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.</p>
 <p>See the <a href="https://michalovadek.github.io/eurlex/articles/eurlexpkg.html" class="external-link">vignette</a> for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features. Example use cases are shown in this <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">paper</a>.</p>
-</div>
-<div class="section level2">
-<h2 id="cite">Cite<a class="anchor" aria-label="anchor" href="#cite"></a>
-</h2>
-<p>Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">10.1080/2474736X.2020.1870150</a></p>
 </div>
 <div class="section level2">
 <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a>
