@@ -3,7 +3,7 @@
 [![R-CMD-check](https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml)
 # eurlex <img src="man/figures/logo.png" align="right" width="150" />
 
-An R package for retrieving official data on European Union law and policy.
+The `eurlex` R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office and other EU institutions. Compared to pure web-scraping, the package provides more efficient and transparent access to data on European Union laws and policies.
 
 ## Installation
 Install from CRAN via `install.packages("eurlex")`.
@@ -14,8 +14,6 @@ The development version is available via `remotes::install_github("michalovadek/
 Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
 
 ## Usage
-
-The `eurlex` R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Compared to web-scraping, the package provides simpler, more efficient and transparent access to data on European Union laws and policies.
 
 The `eurlex` package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: `elx_make_query()` to create pre-defined or customized SPARQL queries; `elx_run_query()` to execute the pre-made or any other manually input query; and `elx_fetch_data()` to fire GET requests for certain metadata to the REST API.
 
