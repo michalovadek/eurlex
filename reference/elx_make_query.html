@@ -28,7 +28,7 @@ Note that not all resource types are compatible with default parameter values.">
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -83,6 +83,10 @@ Note that not all resource types are compatible with default parameter values.</
   include_directory <span class="op">=</span> <span class="cn">FALSE</span>,
   include_sector <span class="op">=</span> <span class="cn">FALSE</span>,
   include_ecli <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_judge_rapporteur <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_advocate_general <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_court_formation <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_court_scholarship <span class="op">=</span> <span class="cn">FALSE</span>,
   order <span class="op">=</span> <span class="cn">FALSE</span>,
   limit <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
@@ -130,6 +134,14 @@ Note that not all resource types are compatible with default parameter values.</
 <dd><p>If `TRUE`, results include the Eur-Lex sector code</p></dd>
 <dt>include_ecli</dt>
 <dd><p>If `TRUE`, results include the ECLI identifier for court documents</p></dd>
+<dt>include_judge_rapporteur</dt>
+<dd><p>If `TRUE`, results include the Judge-Rapporteur</p></dd>
+<dt>include_advocate_general</dt>
+<dd><p>If `TRUE`, results include the Advocate General</p></dd>
+<dt>include_court_formation</dt>
+<dd><p>If `TRUE`, results include the court formation</p></dd>
+<dt>include_court_scholarship</dt>
+<dd><p>If `TRUE`, results include court-curated relevant scholarship</p></dd>
 <dt>order</dt>
 <dd><p>Order results by ids</p></dd>
 <dt>limit</dt>
