@@ -1,4 +1,4 @@
-testthat::test_that("queries work", {
+testthat::test_that("directives work", {
   
   testthat::skip_on_cran()
   

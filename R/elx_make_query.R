@@ -24,6 +24,10 @@
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
 #' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
 #' @param include_ecli If `TRUE`, results include the ECLI identifier for court documents
+#' @param include_advocate_general If `TRUE`, results include the Advocate General
+#' @param include_judge_rapporteur If `TRUE`, results include the Judge-Rapporteur
+#' @param include_court_formation If `TRUE`, results include the court formation
+#' @param include_court_scholarship If `TRUE`, results include court-curated relevant scholarship
 #' @param include_directory If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param order Order results by ids
@@ -45,7 +49,9 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                            include_force = FALSE, include_eurovoc = FALSE, include_author = FALSE,
                            include_citations = FALSE, include_court_procedure = FALSE,
                            include_directory = FALSE, include_sector = FALSE,
-                           include_ecli = FALSE,
+                           include_ecli = FALSE, include_judge_rapporteur = FALSE,
+                           include_advocate_general = FALSE, include_court_formation = FALSE,
+                           include_court_scholarship = FALSE,
                            order = FALSE, limit = NULL){
 
   if (missing(resource_type)) stop("'resource_type' must be defined")
@@ -168,6 +174,30 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
     query <- paste(query, "?sector", sep = " ")
 
+  }
+  
+  if (include_advocate_general == TRUE){
+    
+    query <- paste(query, "?ag", sep = " ")
+    
+  }
+  
+  if (include_judge_rapporteur == TRUE){
+    
+    query <- paste(query, "?jr", sep = " ")
+    
+  }
+  
+  if (include_court_formation == TRUE){
+    
+    query <- paste(query, "?cf", sep = " ")
+    
+  }
+  
+  if (include_court_scholarship == TRUE){
+    
+    query <- paste(query, "?scholarship", sep = " ")
+    
   }
 
   if (resource_type == "any"){
@@ -411,6 +441,33 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
            ?proc skos:prefLabel ?courtprocedure. FILTER(lang(?courtprocedure)='en')}.")
 
   }
+  
+  if (include_advocate_general == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_delivered_by_advocate-general ?agx.
+                   ?agx cdm:agent_name ?ag}")
+    
+  }
+  
+  if (include_judge_rapporteur == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_delivered_by_judge ?jrx.
+                   ?jrx cdm:agent_name ?jr}")
+    
+  }
+  
+  if (include_court_formation == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_delivered_by_court-formation ?cfx.
+                   ?cfx skos:prefLabel ?cf. FILTER(lang(?cf)='en')}.")
+    
+  }
+  
+  if (include_court_scholarship == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_article_journal_related ?scholarship.}")
+    
+  }
 
   if (include_ecli == TRUE){
 
@@ -441,4 +498,3 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   return(query)
 
 }
-

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -78,53 +78,128 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<p><a href="https://cran.r-project.org/package=eurlex" class="external-link"><img src="http://www.r-pkg.org/badges/version/eurlex" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/package=eurlex" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/eurlex" alt="CRAN_Downloads"></a> # eurlex <img src="reference/figures/logo.png" align="right" width="150"></p>
-<p>An R package for retrieving official data on European Union law and policy.</p>
+<p><a href="https://cran.r-project.org/package=eurlex" class="external-link"><img src="http://www.r-pkg.org/badges/version/eurlex" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/package=eurlex" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/eurlex" alt="CRAN_Downloads"></a> <a href="https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml" class="external-link"><img src="https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml/badge.svg" alt="R-CMD-check"></a> # eurlex
+<img src="reference/figures/logo.png" align="right" width="150"></p>
+<p>The <code>eurlex</code> R package attempts to significantly reduce
+the overhead associated with using SPARQL and REST APIs made available
+by the EU Publication Office and other EU institutions. Compared to pure
+web-scraping, the package provides more efficient and transparent access
+to data on European Union laws and policies.</p>
+<p>See the <a href="https://michalovadek.github.io/eurlex/articles/eurlexpkg.html" class="external-link">vignette</a>
+for a walkthrough on how to use the package. Check function
+documentation for most up-to-date overview of features. Example use
+cases are shown in this <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">paper</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install from CRAN via <code>install.packages("eurlex")</code>.</p>
-<p>The development version is available via <code>remotes::install_github("michalovadek/eurlex")</code>.</p>
-</div>
-<div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
-</h2>
-<p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using SPARQL and REST APIs made available by the EU Publication Office. Compared to web-scraping, the package provides simpler, more efficient and transparent access to data on European Union laws and policies.</p>
-<p>The <code>eurlex</code> package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: <code><a href="reference/elx_make_query.html">elx_make_query()</a></code> to create pre-defined or customized SPARQL queries; <code><a href="reference/elx_run_query.html">elx_run_query()</a></code> to execute the pre-made or any other manually input query; and <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> to fire GET requests for certain metadata to the REST API.</p>
-<p>The function <code>elx_make_query</code> takes as its first argument the type of resource to be retrieved (such as “directive”) from the semantic database that powers Eur-Lex (and other publications) called Cellar. If you are familiar with SPARQL, you can always specify your own queries and execute them with <code><a href="reference/elx_run_query.html">elx_run_query()</a></code>.</p>
-<p><code><a href="reference/elx_run_query.html">elx_run_query()</a></code> executes SPARQL queries on a pre-specified endpoint of the EU Publication Office. It outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several hours, depending also on your connection. The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html" class="external-link">CELEX</a>, retrieved by default.</p>
-<p>For the moment, it is recommended to retrieve metadata one variable at a time. For example, if you wish to obtain the legal bases of directives and the date of transposition, you should run separate calls:</p>
-<ol start="0" style="list-style-type: decimal">
-<li><code>ids &lt;- elx_make_query("directive") %&gt;% elx_run_query()</code></li>
-<li><code>lbs &lt;- elx_make_query("directive", include_lbs = TRUE) %&gt;% elx_run_query()</code></li>
-<li><code>dates &lt;- elx_make_query("directive", include_date_transpos = TRUE) %&gt;% elx_run_query()</code></li>
-<li><code>ids %&gt;% dplyr::left_join(lbs) %&gt;% dplyr::left_join(dates)</code></li>
-</ol>
-<p>rather than <code>elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)</code>. This approach is usually faster and should also make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the <code>work</code> and <code>celex</code> columns identify rows uniquely or not.</p>
-<p>One of the main contributions of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the <code>rvest</code> package), the function <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function currently enables downloading the title and the full text of a document in all available languages.</p>
-<p>See the <a href="https://michalovadek.github.io/eurlex/articles/eurlexpkg.html" class="external-link">vignette</a> for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features. Example use cases are shown in this <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">paper</a>.</p>
+<p>The development version is available via
+<code>remotes::install_github("michalovadek/eurlex")</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="cite">Cite<a class="anchor" aria-label="anchor" href="#cite"></a>
 </h2>
-<p>Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">10.1080/2474736X.2020.1870150</a></p>
+<p>Michal Ovádek (2021) <strong>Facilitating access to data on European
+Union laws</strong>, <em>Political Research Exchange</em>, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150" class="external-link">10.1080/2474736X.2020.1870150</a></p>
+</div>
+<div class="section level2">
+<h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
+</h2>
+<p>The <code>eurlex</code> package currently envisions the typical
+use-case to consist of getting bulk information about EU legislation
+into R as fast as possible. The package contains three core functions to
+achieve that objective: <code><a href="reference/elx_make_query.html">elx_make_query()</a></code> to create
+pre-defined or customized SPARQL queries; <code><a href="reference/elx_run_query.html">elx_run_query()</a></code>
+to execute the pre-made or any other manually input query; and
+<code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> to fire GET requests for certain metadata
+to the REST API.</p>
+<p>The function <code>elx_make_query</code> takes as its first argument
+the type of resource to be retrieved (such as “directive”) from the
+semantic database that powers Eur-Lex (and other publications) called
+Cellar. If you are familiar with SPARQL, you can always specify your own
+queries and execute them with <code><a href="reference/elx_run_query.html">elx_run_query()</a></code>.</p>
+<p><code><a href="reference/elx_run_query.html">elx_run_query()</a></code> executes SPARQL queries on a
+pre-specified endpoint of the EU Publication Office. It outputs a
+<code>data.frame</code> where each column corresponds to one of the
+requested variables, while the rows accumulate observations of the
+resource type satisfying the query criteria. Obviously, the more data is
+to be returned, the longer the execution time, varying from a few
+seconds to several hours, depending also on your connection. The first
+column always contains the unique URI of a “work” (legislative act or
+court judgment) which identifies each resource in Cellar. Several
+human-readable identifiers are normally associated with each “work” but
+the most useful one is <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html" class="external-link">CELEX</a>,
+retrieved by default.</p>
+<p>For the moment, it is recommended to retrieve metadata one variable
+at a time. For example, if you wish to obtain the legal bases of
+directives and the date of transposition, you should run separate
+calls:</p>
+<ol start="0" style="list-style-type: decimal">
+<li><code>ids &lt;- elx_make_query("directive") %&gt;%
+elx_run_query()</code></li>
+<li><code>lbs &lt;- elx_make_query("directive", include_lbs = TRUE)
+%&gt;% elx_run_query()</code></li>
+<li><code>dates &lt;- elx_make_query("directive", include_date_transpos
+= TRUE) %&gt;% elx_run_query()</code></li>
+<li><code>ids %&gt;% dplyr::left_join(lbs) %&gt;%
+dplyr::left_join(dates)</code></li>
+</ol>
+<p>rather than <code>elx_make_query("directive", include_lbs = TRUE,
+include_date_transpos = TRUE)</code>. This approach is usually faster
+and should also make it easier to understand the returned data frame(s),
+especially when some variables contain missing or duplicated data.
+Always keep an eye on whether the <code>work</code> and
+<code>celex</code> columns identify rows uniquely or not.</p>
+<p>One of the main contributions of the SPARQL requests is that we
+obtain a comprehensive list of identifiers that we can subsequently use
+to obtain more data relating to the document in question. While the
+results of the SPARQL queries are useful also for webscraping (with the
+<code>rvest</code> package), the function <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code>
+enables us to fire GET requests to retrieve data on documents with known
+identifiers (including Cellar URI). The function currently enables
+downloading the title and the full text of a document in all available
+languages.</p>
 </div>
 <div class="section level2">
 <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a>
 </h2>
-<p>This package nor its author are in any way affiliated with the EU Publications Office. Please refer to the applicable <a href="https://eur-lex.europa.eu/content/welcome/data-reuse.html" class="external-link">data reuse policies</a>.</p>
-<p>Please consider contributing to the maintenance and development of the package by reporting bugs or suggesting new features.</p>
+<p>This package nor its author are in any way affiliated with the EU
+Publications Office. Please refer to the applicable <a href="https://eur-lex.europa.eu/content/welcome/data-reuse.html" class="external-link">data
+reuse policies</a>.</p>
+<p>Please consider contributing to the maintenance and development of
+the package by reporting bugs or suggesting new features.</p>
 </div>
 <div class="section level2">
 <h2 id="latest-changes">Latest changes<a class="anchor" aria-label="anchor" href="#latest-changes"></a>
 </h2>
 <div class="section level3">
+<h3 id="eurlex-041">eurlex 0.4.1<a class="anchor" aria-label="anchor" href="#eurlex-041"></a>
+</h3>
+<ul>
+<li>
+<code>elx_fetch_data(type = "notice", notice = c("tree","branch",
+"object"))</code> now mirrors the behaviour of
+<code><a href="reference/elx_download_xml.html">elx_download_xml()</a></code> but instead of saving to path givess
+access to XML notice in R</li>
+<li>retrieve data on the Judge-Rapporteur, Advocate-General, court
+formation and court-curated scholarship using new <code>include_</code>
+options in <code><a href="reference/elx_make_query.html">elx_make_query()</a></code>
+</li>
+<li>fixed bug in <code><a href="reference/elx_download_xml.html">elx_download_xml()</a></code> parameter checking</li>
+<li>
+<code>elx_download_xml(notice = "object")</code> now retrieves
+metadata correctly</li>
+</ul>
+</div>
+<div class="section level3">
 <h3 id="eurlex-040">eurlex 0.4.0<a class="anchor" aria-label="anchor" href="#eurlex-040"></a>
 </h3>
 <ul>
-<li>download XML notices associated with Cellar URLs with <code><a href="reference/elx_download_xml.html">elx_download_xml()</a></code>
+<li>download XML notices associated with Cellar URLs with
+<code><a href="reference/elx_download_xml.html">elx_download_xml()</a></code>
 </li>
-<li>retrieve European Case Law Identifier (ECLI) with <code>elx_make_query(include_ecli = TRUE)</code>
+<li>retrieve European Case Law Identifier (ECLI) with
+<code>elx_make_query(include_ecli = TRUE)</code>
 </li>
 </ul>
 </div>
@@ -133,9 +208,11 @@
 </h3>
 <ul>
 <li>
-<code><a href="reference/elx_run_query.html">elx_run_query()</a></code> now fails gracefully in presence of internet/server problems</li>
+<code><a href="reference/elx_run_query.html">elx_run_query()</a></code> now fails gracefully in presence of
+internet/server problems</li>
 <li>
-<code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> now automatically fixes urls with parentheses (e.g. “32019H1115(01)” used to fail)</li>
+<code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> now automatically fixes urls with
+parentheses (e.g. “32019H1115(01)” used to fail)</li>
 <li>minor fixes to vignette</li>
 <li>
 <code>elx_parse_xml</code> no longer an exported function</li>
@@ -145,13 +222,26 @@
 <h3 id="eurlex-035">eurlex 0.3.5<a class="anchor" aria-label="anchor" href="#eurlex-035"></a>
 </h3>
 <ul>
-<li><p>it is now possible to select all resource types available with <code>elx_make_query(resource_type = "any")</code>. Since there are nearly 1 million CELEX codes, use with discretion and expect long execution times</p></li>
-<li><p>results can be restricted to a particular directory code with <code>elx_make_query(directory = "18")</code> (directory code “18” denotes Common Foreign and Security Policy)</p></li>
-<li><p>results can be restricted to a particular sector with <code>elx_make_query(sector = 2)</code> (sector code 2 denotes EU international agreements)</p></li>
-<li><p>new feature: request date of court case submission <code>elx_make_query(include_date_lodged = TRUE)</code></p></li>
-<li><p>new feature: request type of court procedure and outcome <code>elx_make_query(include_court_procedure = TRUE)</code></p></li>
-<li><p>new feature: request directory code of legal act <code>elx_make_query(include_directory = TRUE)</code></p></li>
-<li><p><code><a href="reference/elx_curia_list.html">elx_curia_list()</a></code> has a new default parameter <code>parse = TRUE</code> which creates separate columns for <code>ecli</code>, <code>see_case</code>, <code>appeal</code> applying regular expressions on <code>case_info</code></p></li>
+<li><p>it is now possible to select all resource types available with
+<code>elx_make_query(resource_type = "any")</code>. Since there are
+nearly 1 million CELEX codes, use with discretion and expect long
+execution times</p></li>
+<li><p>results can be restricted to a particular directory code with
+<code>elx_make_query(directory = "18")</code> (directory code “18”
+denotes Common Foreign and Security Policy)</p></li>
+<li><p>results can be restricted to a particular sector with
+<code>elx_make_query(sector = 2)</code> (sector code 2 denotes EU
+international agreements)</p></li>
+<li><p>new feature: request date of court case submission
+<code>elx_make_query(include_date_lodged = TRUE)</code></p></li>
+<li><p>new feature: request type of court procedure and outcome
+<code>elx_make_query(include_court_procedure = TRUE)</code></p></li>
+<li><p>new feature: request directory code of legal act
+<code>elx_make_query(include_directory = TRUE)</code></p></li>
+<li><p><code><a href="reference/elx_curia_list.html">elx_curia_list()</a></code> has a new default parameter
+<code>parse = TRUE</code> which creates separate columns for
+<code>ecli</code>, <code>see_case</code>, <code>appeal</code> applying
+regular expressions on <code>case_info</code></p></li>
 </ul>
 </div>
 </div>
@@ -210,7 +300,8 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

@@ -17,7 +17,7 @@ elx_fetch_data(
 \arguments{
 \item{url}{A valid url as character vector of length one based on a resource identifier such as CELEX or Cellar URI.}
 
-\item{type}{The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text. When type = "notice", the results return the full XML branch notice associated withe the url.}
+\item{type}{The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text. When type = "notice", the results return an XML notice associated with the url.}
 
 \item{notice}{If type = "notice", controls what kind of metadata are returned by the notice.}
 

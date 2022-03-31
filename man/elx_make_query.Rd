@@ -26,6 +26,10 @@ elx_make_query(
   include_directory = FALSE,
   include_sector = FALSE,
   include_ecli = FALSE,
+  include_judge_rapporteur = FALSE,
+  include_advocate_general = FALSE,
+  include_court_formation = FALSE,
+  include_court_scholarship = FALSE,
   order = FALSE,
   limit = NULL
 )
@@ -70,6 +74,14 @@ elx_make_query(
 \item{include_sector}{If `TRUE`, results include the Eur-Lex sector code}
 
 \item{include_ecli}{If `TRUE`, results include the ECLI identifier for court documents}
+
+\item{include_judge_rapporteur}{If `TRUE`, results include the Judge-Rapporteur}
+
+\item{include_advocate_general}{If `TRUE`, results include the Advocate General}
+
+\item{include_court_formation}{If `TRUE`, results include the court formation}
+
+\item{include_court_scholarship}{If `TRUE`, results include court-curated relevant scholarship}
 
 \item{order}{Order results by ids}
 
