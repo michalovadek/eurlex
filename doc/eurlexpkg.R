@@ -93,13 +93,13 @@ rec_eurovoc %>%
 
 ## ----getdatapur, message = FALSE, warning=FALSE, error=FALSE------------------
 # the function is not vectorized by default
-elx_fetch_data(results$work[1],"title")
+elx_fetch_data(url = results$work[1], type = "title")
 
 # we can use purrr::map() to play that role
 library(purrr)
 
 dir_titles <- results[1:10,] %>% # take the first 10 directives only to save time
-  mutate(title = map_chr(work,elx_fetch_data, "title")) %>% 
+  mutate(title = map_chr(work, elx_fetch_data, "title")) %>% 
   as_tibble() %>% 
   select(celex, title)
 

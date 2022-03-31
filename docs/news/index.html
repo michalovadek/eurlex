@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -52,7 +52,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.4.0" id="eurlex-040">eurlex 0.4.0<a class="anchor" aria-label="anchor" href="#eurlex-040"></a></h2>
+<h2 class="page-header" data-toc-text="0.4.1" id="eurlex-041">eurlex 0.4.1<a class="anchor" aria-label="anchor" href="#eurlex-041"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-0-4-1">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-1"></a></h3>
+<ul><li>
+<code>elx_fetch_data(type = "notice", notice = c("tree","branch", "object"))</code> now mirrors the behaviour of <code><a href="../reference/elx_download_xml.html">elx_download_xml()</a></code> but instead of saving to path givess access to XML notice in R</li>
+<li>retrieve data on the Judge-Rapporteur, Advocate-General, court formation and court-curated scholarship using new <code>include_</code> options in <code><a href="../reference/elx_make_query.html">elx_make_query()</a></code>
+</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-0-4-1">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-1"></a></h3>
+<ul><li>fixed bug in <code><a href="../reference/elx_download_xml.html">elx_download_xml()</a></code> parameter checking</li>
+<li>
+<code>elx_download_xml(notice = "object")</code> now retrieves metadata correctly</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.0" id="eurlex-040">eurlex 0.4.0<small>2022-01-28</small><a class="anchor" aria-label="anchor" href="#eurlex-040"></a></h2>
 <div class="section level3">
 <h3 id="major-changes-0-4-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-0"></a></h3>
 <ul><li>download XML notices associated with Cellar URLs with <code><a href="../reference/elx_download_xml.html">elx_download_xml()</a></code>

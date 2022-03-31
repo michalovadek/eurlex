@@ -1,7 +1,7 @@
-pandoc: 2.17.0.1
+pandoc: 2.14.0.3
 pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   eurlexpkg: eurlexpkg.html
-last_built: 2022-03-31T18:05Z
+last_built: 2022-03-31T20:47Z
 
