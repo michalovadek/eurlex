@@ -41,6 +41,10 @@ Please consider contributing to the maintenance and development of the package b
 
 ## Latest changes
 
+### eurlex 0.4.2
+
+- the returned results from `elx_make_query()` no longer include previous versions of the same record (new versions typically fix incorrect or missing metadata)
+
 ### eurlex 0.4.1
 
 - `elx_fetch_data(type = "notice", notice = c("tree","branch", "object"))` now mirrors the behaviour of `elx_download_xml()` but instead of saving to path givess access to XML notice in R

@@ -1,3 +1,9 @@
+# eurlex 0.4.2
+
+## Major changes
+
+- the returned results from `elx_make_query()` no longer include previous versions of the same record (new versions typically fix incorrect or missing metadata). This reduces the number of duplicates previously appearing in the results
+
 # eurlex 0.4.1
 
 ## Major changes

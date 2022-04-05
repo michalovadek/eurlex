@@ -431,7 +431,8 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   if (include_citations == TRUE){
 
-    query <- paste(query, "OPTIONAL{?work cdm:work_cites_work ?citation. ?citation cdm:resource_legal_id_celex ?citationcelex.}")
+    query <- paste(query, "OPTIONAL{?work cdm:work_cites_work ?citation. 
+                   ?citation cdm:resource_legal_id_celex ?citationcelex.}")
 
   }
 
@@ -486,6 +487,12 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
     query <- paste(query, "OPTIONAL{?work cdm:resource_legal_id_sector ?sector.}")
 
   }
+  
+  # add filter to hide versioned works (keeps only latest)
+  query <- paste(
+    query,
+    'FILTER not exists{?work cdm:do_not_index "true"^^<http://www.w3.org/2001/XMLSchema#boolean>}.'
+  )
 
   if (order == TRUE){
     query <- paste(query, "} order by str(?date)")
