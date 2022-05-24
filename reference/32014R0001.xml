@@ -209,12 +209,6 @@
             <PREFLABEL>7206 Europe</PREFLABEL>
          </WORK_IS_ABOUT_CONCEPT_EUROVOC_MTH>
       </WORK_IS_ABOUT_CONCEPT_EUROVOC>
-      <LASTMODIFICATIONDATE type="date">
-         <VALUE>2016-03-21T12:22:42.108+01:00</VALUE>
-         <YEAR>2016</YEAR>
-         <MONTH>03</MONTH>
-         <DAY>21</DAY>
-      </LASTMODIFICATIONDATE>
       <ID_SECTOR type="data">
          <VALUE>3</VALUE>
       </ID_SECTOR>
@@ -246,6 +240,12 @@
             </URI>
          </SAMEAS>
       </WORK_HAS_EXPRESSION>
+      <LASTMODIFICATIONDATE type="date">
+         <VALUE>2022-05-24T22:04:18.142+02:00</VALUE>
+         <YEAR>2022</YEAR>
+         <MONTH>05</MONTH>
+         <DAY>24</DAY>
+      </LASTMODIFICATIONDATE>
       <RESOURCE_LEGAL_CONSOLIDATED_BY_ACT_CONSOLIDATED type="link">
          <EMBEDDED_NOTICE>
             <WORK>
@@ -567,11 +567,11 @@
             </URI>
          </SAMEAS>
          <ANNOTATION>
-            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
             <TYPE_OF_LINK_TARGET>MS</TYPE_OF_LINK_TARGET>
             <REFERENCE_TO_MODIFIED_LOCATION>{AN|http://publications.europa.eu/resource/authority/fd_370/AN} III</REFERENCE_TO_MODIFIED_LOCATION>
-            <ROLE2>{R|http://publications.europa.eu/resource/authority/fd_375/R}</ROLE2>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
             <START_OF_VALIDITY>2014-01-01</START_OF_VALIDITY>
+            <ROLE2>{R|http://publications.europa.eu/resource/authority/fd_375/R}</ROLE2>
          </ANNOTATION>
       </RESOURCE_LEGAL_AMENDS_RESOURCE_LEGAL>
       <IDENTIFIER type="data">
@@ -632,9 +632,9 @@
          <MONTH>01</MONTH>
          <DAY>05</DAY>
          <ANNOTATION>
-            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
-            <COMMENT_ON_DATE>{DATPUB|http://publications.europa.eu/resource/authority/fd_335/DATPUB} +1 {V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
             <TYPE_OF_DATE>{EV|http://publications.europa.eu/resource/authority/fd_335/EV}</TYPE_OF_DATE>
+            <COMMENT_ON_DATE>{DATPUB|http://publications.europa.eu/resource/authority/fd_335/DATPUB} +1 {V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
          </ANNOTATION>
       </RESOURCE_LEGAL_DATE_ENTRY-INTO-FORCE>
       <RESOURCE_LEGAL_DATE_ENTRY-INTO-FORCE type="date">
@@ -643,9 +643,9 @@
          <MONTH>01</MONTH>
          <DAY>01</DAY>
          <ANNOTATION>
-            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
-            <COMMENT_ON_DATE>{V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
             <TYPE_OF_DATE>{MA|http://publications.europa.eu/resource/authority/fd_335/MA}</TYPE_OF_DATE>
+            <COMMENT_ON_DATE>{V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
          </ANNOTATION>
       </RESOURCE_LEGAL_DATE_ENTRY-INTO-FORCE>
       <IS_ABOUT type="concept">
@@ -784,10 +784,10 @@
             </URI>
          </SAMEAS>
          <ANNOTATION>
-            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
-            <COMMENT_ON_LEGAL_BASIS>A10P4</COMMENT_ON_LEGAL_BASIS>
-            <ARTICLE>10</ARTICLE>
             <PARAGRAPH>4</PARAGRAPH>
+            <ARTICLE>10</ARTICLE>
+            <COMMENT_ON_LEGAL_BASIS>A10P4</COMMENT_ON_LEGAL_BASIS>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
          </ANNOTATION>
       </RESOURCE_LEGAL_BASED_ON_RESOURCE_LEGAL>
       <WORK_HAS_EXPRESSION type="link">
@@ -944,16 +944,16 @@
          </URI>
          <SAMEAS>
             <URI>
-               <VALUE>http://publications.europa.eu/resource/celex/32014R0001.RON</VALUE>
-               <IDENTIFIER>32014R0001.RON</IDENTIFIER>
-               <TYPE>celex</TYPE>
+               <VALUE>http://publications.europa.eu/resource/oj/JOL_2014_001_R_0001_01.RON</VALUE>
+               <IDENTIFIER>JOL_2014_001_R_0001_01.RON</IDENTIFIER>
+               <TYPE>oj</TYPE>
             </URI>
          </SAMEAS>
          <SAMEAS>
             <URI>
-               <VALUE>http://publications.europa.eu/resource/oj/JOL_2014_001_R_0001_01.RON</VALUE>
-               <IDENTIFIER>JOL_2014_001_R_0001_01.RON</IDENTIFIER>
-               <TYPE>oj</TYPE>
+               <VALUE>http://publications.europa.eu/resource/celex/32014R0001.RON</VALUE>
+               <IDENTIFIER>32014R0001.RON</IDENTIFIER>
+               <TYPE>celex</TYPE>
             </URI>
          </SAMEAS>
          <SAMEAS>
@@ -1432,6 +1432,38 @@
             </URI>
          </SAMEAS>
       </WORK_HAS_EXPRESSION>
+      <RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER type="concept_level">
+         <RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_3 type="concept">
+            <URI>
+               <VALUE>http://publications.europa.eu/resource/authority/subject-matter/ITRA</VALUE>
+               <IDENTIFIER>ITRA</IDENTIFIER>
+               <TYPE>subject-matter</TYPE>
+            </URI>
+            <OP-CODE>ITRA</OP-CODE>
+            <IDENTIFIER>ITRA</IDENTIFIER>
+            <PREFLABEL>General trade related aspects</PREFLABEL>
+         </RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_3>
+         <RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_2 type="concept">
+            <URI>
+               <VALUE>http://publications.europa.eu/resource/authority/subject-matter/IATW</VALUE>
+               <IDENTIFIER>IATW</IDENTIFIER>
+               <TYPE>subject-matter</TYPE>
+            </URI>
+            <OP-CODE>IATW</OP-CODE>
+            <IDENTIFIER>IATW</IDENTIFIER>
+            <PREFLABEL>Annex 2 Provisions of Union law referred to in Article 5(4)</PREFLABEL>
+         </RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_2>
+         <RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_1 type="concept">
+            <URI>
+               <VALUE>http://publications.europa.eu/resource/authority/subject-matter/IENI</VALUE>
+               <IDENTIFIER>IENI</IDENTIFIER>
+               <TYPE>subject-matter</TYPE>
+            </URI>
+            <OP-CODE>IENI</OP-CODE>
+            <IDENTIFIER>IENI</IDENTIFIER>
+            <PREFLABEL>Protocol on Ireland/Northern Ireland</PREFLABEL>
+         </RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_1>
+      </RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER>
       <WORK_IS_ABOUT_CONCEPT_EUROVOC type="concept_facet">
          <WORK_IS_ABOUT_CONCEPT_EUROVOC_CONCEPT type="concept">
             <URI>
@@ -2586,6 +2618,12 @@
                <TYPE>oj</TYPE>
             </URI>
          </SAMEAS>
+         <ANNOTATION>
+            <PARAGRAPH>4</PARAGRAPH>
+            <ARTICLE>10</ARTICLE>
+            <COMMENT_ON_LEGAL_BASIS>A10P4</COMMENT_ON_LEGAL_BASIS>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+         </ANNOTATION>
       </BASED_ON>
       <IS_ABOUT type="concept">
          <URI>
@@ -2656,12 +2694,22 @@
          <YEAR>2014</YEAR>
          <MONTH>01</MONTH>
          <DAY>01</DAY>
+         <ANNOTATION>
+            <TYPE_OF_DATE>{MA|http://publications.europa.eu/resource/authority/fd_335/MA}</TYPE_OF_DATE>
+            <COMMENT_ON_DATE>{V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+         </ANNOTATION>
       </DATE>
       <DATE type="date">
          <VALUE>2014-01-05</VALUE>
          <YEAR>2014</YEAR>
          <MONTH>01</MONTH>
          <DAY>05</DAY>
+         <ANNOTATION>
+            <TYPE_OF_DATE>{EV|http://publications.europa.eu/resource/authority/fd_335/EV}</TYPE_OF_DATE>
+            <COMMENT_ON_DATE>{DATPUB|http://publications.europa.eu/resource/authority/fd_335/DATPUB} +1 {V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+         </ANNOTATION>
       </DATE>
       <DATE type="date">
          <VALUE>2013-08-28</VALUE>
@@ -2703,6 +2751,16 @@
          <MONTH>01</MONTH>
          <DAY>04</DAY>
       </DATE>
+      <IS_ABOUT type="concept">
+         <URI>
+            <VALUE>http://publications.europa.eu/resource/authority/subject-matter/ITRA</VALUE>
+            <IDENTIFIER>ITRA</IDENTIFIER>
+            <TYPE>subject-matter</TYPE>
+         </URI>
+         <OP-CODE>ITRA</OP-CODE>
+         <IDENTIFIER>ITRA</IDENTIFIER>
+         <PREFLABEL>General trade related aspects</PREFLABEL>
+      </IS_ABOUT>
       <RESOURCE_LEGAL_PUBLISHED_IN_OFFICIAL-JOURNAL type="link">
          <EMBEDDED_NOTICE>
             <WORK>
