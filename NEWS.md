@@ -2,7 +2,11 @@
 
 ## Major changes
 
+- new feature: `elx_make_query(include_proposal = TRUE)` retrieves the CELEX of a proposal of a requested legal act
 - the returned results from `elx_make_query()` no longer include previous versions of the same record (new versions typically fix incorrect or missing metadata). This reduces the number of duplicates previously appearing in the results
+
+## Minor changes
+- `elx_make_query(include_author = TRUE)` now returns the human-readable label (institutional authors) instead of URI
 
 # eurlex 0.4.1
 

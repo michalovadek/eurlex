@@ -30,6 +30,7 @@ elx_make_query(
   include_advocate_general = FALSE,
   include_court_formation = FALSE,
   include_court_scholarship = FALSE,
+  include_proposal = FALSE,
   order = FALSE,
   limit = NULL
 )
@@ -82,6 +83,8 @@ elx_make_query(
 \item{include_court_formation}{If `TRUE`, results include the court formation}
 
 \item{include_court_scholarship}{If `TRUE`, results include court-curated relevant scholarship}
+
+\item{include_proposal}{If `TRUE`, results include the CELEX of the proposal of the adopted legal act}
 
 \item{order}{Order results by ids}
 

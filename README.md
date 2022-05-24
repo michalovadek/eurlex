@@ -43,6 +43,7 @@ Please consider contributing to the maintenance and development of the package b
 
 ### eurlex 0.4.2
 
+- new feature: `elx_make_query(include_proposal = TRUE)` retrieves the CELEX of a proposal of a requested legal act
 - the returned results from `elx_make_query()` no longer include previous versions of the same record (new versions typically fix incorrect or missing metadata)
 
 ### eurlex 0.4.1

@@ -28,6 +28,7 @@
 #' @param include_judge_rapporteur If `TRUE`, results include the Judge-Rapporteur
 #' @param include_court_formation If `TRUE`, results include the court formation
 #' @param include_court_scholarship If `TRUE`, results include court-curated relevant scholarship
+#' @param include_proposal If `TRUE`, results include the CELEX of the proposal of the adopted legal act
 #' @param include_directory If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param order Order results by ids
@@ -52,6 +53,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                            include_ecli = FALSE, include_judge_rapporteur = FALSE,
                            include_advocate_general = FALSE, include_court_formation = FALSE,
                            include_court_scholarship = FALSE,
+                           include_proposal = FALSE,
                            order = FALSE, limit = NULL){
 
   if (missing(resource_type)) stop("'resource_type' must be defined")
@@ -197,6 +199,12 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   if (include_court_scholarship == TRUE){
     
     query <- paste(query, "?scholarship", sep = " ")
+    
+  }
+  
+  if (include_proposal == TRUE){
+    
+    query <- paste(query, "?proposal", sep = " ")
     
   }
 
@@ -425,7 +433,8 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   if (include_author == TRUE){
 
-    query <- paste(query, "OPTIONAL{?work cdm:work_created_by_agent ?author.}")
+    query <- paste(query, "OPTIONAL{?work cdm:work_created_by_agent ?authorx.
+                   ?authorx skos:prefLabel ?author. FILTER(lang(?author)='en')}.")
 
   }
 
@@ -446,14 +455,14 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   if (include_advocate_general == TRUE){
     
     query <- paste(query, "OPTIONAL{?work cdm:case-law_delivered_by_advocate-general ?agx.
-                   ?agx cdm:agent_name ?ag}")
+                   ?agx cdm:agent_name ?ag.}")
     
   }
   
   if (include_judge_rapporteur == TRUE){
     
     query <- paste(query, "OPTIONAL{?work cdm:case-law_delivered_by_judge ?jrx.
-                   ?jrx cdm:agent_name ?jr}")
+                   ?jrx cdm:agent_name ?jr.}")
     
   }
   
@@ -467,6 +476,13 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   if (include_court_scholarship == TRUE){
     
     query <- paste(query, "OPTIONAL{?work cdm:case-law_article_journal_related ?scholarship.}")
+    
+  }
+  
+  if (include_proposal == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_adopts_resource_legal ?adoptedx.
+                   ?adoptedx cdm:resource_legal_id_celex ?proposal.}")
     
   }
 
