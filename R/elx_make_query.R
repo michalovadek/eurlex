@@ -39,7 +39,7 @@
 #' @examples
 #' elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
 #' elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
-#' elx_make_query(resource_type = "caselaw")
+#' elx_make_query(resource_type = "any", sector = 2)
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
 
 elx_make_query <- function(resource_type = c("any","directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl"),
