@@ -569,9 +569,9 @@
          <ANNOTATION>
             <TYPE_OF_LINK_TARGET>MS</TYPE_OF_LINK_TARGET>
             <REFERENCE_TO_MODIFIED_LOCATION>{AN|http://publications.europa.eu/resource/authority/fd_370/AN} III</REFERENCE_TO_MODIFIED_LOCATION>
-            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
             <START_OF_VALIDITY>2014-01-01</START_OF_VALIDITY>
             <ROLE2>{R|http://publications.europa.eu/resource/authority/fd_375/R}</ROLE2>
+            <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
          </ANNOTATION>
       </RESOURCE_LEGAL_AMENDS_RESOURCE_LEGAL>
       <IDENTIFIER type="data">
