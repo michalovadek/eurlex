@@ -7,6 +7,8 @@ The `eurlex` R package attempts to significantly reduce the overhead associated 
 
 See the [vignette](https://michalovadek.github.io/eurlex/articles/eurlexpkg.html) for a walkthrough on how to use the package. Check function documentation for most up-to-date overview of features. Example use cases are shown in this [paper](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150).
 
+You can use `eurlex` to create automatically updated overviews of EU decision-making activity, as shown [here](https://michalovadek.github.io/eulaw/).
+
 ## Installation
 Install from CRAN via `install.packages("eurlex")`.
 
