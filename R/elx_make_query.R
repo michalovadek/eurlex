@@ -67,7 +67,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
     stop("Resource and variable requested are incompatible.", call. = TRUE)
   }
 
-  if (include_date_transpos == TRUE & resource_type!="directive"){
+  if (include_date_transpos == TRUE & !resource_type %in% c("any","directive")){
     stop("Transposition date currently only available for directives.", call. = TRUE)
   }
 
@@ -88,31 +88,31 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   if (include_date == TRUE){
 
-    query <- paste(query, "str(?date)", sep = " ")
+    query <- paste(query, "?date", sep = " ")
 
   }
 
   if (include_date_force == TRUE){
 
-    query <- paste(query, "str(?dateforce)", sep = " ")
+    query <- paste(query, "?dateforce", sep = " ")
 
   }
 
   if (include_date_endvalid == TRUE){
 
-    query <- paste(query, "str(?dateendvalid)", sep = " ")
+    query <- paste(query, "?dateendvalid", sep = " ")
 
   }
 
   if (include_date_transpos == TRUE){
 
-    query <- paste(query, "str(?datetranspos)", sep = " ")
+    query <- paste(query, "?datetranspos", sep = " ")
 
   }
 
   if (include_date_lodged == TRUE){
 
-    query <- paste(query, "str(?datelodged)", sep = " ")
+    query <- paste(query, "?datelodged", sep = " ")
 
   }
 
@@ -494,7 +494,8 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   if (include_directory == TRUE){
 
-    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_is_about_concept_directory-code ?directory.}")
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_is_about_concept_directory-code ?directoryx.
+                   ?directoryx skos:prefLabel ?directory. FILTER(lang(?directory)='en').}")
 
   }
 
@@ -509,11 +510,13 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
     query,
     'FILTER not exists{?work cdm:do_not_index "true"^^<http://www.w3.org/2001/XMLSchema#boolean>}.'
   )
-
+  
+  # order
   if (order == TRUE){
     query <- paste(query, "} order by str(?date)")
   } else {query <- paste(query, "}")}
 
+  # limit
   if (!is.null(limit) & is.integer(as.integer(limit))){
     query <- paste(query, "limit", limit, sep = " ")
   }

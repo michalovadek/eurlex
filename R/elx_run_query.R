@@ -124,7 +124,7 @@ elx_parse_xml <- function(sparql_response = ""){
 
   if (identical(unique(res_cols), c("eurovoc","labels"))){ # for use in elx_label_eurovoc
 
-    out <- dplyr::tibble(res_cols, res_text) %>%
+    out <- data.frame(res_cols, res_text) %>%
       dplyr::mutate(is_work = dplyr::if_else(res_cols=="eurovoc", T, NA)) %>%
       dplyr::group_by(.data$is_work) %>%
       dplyr::mutate(triplet = dplyr::row_number(),
@@ -137,7 +137,7 @@ elx_parse_xml <- function(sparql_response = ""){
 
   } else {
 
-    out <- dplyr::tibble(res_cols, res_text) %>%
+    out <- data.frame(res_cols, res_text) %>%
       dplyr::mutate(is_work = dplyr::if_else(res_cols=="work", T, NA)) %>%
       dplyr::group_by(.data$is_work) %>%
       dplyr::mutate(triplet = dplyr::row_number(),
@@ -153,4 +153,3 @@ elx_parse_xml <- function(sparql_response = ""){
   return(out)
 
 }
-

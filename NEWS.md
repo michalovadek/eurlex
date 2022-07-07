@@ -1,3 +1,14 @@
+# eurlex 0.4.3
+
+## Major changes
+
+- all date variables through `elx_make_query(include_... = TRUE)` are now properly named
+
+## Minor changes
+
+- `elx_make_query(include_directory = TRUE)` now retrieves the directory code instead of URI
+- very minor clean up of internals
+
 # eurlex 0.4.2
 
 ## Major changes
@@ -6,6 +17,7 @@
 - the returned results from `elx_make_query()` no longer include previous versions of the same record (new versions typically fix incorrect or missing metadata). This reduces the number of duplicates previously appearing in the results
 
 ## Minor changes
+
 - `elx_make_query(include_author = TRUE)` now returns the human-readable label (institutional authors) instead of URI
 
 # eurlex 0.4.1
