@@ -515,7 +515,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   # order
   if (order == TRUE){
     query <- paste(query, "} order by str(?date)")
-  } else {query <- paste(query, "}")}
+  } else {query <- paste(query, "}")} 
 
   # limit
   if (!is.null(limit) & is.integer(as.integer(limit))){
