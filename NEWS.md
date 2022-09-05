@@ -2,12 +2,12 @@
 
 ## Major changes
 
-- all date variables through `elx_make_query(include_... = TRUE)` are now properly named
+- all date variables retrieved through `elx_make_query(include_... = TRUE)` are now properly named
 
 ## Minor changes
 
 - `elx_make_query(include_directory = TRUE)` now retrieves the directory code instead of URI
-- very minor clean up of internals
+- minor clean up of internals
 
 # eurlex 0.4.2
 
@@ -24,7 +24,7 @@
 
 ## Major changes
 
-- `elx_fetch_data(type = "notice", notice = c("tree","branch", "object"))` now mirrors the behaviour of `elx_download_xml()` but instead of saving to path givess access to XML notice in R
+- `elx_fetch_data(type = "notice", notice = c("tree","branch", "object"))` now mirrors the behaviour of `elx_download_xml()` but instead of saving to path gives access to XML notice in R
 - retrieve data on the Judge-Rapporteur, Advocate-General, court formation and court-curated scholarship using new `include_` options in `elx_make_query()`
 
 ## Minor changes

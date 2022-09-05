@@ -25,7 +25,7 @@ Imports:
     readr,
     pdftools,
     antiword
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Suggests:
     knitr,
     rmarkdown,

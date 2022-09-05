@@ -20,12 +20,12 @@ elx_make_query(
   include_date_lodged = FALSE,
   include_force = FALSE,
   include_eurovoc = FALSE,
-  include_author = FALSE,
   include_citations = FALSE,
-  include_court_procedure = FALSE,
+  include_author = FALSE,
   include_directory = FALSE,
   include_sector = FALSE,
   include_ecli = FALSE,
+  include_court_procedure = FALSE,
   include_judge_rapporteur = FALSE,
   include_advocate_general = FALSE,
   include_court_formation = FALSE,
@@ -64,17 +64,17 @@ elx_make_query(
 
 \item{include_eurovoc}{If `TRUE`, results include EuroVoc descriptors of subject matter}
 
-\item{include_author}{If `TRUE`, results include document author(s)}
-
 \item{include_citations}{If `TRUE`, results include citations (CELEX-labelled)}
 
-\item{include_court_procedure}{If `TRUE`, results include type of court procedure and outcome}
+\item{include_author}{If `TRUE`, results include document author(s)}
 
 \item{include_directory}{If `TRUE`, results include the Eur-Lex directory code}
 
 \item{include_sector}{If `TRUE`, results include the Eur-Lex sector code}
 
 \item{include_ecli}{If `TRUE`, results include the ECLI identifier for court documents}
+
+\item{include_court_procedure}{If `TRUE`, results include type of court procedure and outcome}
 
 \item{include_judge_rapporteur}{If `TRUE`, results include the Judge-Rapporteur}
 

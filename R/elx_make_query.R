@@ -20,17 +20,17 @@
 #' @param include_lbs If `TRUE`, results include legal bases of legislation
 #' @param include_force If `TRUE`, results include whether legislation is in force
 #' @param include_eurovoc If `TRUE`, results include EuroVoc descriptors of subject matter
-#' @param include_author If `TRUE`, results include document author(s)
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
-#' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
+#' @param include_author If `TRUE`, results include document author(s)
+#' @param include_directory If `TRUE`, results include the Eur-Lex directory code
+#' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param include_ecli If `TRUE`, results include the ECLI identifier for court documents
-#' @param include_advocate_general If `TRUE`, results include the Advocate General
+#' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
 #' @param include_judge_rapporteur If `TRUE`, results include the Judge-Rapporteur
+#' @param include_advocate_general If `TRUE`, results include the Advocate General
 #' @param include_court_formation If `TRUE`, results include the court formation
 #' @param include_court_scholarship If `TRUE`, results include court-curated relevant scholarship
 #' @param include_proposal If `TRUE`, results include the CELEX of the proposal of the adopted legal act
-#' @param include_directory If `TRUE`, results include the Eur-Lex directory code
-#' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param order Order results by ids
 #' @param limit Limit the number of results, for testing purposes mainly
 #' @return
@@ -50,9 +50,10 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                            include_force = FALSE, include_eurovoc = FALSE,
                            include_citations = FALSE, include_author = FALSE,
                            include_directory = FALSE, include_sector = FALSE,
-                           include_ecli = FALSE, include_judge_rapporteur = FALSE,
-                           include_court_procedure = FALSE,
-                           include_advocate_general = FALSE, include_court_formation = FALSE,
+                           include_ecli = FALSE, include_court_procedure = FALSE,
+                           include_judge_rapporteur = FALSE,
+                           include_advocate_general = FALSE,
+                           include_court_formation = FALSE,
                            include_court_scholarship = FALSE,
                            include_proposal = FALSE,
                            order = FALSE, limit = NULL){
@@ -367,7 +368,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
     query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/", manual_type, ">)", sep = "")
   }
 
-  if (include_corrigenda == FALSE & resource_type!="caselaw"){
+  if (include_corrigenda == FALSE){
     query <- paste(query,"\n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>}", sep = " ")
   }
 
@@ -407,7 +408,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   }
 
-  if (include_lbs == TRUE & resource_type!="caselaw"){
+  if (include_lbs == TRUE){
 
     query <- paste(query, "OPTIONAL{?work cdm:resource_legal_based_on_resource_legal ?lbs.
     ?lbs cdm:resource_legal_id_celex ?lbcelex.
@@ -506,7 +507,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   }
   
-  # add filter to hide versioned works (keeps only latest)
+  # add filter to hide versioned works (keeps only latest record if several)
   query <- paste(
     query,
     'FILTER not exists{?work cdm:do_not_index "true"^^<http://www.w3.org/2001/XMLSchema#boolean>}.'

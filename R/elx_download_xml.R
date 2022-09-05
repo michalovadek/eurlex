@@ -15,7 +15,7 @@
 #' Path of downloaded file (invisibly) if server validates request (http status code has to be 200). For more information about notices, see Cellar documentation.
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "object")
 #' }
 
