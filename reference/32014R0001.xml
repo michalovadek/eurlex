@@ -240,12 +240,6 @@
             </URI>
          </SAMEAS>
       </WORK_HAS_EXPRESSION>
-      <LASTMODIFICATIONDATE type="date">
-         <VALUE>2022-05-24T22:04:18.142+02:00</VALUE>
-         <YEAR>2022</YEAR>
-         <MONTH>05</MONTH>
-         <DAY>24</DAY>
-      </LASTMODIFICATIONDATE>
       <RESOURCE_LEGAL_CONSOLIDATED_BY_ACT_CONSOLIDATED type="link">
          <EMBEDDED_NOTICE>
             <WORK>
@@ -478,6 +472,16 @@
       <RESOURCE_LEGAL_COMMENT_INTERNAL type="data">
          <VALUE>MAN2</VALUE>
       </RESOURCE_LEGAL_COMMENT_INTERNAL>
+      <PART_OF type="concept">
+         <URI>
+            <VALUE>http://publications.europa.eu/resource/authority/document-collection/JO</VALUE>
+            <IDENTIFIER>JO</IDENTIFIER>
+            <TYPE>document-collection</TYPE>
+         </URI>
+         <OP-CODE>JO</OP-CODE>
+         <IDENTIFIER>JO</IDENTIFIER>
+         <PREFLABEL>JO</PREFLABEL>
+      </PART_OF>
       <BASED_ON type="link">
          <URI>
             <VALUE>http://publications.europa.eu/resource/cellar/e6ba5919-a550-49fd-8679-a25ef2908ee6</VALUE>
@@ -567,11 +571,11 @@
             </URI>
          </SAMEAS>
          <ANNOTATION>
-            <TYPE_OF_LINK_TARGET>MS</TYPE_OF_LINK_TARGET>
             <REFERENCE_TO_MODIFIED_LOCATION>{AN|http://publications.europa.eu/resource/authority/fd_370/AN} III</REFERENCE_TO_MODIFIED_LOCATION>
-            <START_OF_VALIDITY>2014-01-01</START_OF_VALIDITY>
-            <ROLE2>{R|http://publications.europa.eu/resource/authority/fd_375/R}</ROLE2>
             <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+            <ROLE2>{R|http://publications.europa.eu/resource/authority/fd_375/R}</ROLE2>
+            <START_OF_VALIDITY>2014-01-01</START_OF_VALIDITY>
+            <TYPE_OF_LINK_TARGET>MS</TYPE_OF_LINK_TARGET>
          </ANNOTATION>
       </RESOURCE_LEGAL_AMENDS_RESOURCE_LEGAL>
       <IDENTIFIER type="data">
@@ -594,47 +598,21 @@
          <ALTLABEL>European Commission</ALTLABEL>
          <ALTLABEL>Commission</ALTLABEL>
       </CREATED_BY>
-      <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE type="concept_level">
-         <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_3 type="concept">
-            <URI>
-               <VALUE>http://publications.europa.eu/resource/authority/fd_555/117030</VALUE>
-               <IDENTIFIER>117030</IDENTIFIER>
-               <TYPE>fd_555</TYPE>
-            </URI>
-            <OP-CODE>117030</OP-CODE>
-            <IDENTIFIER>117030</IDENTIFIER>
-            <PREFLABEL>Generalised system of preferences</PREFLABEL>
-         </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_3>
-         <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_2 type="concept">
-            <URI>
-               <VALUE>http://publications.europa.eu/resource/authority/fd_555/1170</VALUE>
-               <IDENTIFIER>1170</IDENTIFIER>
-               <TYPE>fd_555</TYPE>
-            </URI>
-            <OP-CODE>1170</OP-CODE>
-            <IDENTIFIER>1170</IDENTIFIER>
-            <PREFLABEL>Development policy</PREFLABEL>
-         </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_2>
-         <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_1 type="concept">
-            <URI>
-               <VALUE>http://publications.europa.eu/resource/authority/fd_555/11</VALUE>
-               <IDENTIFIER>11</IDENTIFIER>
-               <TYPE>fd_555</TYPE>
-            </URI>
-            <OP-CODE>11</OP-CODE>
-            <IDENTIFIER>11</IDENTIFIER>
-            <PREFLABEL>External relations</PREFLABEL>
-         </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_1>
-      </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE>
+      <LASTMODIFICATIONDATE type="date">
+         <VALUE>2022-08-03T12:28:15.733+02:00</VALUE>
+         <YEAR>2022</YEAR>
+         <MONTH>08</MONTH>
+         <DAY>03</DAY>
+      </LASTMODIFICATIONDATE>
       <RESOURCE_LEGAL_DATE_ENTRY-INTO-FORCE type="date">
          <VALUE>2014-01-05</VALUE>
          <YEAR>2014</YEAR>
          <MONTH>01</MONTH>
          <DAY>05</DAY>
          <ANNOTATION>
-            <TYPE_OF_DATE>{EV|http://publications.europa.eu/resource/authority/fd_335/EV}</TYPE_OF_DATE>
-            <COMMENT_ON_DATE>{DATPUB|http://publications.europa.eu/resource/authority/fd_335/DATPUB} +1 {V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
             <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+            <COMMENT_ON_DATE>{DATPUB|http://publications.europa.eu/resource/authority/fd_335/DATPUB} +1 {V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <TYPE_OF_DATE>{EV|http://publications.europa.eu/resource/authority/fd_335/EV}</TYPE_OF_DATE>
          </ANNOTATION>
       </RESOURCE_LEGAL_DATE_ENTRY-INTO-FORCE>
       <RESOURCE_LEGAL_DATE_ENTRY-INTO-FORCE type="date">
@@ -643,9 +621,9 @@
          <MONTH>01</MONTH>
          <DAY>01</DAY>
          <ANNOTATION>
-            <TYPE_OF_DATE>{MA|http://publications.europa.eu/resource/authority/fd_335/MA}</TYPE_OF_DATE>
-            <COMMENT_ON_DATE>{V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
             <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+            <COMMENT_ON_DATE>{V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <TYPE_OF_DATE>{MA|http://publications.europa.eu/resource/authority/fd_335/MA}</TYPE_OF_DATE>
          </ANNOTATION>
       </RESOURCE_LEGAL_DATE_ENTRY-INTO-FORCE>
       <IS_ABOUT type="concept">
@@ -784,10 +762,10 @@
             </URI>
          </SAMEAS>
          <ANNOTATION>
-            <PARAGRAPH>4</PARAGRAPH>
-            <ARTICLE>10</ARTICLE>
-            <COMMENT_ON_LEGAL_BASIS>A10P4</COMMENT_ON_LEGAL_BASIS>
             <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+            <COMMENT_ON_LEGAL_BASIS>A10P4</COMMENT_ON_LEGAL_BASIS>
+            <ARTICLE>10</ARTICLE>
+            <PARAGRAPH>4</PARAGRAPH>
          </ANNOTATION>
       </RESOURCE_LEGAL_BASED_ON_RESOURCE_LEGAL>
       <WORK_HAS_EXPRESSION type="link">
@@ -974,16 +952,6 @@
          <PREFLABEL>Costa Rica</PREFLABEL>
          <ALTLABEL>Republic of Costa Rica</ALTLABEL>
       </IS_ABOUT>
-      <RESOURCE_LEGAL_HAS_TYPE_ACT_CONCEPT_TYPE_ACT type="concept">
-         <URI>
-            <VALUE>http://publications.europa.eu/resource/authority/fd_030/REGDEL</VALUE>
-            <IDENTIFIER>REGDEL</IDENTIFIER>
-            <TYPE>fd_030</TYPE>
-         </URI>
-         <OP-CODE>REGDEL</OP-CODE>
-         <IDENTIFIER>REGDEL</IDENTIFIER>
-         <PREFLABEL>Delegated regulation</PREFLABEL>
-      </RESOURCE_LEGAL_HAS_TYPE_ACT_CONCEPT_TYPE_ACT>
       <IS_ABOUT type="concept">
          <URI>
             <VALUE>http://eurovoc.europa.eu/2231</VALUE>
@@ -1132,16 +1100,18 @@
             </URI>
          </SAMEAS>
       </RESOURCE_LEGAL_CONSOLIDATED_BY_ACT_CONSOLIDATED>
-      <IS_ABOUT type="concept">
-         <URI>
-            <VALUE>http://publications.europa.eu/resource/authority/fd_555/117030</VALUE>
-            <IDENTIFIER>117030</IDENTIFIER>
-            <TYPE>fd_555</TYPE>
-         </URI>
-         <OP-CODE>117030</OP-CODE>
-         <IDENTIFIER>117030</IDENTIFIER>
-         <PREFLABEL>Generalised system of preferences</PREFLABEL>
-      </IS_ABOUT>
+      <RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER type="concept_level">
+         <RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_1 type="concept">
+            <URI>
+               <VALUE>http://publications.europa.eu/resource/authority/subject-matter/RPRE</VALUE>
+               <IDENTIFIER>RPRE</IDENTIFIER>
+               <TYPE>subject-matter</TYPE>
+            </URI>
+            <OP-CODE>RPRE</OP-CODE>
+            <IDENTIFIER>RPRE</IDENTIFIER>
+            <PREFLABEL>Preferential systems</PREFLABEL>
+         </RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER_1>
+      </RESOURCE_LEGAL_IS_ABOUT_SUBJECT-MATTER>
       <WORK_IS_ABOUT_CONCEPT_EUROVOC type="concept_facet">
          <WORK_IS_ABOUT_CONCEPT_EUROVOC_CONCEPT type="concept">
             <URI>
@@ -1779,6 +1749,38 @@
             </URI>
          </SAMEAS>
       </WORK_HAS_EXPRESSION>
+      <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE type="concept_level">
+         <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_3 type="concept">
+            <URI>
+               <VALUE>http://publications.europa.eu/resource/authority/dir-eu-legal-act/117030</VALUE>
+               <IDENTIFIER>117030</IDENTIFIER>
+               <TYPE>dir-eu-legal-act</TYPE>
+            </URI>
+            <OP-CODE>117030</OP-CODE>
+            <IDENTIFIER>117030</IDENTIFIER>
+            <PREFLABEL>Generalised system of preferences</PREFLABEL>
+         </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_3>
+         <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_2 type="concept">
+            <URI>
+               <VALUE>http://publications.europa.eu/resource/authority/dir-eu-legal-act/1170</VALUE>
+               <IDENTIFIER>1170</IDENTIFIER>
+               <TYPE>dir-eu-legal-act</TYPE>
+            </URI>
+            <OP-CODE>1170</OP-CODE>
+            <IDENTIFIER>1170</IDENTIFIER>
+            <PREFLABEL>Development policy</PREFLABEL>
+         </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_2>
+         <RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_1 type="concept">
+            <URI>
+               <VALUE>http://publications.europa.eu/resource/authority/dir-eu-legal-act/11</VALUE>
+               <IDENTIFIER>11</IDENTIFIER>
+               <TYPE>dir-eu-legal-act</TYPE>
+            </URI>
+            <OP-CODE>11</OP-CODE>
+            <IDENTIFIER>11</IDENTIFIER>
+            <PREFLABEL>External relations</PREFLABEL>
+         </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE_1>
+      </RESOURCE_LEGAL_IS_ABOUT_CONCEPT_DIRECTORY-CODE>
       <RESOURCE_LEGAL_NUMBER_NATURAL type="data">
          <VALUE>1</VALUE>
       </RESOURCE_LEGAL_NUMBER_NATURAL>
@@ -2028,6 +2030,16 @@
       <RESOURCE_LEGAL_YEAR type="data">
          <VALUE>2014</VALUE>
       </RESOURCE_LEGAL_YEAR>
+      <PART_OF type="concept">
+         <URI>
+            <VALUE>http://publications.europa.eu/resource/authority/document-collection/CELEX</VALUE>
+            <IDENTIFIER>CELEX</IDENTIFIER>
+            <TYPE>document-collection</TYPE>
+         </URI>
+         <OP-CODE>CELEX</OP-CODE>
+         <IDENTIFIER>CELEX</IDENTIFIER>
+         <PREFLABEL>CELEX</PREFLABEL>
+      </PART_OF>
       <IS_ABOUT type="concept">
          <URI>
             <VALUE>http://eurovoc.europa.eu/5445</VALUE>
@@ -2283,6 +2295,16 @@
             </URI>
          </SAMEAS>
       </RESOURCE_LEGAL_CONSOLIDATED_BY_ACT_CONSOLIDATED>
+      <IS_ABOUT type="concept">
+         <URI>
+            <VALUE>http://publications.europa.eu/resource/authority/dir-eu-legal-act/117030</VALUE>
+            <IDENTIFIER>117030</IDENTIFIER>
+            <TYPE>dir-eu-legal-act</TYPE>
+         </URI>
+         <OP-CODE>117030</OP-CODE>
+         <IDENTIFIER>117030</IDENTIFIER>
+         <PREFLABEL>Generalised system of preferences</PREFLABEL>
+      </IS_ABOUT>
       <WORK_IS_ABOUT_CONCEPT_EUROVOC type="concept_facet">
          <WORK_IS_ABOUT_CONCEPT_EUROVOC_CONCEPT type="concept">
             <URI>
@@ -2619,10 +2641,10 @@
             </URI>
          </SAMEAS>
          <ANNOTATION>
-            <PARAGRAPH>4</PARAGRAPH>
-            <ARTICLE>10</ARTICLE>
-            <COMMENT_ON_LEGAL_BASIS>A10P4</COMMENT_ON_LEGAL_BASIS>
             <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+            <COMMENT_ON_LEGAL_BASIS>A10P4</COMMENT_ON_LEGAL_BASIS>
+            <ARTICLE>10</ARTICLE>
+            <PARAGRAPH>4</PARAGRAPH>
          </ANNOTATION>
       </BASED_ON>
       <IS_ABOUT type="concept">
@@ -2663,6 +2685,16 @@
       </IDENTIFIER>
       <IS_ABOUT type="concept">
          <URI>
+            <VALUE>http://publications.europa.eu/resource/authority/subject-matter/RPRE</VALUE>
+            <IDENTIFIER>RPRE</IDENTIFIER>
+            <TYPE>subject-matter</TYPE>
+         </URI>
+         <OP-CODE>RPRE</OP-CODE>
+         <IDENTIFIER>RPRE</IDENTIFIER>
+         <PREFLABEL>Preferential systems</PREFLABEL>
+      </IS_ABOUT>
+      <IS_ABOUT type="concept">
+         <URI>
             <VALUE>http://eurovoc.europa.eu/4385</VALUE>
             <IDENTIFIER>4385</IDENTIFIER>
             <TYPE>EUROVOC</TYPE>
@@ -2695,9 +2727,9 @@
          <MONTH>01</MONTH>
          <DAY>01</DAY>
          <ANNOTATION>
-            <TYPE_OF_DATE>{MA|http://publications.europa.eu/resource/authority/fd_335/MA}</TYPE_OF_DATE>
-            <COMMENT_ON_DATE>{V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
             <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+            <COMMENT_ON_DATE>{V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <TYPE_OF_DATE>{MA|http://publications.europa.eu/resource/authority/fd_335/MA}</TYPE_OF_DATE>
          </ANNOTATION>
       </DATE>
       <DATE type="date">
@@ -2706,9 +2738,9 @@
          <MONTH>01</MONTH>
          <DAY>05</DAY>
          <ANNOTATION>
-            <TYPE_OF_DATE>{EV|http://publications.europa.eu/resource/authority/fd_335/EV}</TYPE_OF_DATE>
-            <COMMENT_ON_DATE>{DATPUB|http://publications.europa.eu/resource/authority/fd_335/DATPUB} +1 {V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
             <BUILD_INFO>cdm:CDM_2.1.7  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.2.0 builddate:26/06/2014 10:51:16</BUILD_INFO>
+            <COMMENT_ON_DATE>{DATPUB|http://publications.europa.eu/resource/authority/fd_335/DATPUB} +1 {V|http://publications.europa.eu/resource/authority/fd_335/V} {ART|http://publications.europa.eu/resource/authority/fd_335/ART} 2</COMMENT_ON_DATE>
+            <TYPE_OF_DATE>{EV|http://publications.europa.eu/resource/authority/fd_335/EV}</TYPE_OF_DATE>
          </ANNOTATION>
       </DATE>
       <DATE type="date">
