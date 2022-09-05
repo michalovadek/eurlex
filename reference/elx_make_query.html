@@ -77,12 +77,12 @@ Note that not all resource types are compatible with default parameter values.</
 <span>  include_date_lodged <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_eurovoc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_author <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_citations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_court_procedure <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_author <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_directory <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_sector <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_ecli <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_court_procedure <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_judge_rapporteur <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_advocate_general <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_court_formation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -151,16 +151,12 @@ Note that not all resource types are compatible with default parameter values.</
 <dd><p>If `TRUE`, results include EuroVoc descriptors of subject matter</p></dd>
 
 
-<dt>include_author</dt>
-<dd><p>If `TRUE`, results include document author(s)</p></dd>
-
-
 <dt>include_citations</dt>
 <dd><p>If `TRUE`, results include citations (CELEX-labelled)</p></dd>
 
 
-<dt>include_court_procedure</dt>
-<dd><p>If `TRUE`, results include type of court procedure and outcome</p></dd>
+<dt>include_author</dt>
+<dd><p>If `TRUE`, results include document author(s)</p></dd>
 
 
 <dt>include_directory</dt>
@@ -173,6 +169,10 @@ Note that not all resource types are compatible with default parameter values.</
 
 <dt>include_ecli</dt>
 <dd><p>If `TRUE`, results include the ECLI identifier for court documents</p></dd>
+
+
+<dt>include_court_procedure</dt>
+<dd><p>If `TRUE`, results include type of court procedure and outcome</p></dd>
 
 
 <dt>include_judge_rapporteur</dt>
