@@ -21,7 +21,7 @@
 #' @param include_force If `TRUE`, results include whether legislation is in force
 #' @param include_eurovoc If `TRUE`, results include EuroVoc descriptors of subject matter
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
-#' @param include_citations_detailed If `TRUE`, results include citations (CELEX-labelled) with additional precision
+#' @param include_citations_detailed If `TRUE`, results include citations (CELEX-labelled) with additional details
 #' @param include_author If `TRUE`, results include document author(s)
 #' @param include_directory If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code

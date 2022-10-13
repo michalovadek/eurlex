@@ -21,6 +21,7 @@ elx_make_query(
   include_force = FALSE,
   include_eurovoc = FALSE,
   include_citations = FALSE,
+  include_citations_detailed = FALSE,
   include_author = FALSE,
   include_directory = FALSE,
   include_sector = FALSE,
@@ -65,6 +66,8 @@ elx_make_query(
 \item{include_eurovoc}{If `TRUE`, results include EuroVoc descriptors of subject matter}
 
 \item{include_citations}{If `TRUE`, results include citations (CELEX-labelled)}
+
+\item{include_citations_detailed}{If `TRUE`, results include citations (CELEX-labelled) with additional details}
 
 \item{include_author}{If `TRUE`, results include document author(s)}
 
