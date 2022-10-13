@@ -254,14 +254,14 @@
 <span><span class="co">#   elx_run_query()</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,393 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,397 × 3</span></span></span>
 <span><span class="co">#&gt;   work                                                               type  celex</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> http://publications.europa.eu/resource/cellar/469391ea-6c79-4680-… http… 3197…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/e8fcaf0d-443a-40ec-… http… 3198…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/52639f5f-ecaf-4f99-… http… 3198…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/c7560407-689b-4752-… http… 3196…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 4,389 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 4,393 more rows</span></span></span></code></pre></div>
 <p>The function outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection.</p>
 <p>The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is CELEX, retrieved by default.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>One column you should always pay attention to is <code>type</code> (as in <code>resource_type</code>). The URIs contained there reflect the FILTER argument in the SPARQL query, which is manually pre-specified. All resources are indexed as being of one type or another. For example, when retrieving directives, the results are going to return also delegated directives, which might not be desirable, depending on your needs. You can filter results by <code>type</code> to make the necessary adjustments. The queries are expansive by default in the spirit of erring on the side of over-inclusiveness rather than vice versa.</p>
@@ -359,7 +359,7 @@
 <span><span class="co">#&gt; [1] "Council Directive 79/173/EEC of 6 February 1979 on the programme for the acceleration and guidance of collective irrigation works in Corsica"</span></span>
 <span></span>
 <span><span class="co"># we can use purrr::map() to play that role</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dir_titles</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># take the first 10 directives only to save time</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span><span class="va">work</span>, <span class="va">elx_fetch_data</span>, <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>

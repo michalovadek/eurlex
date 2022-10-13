@@ -104,7 +104,7 @@
 <li><code>ids &lt;- elx_make_query("directive") |&gt; elx_run_query()</code></li>
 <li><code>lbs &lt;- elx_make_query("directive", include_lbs = TRUE) |&gt; elx_run_query()</code></li>
 <li><code>dates &lt;- elx_make_query("directive", include_date_transpos = TRUE) |&gt; elx_run_query()</code></li>
-<li><code>ids %&gt;% dplyr::left_join(lbs) |&gt; dplyr::left_join(dates)</code></li>
+<li><code>ids |&gt; dplyr::left_join(lbs) |&gt; dplyr::left_join(dates)</code></li>
 </ol>
 <p>rather than <code>elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)</code>. This approach is usually faster and should also make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the <code>work</code> and <code>celex</code> columns identify rows uniquely or not.</p>
 <p>One of the most useful things about the API is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the <code>rvest</code> package), the function <code><a href="reference/elx_fetch_data.html">elx_fetch_data()</a></code> enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI). The function for example enables downloading the title and the full text of a document in all available languages.</p>
@@ -183,20 +183,14 @@
 <p>List of resource types in Cellar (NAL): <a href="http://publications.europa.eu/resource/authority/resource-type" class="external-link uri">http://publications.europa.eu/resource/authority/resource-type</a></p>
 <p>NAL of corporate bodies: <a href="http://publications.europa.eu/resource/authority/corporate-body" class="external-link uri">http://publications.europa.eu/resource/authority/corporate-body</a></p>
 <p>Query builder: <a href="https://op.europa.eu/en/advanced-sparql-query-editor" class="external-link uri">https://op.europa.eu/en/advanced-sparql-query-editor</a></p>
+<p>Common data model: <a href="https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm" class="external-link uri">https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm</a></p>
 <p>SPARQL endpoint: <a href="http://publications.europa.eu/webapi/rdf/sparql" class="external-link uri">http://publications.europa.eu/webapi/rdf/sparql</a></p>
 </div>
 
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
-<h2 data-toc-skip>Links</h2>
-<ul class="list-unstyled">
-<li><a href="https://cloud.r-project.org/package=eurlex" class="external-link">View on CRAN</a></li>
-</ul>
-</div>
-
-<div class="license">
+    <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
