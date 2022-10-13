@@ -21,6 +21,7 @@
 #' @param include_force If `TRUE`, results include whether legislation is in force
 #' @param include_eurovoc If `TRUE`, results include EuroVoc descriptors of subject matter
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
+#' @param include_citations_detailed If `TRUE`, results include citations (CELEX-labelled) with additional precision
 #' @param include_author If `TRUE`, results include document author(s)
 #' @param include_directory If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code
@@ -48,7 +49,8 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                            include_date = FALSE, include_date_force = FALSE, include_date_endvalid = FALSE,
                            include_date_transpos = FALSE, include_date_lodged = FALSE,
                            include_force = FALSE, include_eurovoc = FALSE,
-                           include_citations = FALSE, include_author = FALSE,
+                           include_citations = FALSE, include_citations_detailed = FALSE,
+                           include_author = FALSE,
                            include_directory = FALSE, include_sector = FALSE,
                            include_ecli = FALSE, include_court_procedure = FALSE,
                            include_judge_rapporteur = FALSE,
@@ -161,10 +163,16 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
     query <- paste(query, "?author", sep = " ")
 
   }
-
+  
   if (include_citations == TRUE){
-
+    
     query <- paste(query, "?citationcelex", sep = " ")
+    
+  }
+
+  if (include_citations_detailed == TRUE){
+
+    query <- paste(query, "?citationcelex ?citationdetailcit ?citationdetail", sep = " ")
 
   }
 
@@ -439,11 +447,23 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                    ?authorx skos:prefLabel ?author. FILTER(lang(?author)='en')}.")
 
   }
-
+  
   if (include_citations == TRUE){
-
+    
     query <- paste(query, "OPTIONAL{?work cdm:work_cites_work ?citation. 
                    ?citation cdm:resource_legal_id_celex ?citationcelex.}")
+    
+  }
+
+  if (include_citations_detailed == TRUE){
+
+    query <- paste(query, "OPTIONAL{?work cdm:work_cites_work ?citation. 
+                   ?citation cdm:resource_legal_id_celex ?citationcelex.
+                   OPTIONAL{?bn owl:annotatedSource ?work.
+    ?bn owl:annotatedProperty <http://publications.europa.eu/ontology/cdm#work_cites_work>.
+    ?bn owl:annotatedTarget ?citation.
+    ?bn annot:fragment_cited_target ?citationdetailcit.
+    ?bn annot:fragment_citing_source ?citationdetail.}}")
 
   }
 

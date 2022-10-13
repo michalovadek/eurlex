@@ -30,7 +30,7 @@ For the moment, it is recommended to retrieve metadata one variable at a time. F
 0. `ids <- elx_make_query("directive") |> elx_run_query()`
 1. `lbs <- elx_make_query("directive", include_lbs = TRUE) |> elx_run_query()`
 2. `dates <- elx_make_query("directive", include_date_transpos = TRUE) |> elx_run_query()`
-3. `ids %>% dplyr::left_join(lbs) |> dplyr::left_join(dates)`
+3. `ids |> dplyr::left_join(lbs) |> dplyr::left_join(dates)`
 
 rather than `elx_make_query("directive", include_lbs = TRUE, include_date_transpos = TRUE)`. This approach is usually faster and should also make it easier to understand the returned data frame(s), especially when some variables contain missing or duplicated data. Always keep an eye on whether the `work` and `celex` columns identify rows uniquely or not.
 
@@ -88,6 +88,9 @@ http://publications.europa.eu/resource/authority/corporate-body
 
 Query builder:
 https://op.europa.eu/en/advanced-sparql-query-editor
+
+Common data model:
+https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/cdm
 
 SPARQL endpoint:
 http://publications.europa.eu/webapi/rdf/sparql

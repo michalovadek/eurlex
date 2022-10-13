@@ -3,6 +3,7 @@
 ## Major changes
 
 - all date variables retrieved through `elx_make_query(include_... = TRUE)` are now properly named
+- new experimental feature: `elx_make_query(include_citations_detailed = TRUE)` retrieves additional details about the citation where available; the retrieval is currently slow
 
 ## Minor changes
 
