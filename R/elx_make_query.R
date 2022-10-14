@@ -462,7 +462,10 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                    OPTIONAL{?bn owl:annotatedSource ?work.
     ?bn owl:annotatedProperty <http://publications.europa.eu/ontology/cdm#work_cites_work>.
     ?bn owl:annotatedTarget ?citation.
-    ?bn annot:fragment_cited_target ?citationdetailcit.
+    ?bn annot:fragment_cited_target ?citationdetailcit.}
+    OPTIONAL{?bn owl:annotatedSource ?work.
+    ?bn owl:annotatedProperty <http://publications.europa.eu/ontology/cdm#work_cites_work>.
+    ?bn owl:annotatedTarget ?citation.
     ?bn annot:fragment_citing_source ?citationdetail.}}")
 
   }
