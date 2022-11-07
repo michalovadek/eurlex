@@ -100,3 +100,4 @@ https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://public
 
 SPARQL endpoint:
 http://publications.europa.eu/webapi/rdf/sparql
+ 
