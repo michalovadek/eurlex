@@ -10,6 +10,7 @@ Authors@R: c(person(given = "Michal",
 Description: Access to data on European Union laws and court decisions made easy with pre-defined 'SPARQL' queries and 'GET' requests.
 License: GPL-3
 Encoding: UTF-8
+Language: en-US
 Depends:
     R (>= 3.4.0)
 Imports:
