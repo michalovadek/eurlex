@@ -4,20 +4,19 @@ options(tibble.print_min = 4, tibble.print_max = 4)
 
 ## ----makequery, message = FALSE, warning=FALSE, error=FALSE-------------------
 library(eurlex)
-library(dplyr) # my preference, not needed for the package
+library(dplyr)
 
 query_dir <- elx_make_query(resource_type = "directive")
 
 ## ----precompute, include=FALSE------------------------------------------------
 dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
-  elx_run_query() %>% 
-  rename(date = `callret-3`)
+  elx_run_query()
 
 results <- dirs %>% select(-force,-date)
 
 ## -----------------------------------------------------------------------------
 query_dir %>% 
-  cat() # for nicer printing
+  cat()
 
 elx_make_query(resource_type = "caselaw") %>% 
   cat()
@@ -108,8 +107,7 @@ print(dir_titles)
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>%
-#    elx_run_query() %>%
-#    rename(date = `callret-3`)
+#    elx_run_query()
 
 ## ----firstplot, message = FALSE, warning=FALSE, error=FALSE-------------------
 library(ggplot2)

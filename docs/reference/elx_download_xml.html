@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.3</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -57,37 +57,52 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">elx_download_xml</span><span class="op">(</span>
-  <span class="va">url</span>,
-  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span>, <span class="st">".xml"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,
-  notice <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tree"</span>, <span class="st">"branch"</span>, <span class="st">"object"</span><span class="op">)</span>,
-  language_1 <span class="op">=</span> <span class="st">"en"</span>,
-  language_2 <span class="op">=</span> <span class="st">"fr"</span>,
-  language_3 <span class="op">=</span> <span class="st">"de"</span>,
-  mode <span class="op">=</span> <span class="st">"wb"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">elx_download_xml</span><span class="op">(</span></span>
+<span>  <span class="va">url</span>,</span>
+<span>  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span>, <span class="st">".xml"</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
+<span>  notice <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tree"</span>, <span class="st">"branch"</span>, <span class="st">"object"</span><span class="op">)</span>,</span>
+<span>  language_1 <span class="op">=</span> <span class="st">"en"</span>,</span>
+<span>  language_2 <span class="op">=</span> <span class="st">"fr"</span>,</span>
+<span>  language_3 <span class="op">=</span> <span class="st">"de"</span>,</span>
+<span>  mode <span class="op">=</span> <span class="st">"wb"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>url</dt>
 <dd><p>A valid url as character vector of length one based on a resource identifier such as CELEX or Cellar URI.</p></dd>
+
+
 <dt>file</dt>
 <dd><p>A character string with the name where the downloaded file is saved.</p></dd>
+
+
 <dt>notice</dt>
 <dd><p>The type of notice requested controls what kind of metadata are returned.</p></dd>
+
+
 <dt>language_1</dt>
 <dd><p>The priority language in which the data will be attempted to be retrieved, in ISO 639 2-char code</p></dd>
+
+
 <dt>language_2</dt>
 <dd><p>If data not available in `language_1`, try `language_2`</p></dd>
+
+
 <dt>language_3</dt>
 <dd><p>If data not available in `language_2`, try `language_3`</p></dd>
+
+
 <dt>mode</dt>
 <dd><p>A character string specifying the mode with which to write the file. Useful values are "w", "wb" (binary), "a" (append) and "ab".</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Path of downloaded file (invisibly) if server validates request (http status code has to be 200). For more information about notices, see Cellar documentation.</p>
+    
+
+<p>Path of downloaded file (invisibly) if server validates request (http status code has to be 200). For more information about notices, see Cellar documentation.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -96,9 +111,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="fu">elx_download_xml</span><span class="op">(</span>url <span class="op">=</span> <span class="st">"http://publications.europa.eu/resource/celex/32014R0001"</span>, notice <span class="op">=</span> <span class="st">"object"</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">elx_download_xml</span><span class="op">(</span>url <span class="op">=</span> <span class="st">"http://publications.europa.eu/resource/celex/32014R0001"</span>, notice <span class="op">=</span> <span class="st">"object"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -113,7 +128,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

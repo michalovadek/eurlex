@@ -14,7 +14,19 @@
 
 <title>eurlex: Retrieve data on European Union law in R</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -24,6 +36,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -107,13 +120,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -125,7 +145,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -137,32 +337,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<h1 class="title toc-ignore">eurlex: Retrieve data on European Union law in R</h1>
+<h1 class="title toc-ignore">eurlex: Retrieve data on European Union law
+in R</h1>
 
 
 
-<p>This vignette shows how to use the <code>eurlex</code> R package to retrieve data on European Union law.</p>
+<p>This vignette shows how to use the <code>eurlex</code> R package to
+retrieve data on European Union law.</p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Dozens of political scientists and legal scholars use data on European Union laws in their research. The provenance of these data is rarely discussed. More often than not, researchers resort to the quick and dirty technique of scraping entire html pages from <code>eur-lex.europa.eu</code>. This is not the optimal, nor preferred (from the perspective of the server host) approach of retrieving data, however, especially as the Publication Office of the European Union, the public body behind Eur-Lex, operates several dedicated APIs for automated retrieval of its data.</p>
-<p>The allure of web scraping is completely understandable. Not only is it easier to download data that can be readily seen in a user-friendly manner through a browser, using the dedicated APIs requires technical knowledge of semantic web and Client URL technologies, which is not necessarily widespread among researchers. And why go through the pain of learning how to compile SPARQL queries when it is much easier to simply download the web page?</p>
-<p>The <code>eurlex</code> R package attempts to significantly reduce the overhead associated with using the SPARQL and REST APIs made available by the EU Publication Office. Although at present it does not offer access to the same array of information as comprehensive web scraping might, the package provides simpler, more efficient and transparent access to data on European Union law. This vignette gives a quick guide to the package and an even quicker introduction to the Eur-Lex dataverse.</p>
+<p>Dozens of political scientists and legal scholars use data on
+European Union laws in their research. The provenance of these data is
+rarely discussed. More often than not, researchers resort to the quick
+and dirty technique of scraping entire html pages from
+<code>eur-lex.europa.eu</code>. This is not the optimal, nor preferred
+(from the perspective of the server host) approach of retrieving data,
+however, especially as the Publication Office of the European Union, the
+public body behind Eur-Lex, operates several dedicated APIs for
+automated retrieval of its data.</p>
+<p>The allure of web scraping is completely understandable. Not only is
+it easier to download data that can be readily seen in a user-friendly
+manner through a browser, using the dedicated APIs requires technical
+knowledge of semantic web and Client URL technologies, which is not
+necessarily widespread among researchers. And why go through the pain of
+learning how to compile SPARQL queries when it is much easier to simply
+download the web page?</p>
+<p>The <code>eurlex</code> R package attempts to significantly reduce
+the overhead associated with using the SPARQL and REST APIs made
+available by the EU Publication Office. Although at present it does not
+offer access to the same array of information as comprehensive web
+scraping might, the package provides simpler, more efficient and
+transparent access to data on European Union law. This vignette gives a
+quick guide to the package and an even quicker introduction to the
+Eur-Lex dataverse.</p>
 </div>
 <div id="the-eurlex-package" class="section level1">
 <h1>The <code>eurlex</code> package</h1>
-<p>The <code>eurlex</code> package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: <code>elx_make_query()</code> to create pre-defined or customized SPARQL queries; <code>elx_run_query()</code> to execute the pre-made or any other manually input query; and <code>elx_fetch_data()</code> to fire GET requests for certain metadata to the REST API.</p>
-<p>The package also contains largely self-explanatory functions for retrieving data on EU court cases (<code>elx_curia_list()</code>) and Council votes (<code>elx_council_votes()</code>) from outside Eur-Lex.</p>
+<p>The <code>eurlex</code> package currently envisions the typical
+use-case to consist of getting bulk information about EU law and policy
+into R as fast as possible. The package contains three core functions to
+achieve that objective: <code>elx_make_query()</code> to create SPARQL
+queries based on user input; <code>elx_run_query()</code> to execute the
+pre-made or any other manually input query; and
+<code>elx_fetch_data()</code> to fire GET requests for certain metadata
+to the REST API.</p>
+<p>The package also contains largely self-explanatory functions for
+retrieving data on EU court cases (<code>elx_curia_list()</code>) and
+Council votes (<code>elx_council_votes()</code>) from outside Eur-Lex.
+More advanced users might be interested in downloading and
+custom-parsing XML notices with <code>elx_download_xml()</code>.</p>
 <div id="elx_make_query-generate-sparql-queries" class="section level2">
 <h2><code>elx_make_query()</code>: Generate SPARQL queries</h2>
-<p>The function <code>elx_make_query</code> takes as its first argument the type of resource to be retrieved from the semantic database that powers Eur-Lex (and other publications) called Cellar.</p>
+<p>The function <code>elx_make_query</code> takes as its first argument
+the type of resource to be retrieved from the semantic database that
+powers Eur-Lex (and other publications) called Cellar.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(eurlex)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># my preference, not needed for the package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>query_dir <span class="ot">&lt;-</span> <span class="fu">elx_make_query</span>(<span class="at">resource_type =</span> <span class="st">&quot;directive&quot;</span>)</span></code></pre></div>
-<p>Currently, it is possible to choose from among a host of resource types, including directives, regulations and even case law (see function description for the full list). It is also possible to manually specify a resource type from the <a href="http://publications.europa.eu/resource/authority/resource-type">eligible list</a>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-<p>The choice of resource type is then reflected in the SPARQL query generated by the function:</p>
+<p>Currently, it is possible to choose from among a host of resource
+types, including directives, regulations and even case law (see function
+description for the full list). It is also possible to manually specify
+a resource type from the <a href="http://publications.europa.eu/resource/authority/resource-type">eligible
+list</a>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>The choice of resource type is then reflected in the SPARQL query
+generated by the function:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>query_dir <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>() <span class="co"># for nicer printing</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span></span>
@@ -173,7 +414,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL&gt;||</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_DEL&gt;) </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} }</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index &quot;true&quot;^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">elx_make_query</span>(<span class="at">resource_type =</span> <span class="st">&quot;caselaw&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span>
@@ -193,22 +434,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/JUDG_EXTRACT&gt;||</span></span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/INFO_JUDICIAL&gt;||</span></span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/VIEW_AG&gt;||</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_AG&gt;) OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} }</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">elx_make_query</span>(<span class="at">resource_type =</span> <span class="st">&quot;manual&quot;</span>, <span class="at">manual_type =</span> <span class="st">&quot;SWD&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type.FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/SWD&gt;) </span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} }</span></span></code></pre></div>
-<p>There are various ways of querying the same information in the Cellar database due to the existence of several overlapping classes and identifiers describing the same resources. The queries generated by the function should offer a reliable way of obtaining exhaustive results, as they have been validated by the helpdesk of the Publication Office. At the same time, it is always possible there will be issues either on the query or the database side; please report any you encounter through Github.</p>
-<p>The other arguments in <code>elx_make_query()</code> relate to additional metadata to be returned. The results include by default the <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html">CELEX number</a> and exclude corrigenda (corrections of errors in legislation). Other data needs to be opted into. Make sure to select ones that are logically compatible (e.g. case law does not have a legal basis). More options should be added in the future.</p>
-<p>Note that availability of data for each variable might have an impact on the results. The data frame returned by the query might be shrunken to the size of the variable with most missing data. It is recommended to always compare results from a desired query to a minimal query requesting only celex ids.</p>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/OPIN_AG&gt;) </span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index &quot;true&quot;^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="fu">elx_make_query</span>(<span class="at">resource_type =</span> <span class="st">&quot;manual&quot;</span>, <span class="at">manual_type =</span> <span class="st">&quot;SWD&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type.FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/SWD&gt;) </span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index &quot;true&quot;^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }</span></span></code></pre></div>
+<p>There are various ways of querying the same information in the Cellar
+database due to the existence of several overlapping classes and
+identifiers describing the same resources. The queries generated by the
+function should offer a reliable way of obtaining exhaustive results, as
+they have been validated by the helpdesk of the Publication Office. At
+the same time, it is always possible there will be issues either on the
+query or the database side; please report any you encounter through
+Github.</p>
+<p>The other arguments in <code>elx_make_query()</code> relate to
+additional metadata to be returned. The results include by default the
+<a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html">CELEX
+number</a> and exclude corrigenda (corrections of errors in
+legislation). Other data needs to be opted into. Make sure to select
+ones that are logically compatible (e.g. case law does not have a legal
+basis). More options should be added in the future.</p>
+<p>Note that availability of data for each variable might have an impact
+on the results. The data frame returned by the query might be shrunken
+to the size of the variable with most missing data. It is recommended to
+always compare results from a desired query to a minimal query
+requesting only celex ids.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">elx_make_query</span>(<span class="at">resource_type =</span> <span class="st">&quot;directive&quot;</span>, <span class="at">include_date =</span> <span class="cn">TRUE</span>, <span class="at">include_force =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;</span></span>
@@ -218,10 +477,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   select distinct ?work ?type ?celex str(?date) ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   select distinct ?work ?type ?celex ?date ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL&gt;||</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_DEL&gt;) </span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} OPTIONAL{?work cdm:work_date_document ?date.} OPTIONAL{?work cdm:resource_legal_in-force ?force.} }</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} OPTIONAL{?work cdm:work_date_document ?date.} OPTIONAL{?work cdm:resource_legal_in-force ?force.} FILTER not exists{?work cdm:do_not_index &quot;true&quot;^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># minimal query: elx_make_query(resource_type = &quot;directive&quot;)</span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -234,7 +493,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;</span></span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   select distinct ?work ?type ?celex str(?date) ?lbs ?lbcelex ?lbsuffix where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO&gt;||</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   select distinct ?work ?type ?celex ?date ?lbs ?lbcelex ?lbsuffix where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO&gt;||</span></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DEC&gt;||</span></span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_DIR&gt;||</span></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/RECO_OPIN&gt;||</span></span>
@@ -247,10 +506,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     OPTIONAL{?bn owl:annotatedSource ?work.</span></span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ?bn owl:annotatedProperty &lt;http://publications.europa.eu/ontology/cdm#resource_legal_based_on_resource_legal&gt;.</span></span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ?bn owl:annotatedTarget ?lbs.</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ?bn annot:comment_on_legal_basis ?lbsuffix}} }</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ?bn annot:comment_on_legal_basis ?lbsuffix}} FILTER not exists{?work cdm:do_not_index &quot;true&quot;^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }</span></span>
 <span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co"># minimal query: elx_make_query(resource_type = &quot;recommendation&quot;)</span></span></code></pre></div>
-<p>You can also decide to not specify any resource types, in which case all types of documents will be returned. As there are over a million documents with a CELEX identifier, this is likely not efficient for a majority of users. But since version 0.3.5 it is possible to request documents belonging to a particular <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html">“sector”</a> or <a href="https://eur-lex.europa.eu/browse/directories/legislation.html">directory code</a>.</p>
+<p>You can also decide to not specify any resource types, in which case
+all types of documents will be returned. As there are over a million
+documents with a CELEX identifier, this is likely not efficient for a
+majority of users. But since version 0.3.5 it is possible to request
+documents belonging to a particular <a href="https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html">“sector”</a>
+or <a href="https://eur-lex.europa.eu/browse/directories/legislation.html">directory
+code</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># request documents from directory 18 (&quot;Common Foreign and Security Policy&quot;)</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and sector 3 (&quot;Legal acts&quot;)</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -280,12 +545,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ?work cdm:resource_legal_id_sector ?sector.</span></span>
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     FILTER(str(?sector)=&#39;3&#39;)</span></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      </span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} }</span></span></code></pre></div>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index &quot;true&quot;^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }</span></span></code></pre></div>
 <p>Now that we have a query, we are ready to run it.</p>
 </div>
 <div id="elx_run_query-execute-sparql-queries" class="section level2">
 <h2><code>elx_run_query()</code>: Execute SPARQL queries</h2>
-<p><code>elx_run_query()</code> sends SPARQL queries to a pre-specified endpoint. The function takes the query string as the main argument, which means you can manually pass it any working SPARQL query (relevant to official EU publications).</p>
+<p><code>elx_run_query()</code> sends SPARQL queries to a pre-specified
+endpoint. The function takes the query string as the main argument,
+which means you can manually pass it any working SPARQL query (relevant
+to official EU publications).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">elx_run_query</span>(<span class="at">query =</span> query_dir)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the functions are compatible with piping</span></span>
@@ -293,17 +561,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># elx_make_query(&quot;directive&quot;) %&gt;% </span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   elx_run_query()</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(results)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4,383 x 3</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   work                                   type                            celex  </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                                  &lt;chr&gt;                           &lt;chr&gt;  </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31979L~</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31989L~</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31984L~</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 http://publications.europa.eu/resourc~ http://publications.europa.eu/~ 31966L~</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 4,379 more rows</span></span></code></pre></div>
-<p>The function outputs a <code>data.frame</code> where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection.</p>
-<p>The first column always contains the unique URI of a “work” (legislative act or court judgment) which identifies each resource in Cellar. Several human-readable identifiers are normally associated with each “work” but the most useful one is CELEX, retrieved by default.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<p>One column you should always pay attention to is <code>type</code> (as in <code>resource_type</code>). The URIs contained there reflect the FILTER argument in the SPARQL query, which is manually pre-specified. All resources are indexed as being of one type or another. For example, when retrieving directives, the results are going to return also delegated directives, which might not be desirable, depending on your needs. You can filter results by <code>type</code> to make the necessary adjustments. The queries are expansive by default in the spirit of erring on the side of over-inclusiveness rather than vice versa.</p>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4,401 × 3</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   work                                                               type  celex</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                                                              &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://publications.europa.eu/resource/cellar/469391ea-6c79-4680-… http… 3197…</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://publications.europa.eu/resource/cellar/e8fcaf0d-443a-40ec-… http… 3198…</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://publications.europa.eu/resource/cellar/52639f5f-ecaf-4f99-… http… 3198…</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 http://publications.europa.eu/resource/cellar/c7560407-689b-4752-… http… 3196…</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 4,397 more rows</span></span></code></pre></div>
+<p>The function outputs a <code>data.frame</code> where each column
+corresponds to one of the requested variables, while the rows accumulate
+observations of the resource type satisfying the query criteria.
+Obviously, the more data is to be returned, the longer the execution
+time, varying from a few seconds to several minutes, depending also on
+your connection.</p>
+<p>The first column always contains the unique URI of a “work”
+(legislative act or court judgment) which identifies each resource in
+Cellar. Several human-readable identifiers are normally associated with
+each “work” but the most useful one is CELEX, retrieved by default.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>One column you should always pay attention to is <code>type</code>
+(as in <code>resource_type</code>). The URIs contained there reflect the
+FILTER argument in the SPARQL query, which is manually pre-specified.
+All resources are indexed as being of one type or another. For example,
+when retrieving directives, the results are going to return also
+delegated directives, which might not be desirable, depending on your
+needs. You can filter results by <code>type</code> to make the necessary
+adjustments. The queries are expansive by default in the spirit of
+erring on the side of over-inclusiveness rather than vice versa.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(results<span class="sc">$</span>type,<span class="dv">5</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;http://publications.europa.eu/resource/authority/resource-type/DIR&quot;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2] &quot;http://publications.europa.eu/resource/authority/resource-type/DIR&quot;</span></span>
@@ -313,55 +597,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(type)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 x 1</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 1</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   type                                                                   </span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                                                                  </span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://publications.europa.eu/resource/authority/resource-type/DIR     </span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://publications.europa.eu/resource/authority/resource-type/DIR_DEL</span></span></code></pre></div>
-<p>The data is returned in the long format, which means that rows are recycled up to the length of the variable with the most data points. For example, if 20 directives are returned, each with two legal bases, the resulting <code>data.frame</code> will have 40 rows. Some variables, such as dates, contain unexpectedly several entries for some documents. You should always check the number of unique identifiers in the results instead of assuming that each row is a unique observation.</p>
+<p>The data is returned in the long format, which means that rows are
+recycled up to the length of the variable with the most data points. For
+example, if 20 directives are returned, each with two legal bases, the
+resulting <code>data.frame</code> will have 40 rows. Some variables,
+such as dates, contain unexpectedly several entries for some documents.
+You should always check the number of unique identifiers in the results
+instead of assuming that each row is a unique observation.</p>
 <div id="eurovoc-descriptors" class="section level3">
 <h3>EuroVoc descriptors</h3>
-<p>EuroVoc is a multilingual thesaurus, keywords from which are used to describe the content of European Union documents. Most resource types that can be retrieved with the pre-defined queries in this package can be accompanied by EuroVoc keywords and these can be retrieved as other variables.</p>
+<p>EuroVoc is a multilingual thesaurus, keywords from which are used to
+describe the content of European Union documents. Most resource types
+that can be retrieved with the pre-defined queries in this package can
+be accompanied by EuroVoc keywords and these can be retrieved as other
+variables.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rec_eurovoc <span class="ot">&lt;-</span> <span class="fu">elx_make_query</span>(<span class="st">&quot;recommendation&quot;</span>, <span class="at">include_eurovoc =</span> <span class="cn">TRUE</span>, <span class="at">limit =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">elx_run_query</span>() <span class="co"># truncated results for sake of the example</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>rec_eurovoc <span class="sc">%&gt;%</span> </span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(celex, eurovoc)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 x 2</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 2</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   celex      eurovoc                      </span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;                        </span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 32012H0090 http://eurovoc.europa.eu/1425</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 31962H0816 http://eurovoc.europa.eu/1004</span></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 31974H0435 http://eurovoc.europa.eu/1085</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 31996H0592 http://eurovoc.europa.eu/1076</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6 more rows</span></span></code></pre></div>
-<p>By default, the endpoint returns the EuroVoc concept codes rather than the labels (keywords). The function <code>elx_label_eurovoc()</code> needs to be called to obtain a look-up table with the labels.</p>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 6 more rows</span></span></code></pre></div>
+<p>By default, the endpoint returns the EuroVoc concept codes rather
+than the labels (keywords). The function
+<code>elx_label_eurovoc()</code> needs to be called to obtain a look-up
+table with the labels.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>eurovoc_lookup <span class="ot">&lt;-</span> <span class="fu">elx_label_eurovoc</span>(<span class="at">uri_eurovoc =</span> rec_eurovoc<span class="sc">$</span>eurovoc)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(eurovoc_lookup)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 x 2</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 2</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   eurovoc                       labels         </span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;          </span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://eurovoc.europa.eu/1085 France         </span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://eurovoc.europa.eu/1442 food inspection</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://eurovoc.europa.eu/1076 form           </span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 http://eurovoc.europa.eu/1318 Germany        </span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 5 more rows</span></span></code></pre></div>
-<p>The results include labels only for unique identifiers, but with <code>dplyr::left_join()</code> it is straightforward to append the labels to the entire dataset.</p>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 5 more rows</span></span></code></pre></div>
+<p>The results include labels only for unique identifiers, but with
+<code>dplyr::left_join()</code> it is straightforward to append the
+labels to the entire dataset.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rec_eurovoc <span class="sc">%&gt;%</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(eurovoc_lookup)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Joining, by = &quot;eurovoc&quot;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 x 5</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   work                      type                   celex  eurovoc      labels   </span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                     &lt;chr&gt;                  &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    </span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://publications.euro~ http://publications.e~ 32012~ http://euro~ consumer~</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://publications.euro~ http://publications.e~ 31962~ http://euro~ welfare  </span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://publications.euro~ http://publications.e~ 31974~ http://euro~ France   </span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 http://publications.euro~ http://publications.e~ 31996~ http://euro~ form     </span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6 more rows</span></span></code></pre></div>
-<p>As elsewhere in the API, we can tap into the multilingual nature of EU documents also when it comes to the EuroVoc keywords. Moreover, most concepts in the thesaurus are associated with alternative labels; these can be returned as well (separated by a comma).</p>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 5</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   work                                                type  celex eurovoc labels</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                                               &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://publications.europa.eu/resource/cellar/e46f… http… 3201… http:/… consu…</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://publications.europa.eu/resource/cellar/120a… http… 3196… http:/… welfa…</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://publications.europa.eu/resource/cellar/123d… http… 3197… http:/… France</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 http://publications.europa.eu/resource/cellar/8a36… http… 3199… http:/… form  </span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 6 more rows</span></span></code></pre></div>
+<p>As elsewhere in the API, we can tap into the multilingual nature of
+EU documents also when it comes to the EuroVoc keywords. Moreover, most
+concepts in the thesaurus are associated with alternative labels; these
+can be returned as well (separated by a comma).</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>eurovoc_lookup <span class="ot">&lt;-</span> <span class="fu">elx_label_eurovoc</span>(<span class="at">uri_eurovoc =</span> rec_eurovoc<span class="sc">$</span>eurovoc,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">alt_labels =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">language =</span> <span class="st">&quot;sk&quot;</span>)</span>
@@ -370,20 +672,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(eurovoc_lookup) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(celex, eurovoc, labels)</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Joining, by = &quot;eurovoc&quot;</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 x 3</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 3</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   celex      eurovoc                       labels                               </span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;                         &lt;chr&gt;                                </span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 32012H0090 http://eurovoc.europa.eu/1425 informácie pre spotrebitela,vzdeláva~</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 32012H0090 http://eurovoc.europa.eu/1425 informácie pre spotrebiteľa,vzdeláva…</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 31962H0816 http://eurovoc.europa.eu/1004 blahobyt                             </span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 31974H0435 http://eurovoc.europa.eu/1085 Francúzska republika,Francúzsko      </span></span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 31996H0592 http://eurovoc.europa.eu/1076 formulár                             </span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6 more rows</span></span></code></pre></div>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 6 more rows</span></span></code></pre></div>
 </div>
 </div>
 <div id="elx_fetch_data-fire-get-requests" class="section level2">
 <h2><code>elx_fetch_data()</code>: Fire GET requests</h2>
-<p>A core contribution of the SPARQL requests is that we obtain a comprehensive list of identifiers that we can subsequently use to obtain more data relating to the document in question. While the results of the SPARQL queries are useful also for webscraping (with the <code>rvest</code> package), the function <code>elx_fetch_data()</code> enables us to fire GET requests to retrieve data on documents with known identifiers (including Cellar URI).</p>
-<p>One of the most sought-after data in the Eur-Lex dataverse is the text. It is possible now to automate the pipeline for downloading html and plain texts from Eur-Lex. Similarly, you can retrieve the title of the document. For both you can specify also the desired language (English by default). Other metadata might be added in the future.</p>
+<p>A core contribution of the SPARQL requests is that we obtain a
+comprehensive list of identifiers that we can subsequently use to obtain
+more data relating to the document in question. While the results of the
+SPARQL queries are useful also for webscraping (with the
+<code>rvest</code> package), the function <code>elx_fetch_data()</code>
+enables us to fire GET requests to retrieve data on documents with known
+identifiers (including Cellar URI).</p>
+<p>One of the most sought-after data in the Eur-Lex dataverse is the
+text. It is possible now to automate the pipeline for downloading html
+and plain texts from Eur-Lex. Similarly, you can retrieve the title of
+the document. For both you can specify also the desired language
+(English by default). Other metadata might be added in the future.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the function is not vectorized by default</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">elx_fetch_data</span>(<span class="at">url =</span> results<span class="sc">$</span>work[<span class="dv">1</span>], <span class="at">type =</span> <span class="st">&quot;title&quot;</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Council Directive 79/173/EEC of 6 February 1979 on the programme for the acceleration and guidance of collective irrigation works in Corsica&quot;</span></span>
@@ -397,32 +709,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(celex, title)</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dir_titles)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 x 2</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 2</span></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   celex      title                                                              </span></span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;                                                              </span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 31979L0173 Council Directive 79/173/EEC of 6 February 1979 on the programme f~</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 31989L0194 Council Directive 89/194/EEC of 13 March 1989 amending Directive 6~</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 31984L0378 Council Directive 84/378/EEC of 28 June 1984 amending the Annexes ~</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 31966L0683 Commission Directive 66/683/EEC of 7 November 1966 eliminating all~</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6 more rows</span></span></code></pre></div>
-<p>Note that text requests are by far the most time-intensive; requesting the full text for thousands of documents is liable to extend the run-time into hours. Texts are retrieved from html by priority, but methods for pdfs and .docs are also implemented.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> The function even handles multi-document resources (by pasting them together).</p>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 31979L0173 Council Directive 79/173/EEC of 6 February 1979 on the programme f…</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 31989L0194 Council Directive 89/194/EEC of 13 March 1989 amending Directive 6…</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 31984L0378 Council Directive 84/378/EEC of 28 June 1984 amending the Annexes …</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 31966L0683 Commission Directive 66/683/EEC of 7 November 1966 eliminating all…</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 6 more rows</span></span></code></pre></div>
+<p>Note that text requests are by far the most time-intensive;
+requesting the full text for thousands of documents is liable to extend
+the run-time into hours. Texts are retrieved from html by priority, but
+methods for .pdfs and .docs are also implemented.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> The function even
+handles multi-document resources (by pasting them together).</p>
 </div>
 </div>
 <div id="application" class="section level1">
 <h1>Application</h1>
-<p>In this section I showcase a simple application of <code>eurlex</code> on making overviews of EU legislation. First, we collate data on directives.</p>
+<p>In this section I showcase a simple application of
+<code>eurlex</code> on making overviews of EU legislation. First, we
+collate data on directives.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dirs <span class="ot">&lt;-</span> <span class="fu">elx_make_query</span>(<span class="at">resource_type =</span> <span class="st">&quot;directive&quot;</span>, <span class="at">include_date =</span> <span class="cn">TRUE</span>, <span class="at">include_force =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">elx_run_query</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">date =</span> <span class="st">`</span><span class="at">callret-3</span><span class="st">`</span>)</span></code></pre></div>
-<p>Let’s calculate the proportion of directives currently in force in the entire set of directives ever adopted. This variable offers a particularly good demonstration of the usefulness of the package to retrieve EU law data, because it changes every day, as new acts enter into force and old ones drop out. Regularly scraping webpages for this purpose and scale is simply impractical and disproportional.</p>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">elx_run_query</span>()</span></code></pre></div>
+<p>Let’s calculate the proportion of directives currently in force in
+the entire set of directives ever adopted. This variable offers a
+particularly good demonstration of the usefulness of the package to
+retrieve EU law data, because it changes every day, as new acts enter
+into force and old ones drop out. Regularly scraping webpages for this
+purpose and scale is simply impractical and disproportional.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>dirs <span class="sc">%&gt;%</span> </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(force) <span class="sc">%&gt;%</span> </span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> force, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>Directives become naturally outdated with time. It might be all the more interesting to see which older acts are thus still surviving.</p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Directives become naturally outdated with time. It might be all the
+more interesting to see which older acts are thus still surviving.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dirs <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(force)) <span class="sc">%&gt;%</span> </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date)) <span class="sc">%&gt;%</span> </span>
@@ -431,8 +754,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.y =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>We want to know a bit more about the directives from 1970s that are still in force today. Their titles could give us a clue.</p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>We want to know a bit more about the directives from 1970s that are
+still in force today. Their titles could give us a clue.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dirs_1970_title <span class="ot">&lt;-</span> dirs <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(<span class="fu">as.Date</span>(date), <span class="fu">as.Date</span>(<span class="st">&quot;1970-01-01&quot;</span>), <span class="fu">as.Date</span>(<span class="st">&quot;1980-01-01&quot;</span>)),</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         force <span class="sc">==</span> <span class="st">&quot;true&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -440,15 +764,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dirs_1970_title)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 62 x 6</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   work                 type               celex  date  force title              </span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                &lt;chr&gt;              &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;              </span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://publications~ http://publicatio~ 31975~ 1975~ true  Council Directive ~</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://publications~ http://publicatio~ 31977~ 1977~ true  First Commission D~</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://publications~ http://publicatio~ 31977~ 1977~ true  Council Directive ~</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 http://publications~ http://publicatio~ 31973~ 1973~ true  Council Directive ~</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 58 more rows</span></span></code></pre></div>
-<p>I will use the <code>tidytext</code> package to get a quick idea of what the legislation is about.</p>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 62 × 6</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   work                                             type  celex date  force title</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                                            &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 http://publications.europa.eu/resource/cellar/c… http… 3197… 1975… true  Coun…</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 http://publications.europa.eu/resource/cellar/3… http… 3197… 1977… true  Firs…</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 http://publications.europa.eu/resource/cellar/b… http… 3197… 1977… true  Coun…</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 http://publications.europa.eu/resource/cellar/1… http… 3197… 1973… true  Coun…</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 58 more rows</span></span></code></pre></div>
+<p>I will use the <code>tidytext</code> package to get a quick idea of
+what the legislation is about.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -459,17 +784,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">d&quot;</span>, word)) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, celex, n) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">wordcloud</span>(word, tf_idf, <span class="at">max.words =</span> <span class="dv">40</span>, <span class="at">scale =</span> <span class="fu">c</span>(<span class="fl">1.8</span>,<span class="fl">0.1</span>)))</span></code></pre></div>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABDlBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZp0AZrYqADoyADo6AAA6ADo6AGY6OgA6Ojo6OmY6Zjo6ZmY6ZpA6ZrY6kJA6kLY6kNtmAABmADpmOgBmOjpmOmZmOpBmZgBmZjpmZmZmZpBmkJBmkLZmkNtmtrZmtttmtv+QOgCQZgCQZjqQZmaQZpCQkDqQkGaQkLaQtpCQtraQttuQ27aQ29uQ2/+2ZgC2Zjq2kDq2kGa2kJC2nHy2tma2tpC2tra2ttu225C227a229u22/+2/7a2/9u2///bkDrbkGbbtmbbtpDbtrbb25Db27bb29vb2//b/7bb/9vb////tmb/25D/27b/29v//7b//9v///8ynimUAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO1di3vbxpEHZSnHOzp2LvaFitKrlTQxVedqt0kMO73G6VmpEcuvRqAs8v//R27ntTuzWICkCJCQy/k+ScRrhf1xd147M5vNd9RI2bZfoO+0A2gB7QBaQDuAFtAOoAW0A2gB7QBaQDuAFtAOoAW0A2gB7QBaQDuAFtA2AJqOhkvdd/HI/Sqzcbdvs4B6DBDdtgNo3ds6ph1AC2gTAJ0dZdmN+/jx4ossu/saep4PHs8FhNmTUTb4mm54cCvLsk9O5/PC/XXTi6fYy1vSRj744UGW7X+3gRcH2gBA2FOHyxzwgE+fRgDNTjICQ27IMndRA8R3ZAfn7kF/x0aoe4DKbP+5GxlH2QT6efd8/nKUWYCKbP/UfYITefaZw+DiEFBRTLrIBm7EnI3gcw6fXUsbmn/dA0RIzC8Ph67LMARcdw1AsxP8WChxVViA+A56Psf7yi0B5L7obHgejmcney/gp6mJZkEsswPmB/dqaqfY5eGB/o9vnn37RWYBkjvwTTTz2gBZgLA3Q3NiXYAuDwWgvRd8ZwNAswd8cw1A7qGtAnR5uGd53zIANZN+evEIcgzm+NGzd0VfR5Ad7fM2AHJ9nshHw4PwNHxkDqOwcgO5gQdtEaCCZoLSOhRAcs7z1CG/J04crZ04Rjb42vegzAbw1FNCxTG4M5RiBchs+eik2MWJQ+zyEKQVMEIE6KPzlBTbPkBK6/AAqXMFfPfu+ABff8IABe1EKTtIT4QFmUvqI7etlBxkhHBHSg/a/hRT35cHSJ2bcv9Qb3GXSqudsLKjmD2MvcFdnLsXbpjdpc5NwzhDTRpvgE/ZjT+8xrn4K4yvhCa9bYD0jBeA7Dl3Uzl4iFMCPhJAop1oRtMtzc4X37M2JQDSMkN+KnIk3/vlkL/e0nIGLcuvSMjAFyJ8djSpvaYkw5rUCNDgcRUgB4SDYHYyhIGEsGwJoNlJAwgbAqhmBDmrYToaz4u9f5wcnHcG0CLaHkCLeBCw5r/hQPpqRIzHANQCD+o5QIukmINkcMudYkEWA6RNduMLQhGGrp7owDVQjrJ918B7EGJ3z8MUc2j/9uMouH/OnJnmpNy5OFEm2NIoNKtb6AygBXoQyvihV4VigLxPBwAqvGXl7qPzg0l8UDp1CPUkfnL/9wqg/SPVxBNv9waAuCVCxLTQGUDNmvRcTAHQi+cJgFAT3v+Jsfrs3CnRrCQenM7fPxBlMhyUGRy8A7vWqdTu9kwBlIGHyKnZ0AQr5U8yVlUn+MowYN1D0JJtoQOAWiQ2EVAPxK7kNN4IVnNQsnuw5JOlAYhZPrnT8IC+HwZIeF1BLekWWqH2AZqO9k6DB9G/p/8MnTAH7hdZw9x/GAcBIHG3KRerBkikh3amSQutUPsACbca2m75zw7AF+ZAvvcAp2bShJ1/APxpt7IAUHA3kRGpW2iFOphiZE8Bt7IAsdMEPpiDAJDcXQsQ8EFh2UmATAutUKc+6bZHkGMtg0++/MvbEw2QnXvXYQQFWpoHCcceq1urALHwjHiQhsK20Ap1u6rBikChBBct2JiDIHsIDSPFFEAyMcuRkmK5f1ix+15LMU2oB4H+PWnWg8TQQy3m11EtQOCQnP04Eh709VxaAs19HLfQCnW8LlYEpbpJk2ZP+AVx3IM/1vAgbu0A3bfofRwHTfpupYVWqOuFQ2OLgSF157Ry4AEiAWhtsYoUc63RA7BEhIr7A2Wszbq1xXZUofYB8jqOp9mPMPz10vI1ok0AVLJhvwMIqQ6ga0r9BCgP6nHJbjs+3HjY2WKAnECAJaw/sCR+4IWPvsAqLEgeBsj7/sh4HcoUsw2AWBK5pv/n9QLoq1FSl9EXKgCJ728YAWQbuM1WZuV/2vixvgMEqupL0YbvvAOXHrmvwoUYoBJd2POXrCl7Jh03MDznBqL/eb0AwrcryBE85HNDeyEGKPj+JgagqIEDNT11LKcDyJkLqPyFKRYCQIu9X44ycMsFNbSz0M5lAML3h35bI1xdSPCg+fz9q4dHmQUobiCYsnMTy5kP7uFEfKwAUtEOxd7vleMejYzOQjuXYtL0+oPH3vnCoPgLVYAueDHCAhQ34B+ivyqWk0IhxgEgvZpUyHqTDw/tLrRzRYC0I7AJIPi6B5989fwkBsg2oAHSsZwqUFMA0uuRLBBVeGh3oZ3djCD4KoOTcLkRZCLxwiKSAKTD9zBCyYSHdhcUszQPArs6yYPQ4I4AEiBodaGeB60EUFjyL2RFzHujtwuQHttVIaQuIA/QAJXksamVYmuOIKVAbRWgoK2QGsOOQH3BIXEf1j/NFMMVzrH4e5Qe5BtI8KAoBLaGB03ozYICtVWAjr34jRThcIH4wd7fgqKofH/AsQ/OU5p0VYpd0CpsFSAbAEpeSR0eqgHCGLgNAjRxo8REaARTyl8A997+aenFPKtwNHic0icA2QYMQDqWMwGQ1oN46Kjw0O0CtOKFq1KI5UwBpAJABSAVHvovAVBrRAAhel/zQUGLHsOSBeCYdFkIK3JnC2e4wBwY3K+09eECVIgmX5BAQGY4Rq1yXrpTNGVxPfKGYwG/nYjib+mDBchNy1OJCYR4ZeBUJYbnAseC6zBczigkDuWrm6oJKfjBAuT+vP3p2xFKDQfSzYcADi6+TnCGTUckISRAbDq68dXzRFu9WfZJJsnT8cr58wgQR+MNcbyUe78cTpDzAFwlhqCK/c9woj+g6t3sC0DpJPnSZv0sS9BlN6k+ffTzP4HlODzyoWPFMNcwe4JGUgQQaiZV72a/AFr1Ug1BlwkNjir95mQ8Lw6eYu/L7JtDhH2i7uaPb6pL1h8wQE7xdpIcQ3Vv3HwMscusJN0GseaYNGReoaeJwuE/A+Oo4nHbPEAhM145WVUOuCwwlv44U/nzaq0f9Zw/pDRCkmLeFeKaIE2cRkeR8UhiQ4kAUnq8oY0DpDLjlZNVocBWKerGFYCUk7XI0j2a86TBYOTvcgofHirjX0bk9EgyBClW6YFP2tK0cYB0ZrxysipOTOoD4hQzaeVkJY/KxUllTiykciX1ZFs8iNxnwclqUCD30aQqxZSTlbI3r0AXRysZalsAyGfGaxeZQoFTH2huRMm92smawcrtuxX/ObghVwqi2DhAKjO+BiAcUupYp4crJ+uMnB37q2Vkw+LISg9sgQf5zPg6gID9kEejMoKsHvcGYso7XmndNEA6M147WY26nA++PwyJRBX+rWkaZ/q3TZsHSGXGKyerSpKHP7flg82fV07W6WgfVKmXSTnfIjUBRDlvKCviiHfMgLvlVTp4yZDXJpoM+VRVK3SOaWiUM5Ukj+dlVWRsL2kna9CnuqQGgESlI7ZgAcIMuL/5NRwVjasycPBm3QqQyYwPTlaTJE8BEXMZUXH+PD+BiRuJ4KJ2qQGgnJduyFsS5UxABhwvJEuQd8hrK2SCUISCb+U6Uj1AvPg3YxZhAaIhkmc+DtzktfEcy8Nis88bCEy2EtRZjd3T1BgD2vzoWlQPEIT1e84RAyQpERRdNony2uhIElBU0E7HAC2H02oRDg1TDM3dG2QuxwARi8AX4l/CexG7Iiyo6laavbRrDIPtAEQuNscHz+sAQtuooNxCAxBqO3lwUHArHxpAbpr99YssSyW2MUBYpKKS1zZH5MIp3woAdHaLnTiVlVbunlp6RXNi/5TDHmJ/kEqi3xpA87n3NiUBciPlNV6JM9hAUzLvUbDuciw6UDXqlbqnF+9JTxrcCwDpPPwQSBsBZCoNBBTnmDQ1uN8WQIIJ/pXs48IkeIEH/E/070xeGyL3lN06qhUTGFuJepXQtBAGi+UevNY9lvyzl5JE7wNpDUBTnXalUBTd8rglgKCwAuR3n7DOyxn7FqBSVFmT1wbvgtUrolaiiNkoXgi7p0/wsKTceX17riKPZ1TaKwDkNbIYRTJUZvlq9u0SmrT24H52YgFybyPsSOe14f3Dais6MLYScVaJo/XOVwGokooqgbQaoKCRjS2KfLBipGezLTYKbnGYyzfuzyKAQpCzzWtTqf26FR3WWIlZ1KFpeKLUXTW3U8MhkFYBZDUyi6KwiXaZ9NUoLVCqAKmo10pCfQIg1agOpDUAGYWjimLrUuxqlH6LVUcQjYHkCDKBtAogq5FpFEVe9AKgi0gvYtKBsWvyIBNIawCylQYqKPYBoDyrkRQ2MHZJKXZ5GEsxijZWgbR2igVGHqHYGx5UQOJx6gIHxmaRHkRRr0oP4jBY1LqqehDm4ZtAWivFgkZmw5Fbl2Ltk2jSIcn3apo0OamRMJA20oNYI4tQJIUKrJc+AzRBbR8+L2+L5QEgbYupQFqjSWuNzIQjM7xtadL9oaVD2YwtRhqZCUcGL217ttj2ieVy7CnYLPUZIC5mkne9stNIfQYIxB1y6S0OoH4DhAbgoPOVnUbqL0CXh5Pk5w1TCwCV4F6t7UApV8rruTLWDkD1FwN0O4CStApAl58/xOxKdE7Qk+hum+Dny8NvDjNefswGD2v+6RO7cQoTRXVyMfXp78yLRIcxrQlQQe+KHaDuFeJThw9DyqUDgT14uEclc9nHj86Imw91FCaFxuRgyKJpNqFg5jKbEEDgI+Fsi7JGtJVpM9kAVNhvqmj+4tYDSN6VOoARtxivMJY+jnEcQA4AWdrQeXhP+kuJwr5DlCrw+eM5559M/Kij9in8m+Pl6wCqZYY+XnyDAPl39R3AX9Av+sATBfvpXqSkRcWJ/MXnpzelq346lmFayWoTHfuHa+Z1Tm4yzhSbo8m6/9iMIEx7GqtsMjqU5LF2AfLv6jtQcszYRCL98WyBEUAfv5BVLfmL2AQuRZ/cxb2/8wii958YgIqFAPlMMbJVMUIgBkjuYYB88li7ABVVgMQDLOPCAiSDnP+mAKJRJQBhr1X7C0YQTrGQKYau3ZccTG94ULiHDyV5rF2A6kbQPOSKhCnmfslV+UtgfCw8QN2bKYAuDycaIGq5aORBnCnGOWFpJs334GFIHmsXIP+uugPSK8WDKPCb00ZKTkByfytM2g8e9BJOCMkyar9Zik38UtwwZPRUAQrZZMWez2JPNbqeFCswn0J1gBNEWSC7zhNQWsxLkgaIOxDzYVh7HjR4zNMK35xFfvgCcgj/S8seGnqSKVYPkMom6xQgowfR4ClkFbWgL6jJWREE2MpUo3aWGStPnK1aN8VUNlk4TNJWjdUrAYSdkRkcEwEkmWLIpCGS2gKEqprPJqOhLsljlRavH0A0H2q+cZJi7IiWvMtJNIIyjGqSewoKMibFo9riOgBt0QlRR8ikVaYYLxEYgC6PnLkW7sFDnzxWoQ8MoPapjwB5m3u5Ghx1boLUBL44XXVeG4BymdxskrOBXmZqn2GKjKbLXQJECu46ACXoCkxPAySOBm+Sk4FOusXQ+x78iU6nWA8BUo4GbZLPTvBo8FhexJ9oDyBbocWblO7DP4/YLp/e/DMktUxHsrEPapiRo2n68Z+cpYt3TgAN1pcnNPjxYbSQ+fEp37kkQEDoaPAmebAe6UjiMSfqcjtkKrQogGhvKJ/kS8GNZJ/AT+xo4tQzuomHC903mcsp9yOPy53LAiSOBm+SK4DgI/se/AkD0OXROsl/pkKL4kEAyK/YrrfyoYfe+o0cTeYmBgjqULyHmcqn1OORP2oRQL51b5LbEYSncjAxUyMoT+tZS5Kp0KKdEi/oGvdDfpXoP7n5OHY0mZuo54VETYGlJQDx4+H2pQBKOhoUy5FTSR7k+rLW+qeu0BJJMbL3mwHSDiYDEL03Za7dXBMg72jwJjkhIEJLfA9JKbZu2TBdoWUJgPBVeGopR1MFIL6AiJRhBPHjKwLkHQ3eJGcERA8qxSFQ1YNKNmxwtwyMBaaSxj+c7P3jCYTqQDb4Xc4xTKUJ6gotiwEKTNo6mmKAhDFQSS76xv3j//bqf/+D7jx7VP/ltmSsMkCevc+5pPFvJ/Any+6fsC1I2QBVwaErtHibuxagpJinWWQAysXLA0tp34OzLRv6x928+3e88/umHJi2rHnsC3kNZnkoaezeZO8UojQOTp00glAwyGhIRUSpCi3K5g4AtUy/Hh/fGw0+PQa615Qv2ipATGUoaaz32YO5QPv7pUhVaPE292/dASQZEkQNxRjaBuj9q7/eU+VECRrpN8fB30kVU9s0vXr202jwl2dAz5sKgLQLkAT+K4AEGilagqU79rcZEiU0+/bLJQRvyzwo2//y2fOyASDOP5QqdZPAV4Hf/vljrtk6JrPqhXcg1FHRdfxZqwBxbaeiEaA5mCWig4wmApCYVd5sQrOKb6r9t2uag7O3RA1zrGWAHAvmSO00QCUGeZ85I1HWC73ux2aVN5vMoqJr/qdbbNejt5RZ/RrrIqpSz8akmE9FQjGdAkjuoNUtrd+I1aDNJn/TXD1XqmV0mIFDMyn/brwizTPUNb6Pcv64gRm1y6SxUNqd/6OUiTSTfhLS7tB8jwHSZpO/iXMKCspwuR+KexDz0pNSe0WaZ+hy2/luN4gTPBR6ioFZpcwmf5Oy65nPcXwQ3GUnpXF4fFw/dZZNIt8aQAgIM2fakoKYtJhNZIvzTcro4AFRBoDMpLS/GhN443pWadreCBLTF/jEN58/9mYVm0266/NGgMykjH7xDE3TUnvm9StOuqzzmWiA4ilmJmUMUJMmcHGS3UFV+tnP6zHpVv3zDf+kweoKAFWZtJmU1m0kMzRJUb2RGloSoCXuWpc4GiRNyq7XYp56ryel/VVmDZkes2+PhdYU85sBqJGMZ0gpit3TIoBUAFCwnv48UrHQ6FrkGG+vmJml2YUGVZ9pAUA6EFpWVtGrhWEUYQWWQsr82qtZmvVn+0fv0RJ79dP/XJUHmUBoWVmluK0C3IN6BdbdG+K+9YUtJmkoPpxgxJdHazPpKIxVr6zCWrRZgcWVRF6Eii70NI3FMXfYXDu534inZoBMILRfWSUVzgFkVmDV2qu9IGfboEKpdnVheMsSuINJh29SGFcYQUi5WEl+BM19rK9fe7UX5Cz8wYRkVZeTSsOEZaA3eP12shD7PMJkSYBkmlWGsd9mr2xKil2GBxUKIFwAhxfLgQfpFVg50ov2cZrBS5n0XOS4sF7z2ZPoerWzqwPkXrQYpmx6X8WokQcskGI6EFpWVrFcl5difgUWsgRk7dVc8GelTBVUQmDXI64hvn/CCHFJiwsfB6FzqwZU9jRkXF0e/tehVTfm+UcnsWIIMIIxUlRGCRqrYcOvqwFk9CDWS6ejr0YqEk1WYBFD0VzN0qw6y2+Sc/1TUZ3Jswxp4Nwp3qJW51ZR/Pc4nEV/jr+MH/IqN0EFBVzdVddH7owW8B9J3ZwrAZSgJh9xM0Uedo/XnAqO+PwCWG584fUJ+HqGknQ2js6Sp2xMH2hnI0sQagGhYQmAePvKQWPczkYBgpJwYVFMl2GJ4vFphFVyq2i+GB0C1S85g7FAMSFw48QUc3P5v2nR+k7D8s9GAeKifVyqX2txQci8f/MMCrGvApCw+jRAEHrZ5BWazxpfecP+ICz7mJFXOgEQloj2hyWHkqQAKkXJ0upGGqA66qtHESv1UxphNPdp6eL28aN3eYIHSUyiOsush86UFJ4W/zsMTZ2nDJ7e+KSrrwZyHnffsf0Jhau4ICXJKw5OLilLOJzlgud8hnZ8rgeoGqs5W2pXl00CpLhyTgny8oaIVQDMs4xID2LBZ5wsIQV9ngAoD3O4qlXOHgzacbmuSWEEFUqO0+q8rypMWTqS09poX69GMoISV1pzuS5B4hOLKgf4pQr/SoP75+gtF7cacGuacX6KvTlqcpS2R+25XBeTLGHGlQNkscvfN7ID3ttiVEJY/DN3nvbHA9kSQKymxpUDJCLB3zj78TYoQnclnIJ3Y/tOrt4iVbIi4K5IWPph8TRqopamWC5FtGl4+L8+ImFDtFK0x/u3bzcX/kKSJ64c0GuAjKJau0zSohQTf8c8LBRJREJ7/2QBpQBCIBIq9uzbe252H0MVsP+8VSsV2gFIljDjygES6L32P6D0h4ICjPZeBLEZiU8MpberTPRlpSo1cDFd3KmqtsBri4HkqmKA/2vF/BpUYHzW2Oc9mQC+ID59DIPaRZU9wQmHma+QESoPV6g/wQvNsRY6kQncvhLAF4nPalDQEraYqfQd03UBaIaZHOd+2wiJ/InEZzUoSEZQ1R/kK3yC4+waALSAyoPfTozbSww2Iz4TQUElK+1VzZO9dJg6UbuycW0AuvwcgqhNHIVaRzH5UOpS4+IqMMhPj++NMiz0XjN+WwEIk6Bu8/JkKGhcZmMukWX2SlEHUD75FqdH8TYP4YTeuGbOGa0iHkVsxuJzYVCQfW+KA74DVejq3K5tACQWlizliK1FG9kd+K3faa8UfZBnt/1XywCFE7rc9lymiohHEZuR+FwYFBTT21dvm29oASD3brA78RlvSaw3l5F9bNReKeaAS7iHrWzsibBxzRpUu7K6HLUAkKn3rDeXkWUcs1dKtHEKrX/5kuPqhNm4Zg1KrqzOXv18Pnv1TKhbhxmksDwPn5UOy1JCK2R245Q87HIgAPkTZtOIq1N6ZbW6A0cdtcGDkO3sP6LZpEaTB0i9iN04JRePaQDInzD7slyd0iurkAq1QYcZr9bcPbeGF3fRfFP2a9sAQA0rq0tRS3oQbUI3jkcQA6TO2QL1zQAdhI1r1qCGldVlqD1F0QkmXJnQPEgydXR+vVZpmwBqiQc1rqxuJl8sbEJ34PdbLSgYQSbJgd8rxR40AWQ2rvFUtuirbiFGcSkym9CpzWU8QHqvFHvQBJDZuMb3qc2I/xz8ZZtg0qJJY1iY2VyGrWqze50+aAQo0qSRrgJQjuXwqvN0g/liaF3JTpTaFhvqG2TtQh00AqQ3rmHi+t1cSsyHVMkCbDJiPWdtvuIx7M3a/JpkyjRQqVJerWcfkQ8wS0asy5hLeMZrinZb6i9AyY1rMF5bSom5Tv/y+eMQtp5cHSBvdip4wT340WLR31+AkhvX+PEg5f+HJmw9hVDBJl1CWXBT8jbSJ91nPXdAqY1rKIGXS4nxfAolZ9IR68iZUrOp9AvhG0gL74ISG9f4pBr8NTs53ou8jMsxFiQH50cbXFndDPmkGorTRj+1Ff3LKwIfihQzRDF4umY5BFRx2HqIWF+KthejOE0Vz1dU/2az54veG3i2lBLLcTFx6MPWV3O2LpnD1iuALo6Gy36xbdD7Hwd3ft4GD1oEUPsPXok2GoJn6JoA1JVHcRZX/sOCJQMK4IUVsruvR2JJ0SbhUjHw4DVVrqU6OaK8hNKCVIudK6FImzP/2HboSgDZyn/sVtmXoJTs09HQD2AMzuSKgQTJOAIo+kQAhTZn/rHt0FUAspX/QLCcsjcohyH1cuQ/ulE0luhfdBux23FP8umGprQgTjG8GtoMj1XeYyPp/FcCyFT+U7vkspeU9qpmdys6EaliID0RANIBA6UByGxuLY9V3qO3ANnKf8JZQVOT3dKHIeB3z9ZaUgBh5iKQLy3oAVJthseS79E5XYkHvVgMkHCWeoDEoadKC/4rAaQldhog9hTq0oKrAvTDEw4TydnjEdZC6FWCd5Mk6Sntu1aXVN0NQIpfcDeKKFE2CZCs0evSgmkeVA/QLXGHBIBkXPmixuz9JkkqEWorrJGtD5CVYkNc0sCPtHgRFcQTgDyD1qUF8euvSLFagCD6g8RfAIiHDn+EmAE3hSchbRh+X6wyOVsAiDUe5iuRHkRfZAWgf8gS/eAHVVoQnrkftdkEEK2bAZ4BIN6LEheVCAcUqCRJHUDfzVejFgAymjRo1zRrZg9GPnasAaDHqrTg/NcR1EiONOlagGgSg1NfAYT/jSoS+jgJP4pxPYRTZjsDqC8kABURQF5EBGPUS1Kp7VBT2CFFGwRo1sAZm67VPSIjCHJVFUBwviBdVhnpIcoVc2aXN4o3B9DZEYXj2nejY7q2GhkelKm2S2cmIjR6Rc2EAU+rE7aWNgYQ9ycJkA35WL5BiGE8oVXZA5GeANkNWuMpaW+xp6H27nSEWT0vV5DzmwZo5WsNDZJXwae2kPScz0Oy8JPgDlNMOlvJL9tjgEzMNMU06zUg9ktRfPMUXEaifwcjGPXmu6S8TvyZ1LYVtdQ+QFhcoRLJULDPB6aUhCOUqNoO5ZpPuOHrOmZaFvkGy4y0tUOuNLUOkNRIYqNDnF0aIIn6yDlPi6+JlSCr8Tpm2s2hO+9ASC8xOc6aqt2sTG0DxIzxiWS7fXbOMeOKSXtLC6oCKSbN0YgyQ2wQtWC6SECvtwlTldoGKNjovlviYQtSLOeNACVkz8eMB0TmJmbaM6nGcmNIT1v2X3fEpBGgVPSmCl7MyYgMAInzkKeRCqby5zZfcrADgGZUASiKCdYAYTepr0YPwjnmB4kBSCUHtv/GTdQ6QL4EUANAtFs2pwoqgNAk9TLowxxBUIXrky//8vakEaASNxP2x34uYuE8eagaErwMD2qbWgaImPMiHgRD5TUJYwuQAy5EftoIz2WlWNvUMkC+musoyt2JbLF870/VawjcUw+qBoj0oPcPNlEVxlLrAGFg4Y9UcFpHlTsQQPx6i1vnkvG1OcyxW57JmJDgVTTpVqltHiRe8ac6W5tz7LJQ4UBKSQrTFu2uVK4aA1DVFtsQdSLFnPXF3DSsu2Csw1AxE6kgNPTX5stGv2+SeuZy7V/t6Z4BVG5cSi2ifgF0cbhxKbWI+gRQnq2zXXRH1CeAQqHJHlGfAOoldQkQLLif46/qtenvZKfinlOHAEGI0LCs4SthK+eeU6cAJfLbhBLpW/2k9gGCiDGIagKZhCtXDgo5h8m8+7QZNW3lXLB7ejhXN/WJWgdoKrtbKYD8OYrMg7AxAWjq877CTb2itgGancCqxhnFL/EUC+fQ6/wS/fnMg4gP5RjNKg+u9v865mNtA8Spj9B/D1A4FxIjPZMuuFi2enAVukuexuIAAAMJSURBVHYASXSr7E1Sqlh63l8LyQMEwNibWn6jNWnrAMEv2sVMAyQMm9c5xuHM7GRYYLgqVUejNh7IDk/tM/r2p5gX62qKTfzVyhRzc+z7w2G0GYVn2D7kVZ25AYXMS3+IFVVoXbsLRt8Bk/4O4kg1DwrnkElj+FIxkN1lp6Njzm2QBy2nHxYRn4fx5Lk9ScK75xIDfBVG30iti/nSxysERVGf4++6YDFPyTEvzIOGYeccICxnKLDOD0UC6MZXWCPsioy+kdpXFKfiZVWatD8HrAO5xeVRNvztxMedmwcNP6KMjnBGhh1PSDzEsKg7p50w+l5a87qjVGOhGSB0fWchCe2DB0gx7MvD/SPk0XJGABrrQ0dv/qi2uGmRegmQYtgFpchoPk+Mi7k9HJaw+jZ7CqMrMPq2qJcABYZNsimoSWMZMsLtlZjHOkqe0bdF/QTIM+yc+PQwnJE5xdw+KIrorQ2Mvi3qKUD9oU0D1FFdhYtHHTSK9GEA1GFFgh1AC2gH0ALqEqAQ2pEPfnjAW2UhQLznEWbbcbbthUom8A9Wy2AkGy3alu2KOgRIpdSGHBIESJLqMV+Tsm11Okp4sFIGI93o9QRIp9TmmH/rc3RzrPF+cWjqVkBRiyyzubiVMhjpRq/nFNMptTlvAjA0PKjwldrnqqiFfpCCFynwVWXvxo1eS4BMSq3Oa0eAINj8C85yoXUfX5JAP6jLYFASfbLRawmQSamNAJo9yLzRVAFIP6hzq20ZepsLfh0BMvI8Ashxj+NHz94VNSMoPBgDVNPotQTIpNRagDgJXjKCVKKPygVCigGqafR6AqRTamOA0G1zpKYYS7ERSTH/YAWgdKPu1xJla69GHepBKqW2MsWYfDqy2f4mPFgBKN0oPn3t9CCdUhsz6SdYoPt1qHxCA2r/J5oq/sEqQMlGsaZFR5OsX/6gVGX1LVNPAMIiOawh94t6ApBogL2LAu4LQMyWWvUmt0N9Aai3tANoAe0AWkA7gBbQDqAFtANoAe0AWkA7gBbQDqAFtANoAf0/b/F+oOJS6qwAAAAASUVORK5CYII=" /><!-- --></p>
-<p>I use term-frequency inverse-document frequency (tf-idf) to weight the importance of the words in the wordcloud. If we used pure frequencies, the wordcloud would largely consist of words conveying little meaning (“the”, “and”, …).</p>
-<p>This is an extremely basic application of the <code>eurlex</code> package. Much more sophisticated methods can be used to analyse both the content and metadata of European Union legislation. If the package is useful for your research, please cite the <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150">accompanying paper</a>.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>I use term-frequency inverse-document frequency (tf-idf) to weight
+the importance of the words in the wordcloud. If we used pure
+frequencies, the wordcloud would largely consist of words conveying
+little meaning (“the”, “and”, …).</p>
+<p>This is an extremely basic application of the <code>eurlex</code>
+package. Much more sophisticated methods can be used to analyse both the
+content and metadata of European Union legislation. If the package is
+useful for your research, please cite the <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150">accompanying
+paper</a>.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr />
 <ol>
-<li id="fn1"><p>Note, however, that not all resource types will work properly with the pre-specified query.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Occasionally, you may encounter legal acts without CELEX numbers, especially when digging through older legislation. It is good to report these to the Eur-Lex helpdesk.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>It is worth pointing out that the html and pdf contents of older case law differs. Whereas typically the html file is only going to contain a summary and grounds of a judgment, the pdf should also contain background to the dispute.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150">10.1080/2474736X.2020.1870150</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Note, however, that not all resource types will work
+properly with the pre-specified query.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Occasionally, you may encounter legal acts without CELEX
+numbers, especially when digging through older legislation. It is good
+to report these to the Eur-Lex helpdesk.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>It is worth pointing out that the html and pdf contents
+of older case law differs. Whereas typically the html file is only going
+to contain a summary and grounds of a judgment, the pdf should also
+contain background to the dispute.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Michal Ovádek (2021) Facilitating access to data on
+European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150">10.1080/2474736X.2020.1870150</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

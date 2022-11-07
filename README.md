@@ -43,6 +43,12 @@ Please consider contributing to the maintenance and development of the package b
 
 ## Latest changes
 
+### eurlex 0.4.3
+
+- all date variables retrieved through `elx_make_query(include_... = TRUE)` are now properly named
+- new experimental feature: `elx_make_query(include_citations_detailed = TRUE)` retrieves additional details about the citation where available; the retrieval is currently slow
+- `elx_make_query(include_directory = TRUE)` now retrieves the directory code instead of URI
+
 ### eurlex 0.4.2
 
 - new feature: `elx_make_query(include_proposal = TRUE)` retrieves the CELEX of a proposal of a requested legal act

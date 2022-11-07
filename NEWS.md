@@ -9,6 +9,7 @@
 
 - `elx_make_query(include_directory = TRUE)` now retrieves the directory code instead of URI
 - minor clean up of internals
+- vignette lightly touched up
 
 # eurlex 0.4.2
 
