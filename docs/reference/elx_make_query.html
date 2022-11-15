@@ -28,7 +28,7 @@ Note that not all resource types are compatible with default parameter values.">
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -61,169 +61,112 @@ Note that not all resource types are compatible with default parameter values.</
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">elx_make_query</span><span class="op">(</span></span>
-<span>  resource_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"any"</span>, <span class="st">"directive"</span>, <span class="st">"regulation"</span>, <span class="st">"decision"</span>, <span class="st">"recommendation"</span>,</span>
-<span>    <span class="st">"intagr"</span>, <span class="st">"caselaw"</span>, <span class="st">"manual"</span>, <span class="st">"proposal"</span>, <span class="st">"national_impl"</span><span class="op">)</span>,</span>
-<span>  manual_type <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  directory <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  sector <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  include_corrigenda <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_celex <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  include_lbs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_date <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_date_force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_date_endvalid <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_date_transpos <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_date_lodged <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_eurovoc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_citations <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_citations_detailed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_author <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_directory <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_sector <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_ecli <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_court_procedure <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_judge_rapporteur <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_advocate_general <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_court_formation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_court_scholarship <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_proposal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  order <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  limit <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">elx_make_query</span><span class="op">(</span>
+  resource_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"any"</span>, <span class="st">"directive"</span>, <span class="st">"regulation"</span>, <span class="st">"decision"</span>, <span class="st">"recommendation"</span>,
+    <span class="st">"intagr"</span>, <span class="st">"caselaw"</span>, <span class="st">"manual"</span>, <span class="st">"proposal"</span>, <span class="st">"national_impl"</span><span class="op">)</span>,
+  manual_type <span class="op">=</span> <span class="st">""</span>,
+  directory <span class="op">=</span> <span class="cn">NULL</span>,
+  sector <span class="op">=</span> <span class="cn">NULL</span>,
+  include_corrigenda <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_celex <span class="op">=</span> <span class="cn">TRUE</span>,
+  include_lbs <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_date <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_date_force <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_date_endvalid <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_date_transpos <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_date_lodged <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_force <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_eurovoc <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_citations <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_citations_detailed <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_author <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_directory <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_sector <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_ecli <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_court_procedure <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_judge_rapporteur <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_advocate_general <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_court_formation <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_court_scholarship <span class="op">=</span> <span class="cn">FALSE</span>,
+  include_proposal <span class="op">=</span> <span class="cn">FALSE</span>,
+  order <span class="op">=</span> <span class="cn">FALSE</span>,
+  limit <span class="op">=</span> <span class="cn">NULL</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>resource_type</dt>
 <dd><p>Type of resource to be retrieved via SPARQL query</p></dd>
-
-
 <dt>manual_type</dt>
 <dd><p>Define manually the type of resource to be retrieved</p></dd>
-
-
 <dt>directory</dt>
 <dd><p>Restrict the results to a given directory code</p></dd>
-
-
 <dt>sector</dt>
 <dd><p>Restrict the results to a given sector code</p></dd>
-
-
 <dt>include_corrigenda</dt>
 <dd><p>If `TRUE`, results include corrigenda</p></dd>
-
-
 <dt>include_celex</dt>
 <dd><p>If `TRUE`, results include CELEX identifier for each resource URI</p></dd>
-
-
 <dt>include_lbs</dt>
 <dd><p>If `TRUE`, results include legal bases of legislation</p></dd>
-
-
 <dt>include_date</dt>
 <dd><p>If `TRUE`, results include document date</p></dd>
-
-
 <dt>include_date_force</dt>
 <dd><p>If `TRUE`, results include date of entry into force</p></dd>
-
-
 <dt>include_date_endvalid</dt>
 <dd><p>If `TRUE`, results include date of end of validity</p></dd>
-
-
 <dt>include_date_transpos</dt>
 <dd><p>If `TRUE`, results include date of transposition deadline for directives</p></dd>
-
-
 <dt>include_date_lodged</dt>
 <dd><p>If `TRUE`, results include date a court case was lodged with the court</p></dd>
-
-
 <dt>include_force</dt>
 <dd><p>If `TRUE`, results include whether legislation is in force</p></dd>
-
-
 <dt>include_eurovoc</dt>
 <dd><p>If `TRUE`, results include EuroVoc descriptors of subject matter</p></dd>
-
-
 <dt>include_citations</dt>
 <dd><p>If `TRUE`, results include citations (CELEX-labelled)</p></dd>
-
-
 <dt>include_citations_detailed</dt>
 <dd><p>If `TRUE`, results include citations (CELEX-labelled) with additional details</p></dd>
-
-
 <dt>include_author</dt>
 <dd><p>If `TRUE`, results include document author(s)</p></dd>
-
-
 <dt>include_directory</dt>
 <dd><p>If `TRUE`, results include the Eur-Lex directory code</p></dd>
-
-
 <dt>include_sector</dt>
 <dd><p>If `TRUE`, results include the Eur-Lex sector code</p></dd>
-
-
 <dt>include_ecli</dt>
 <dd><p>If `TRUE`, results include the ECLI identifier for court documents</p></dd>
-
-
 <dt>include_court_procedure</dt>
 <dd><p>If `TRUE`, results include type of court procedure and outcome</p></dd>
-
-
 <dt>include_judge_rapporteur</dt>
 <dd><p>If `TRUE`, results include the Judge-Rapporteur</p></dd>
-
-
 <dt>include_advocate_general</dt>
 <dd><p>If `TRUE`, results include the Advocate General</p></dd>
-
-
 <dt>include_court_formation</dt>
 <dd><p>If `TRUE`, results include the court formation</p></dd>
-
-
 <dt>include_court_scholarship</dt>
 <dd><p>If `TRUE`, results include court-curated relevant scholarship</p></dd>
-
-
 <dt>include_proposal</dt>
 <dd><p>If `TRUE`, results include the CELEX of the proposal of the adopted legal act</p></dd>
-
-
 <dt>order</dt>
 <dd><p>Order results by ids</p></dd>
-
-
 <dt>limit</dt>
 <dd><p>Limit the number of results, for testing purposes mainly</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A character string containing the SPARQL query</p>
+    <p>A character string containing the SPARQL query</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"directive"</span>, include_date <span class="op">=</span> <span class="cn">TRUE</span>, include_force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"directive"</span>, include_date <span class="op">=</span> <span class="cn">TRUE</span>, include_force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex ?date ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/DIR_DEL&gt;) \n FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} OPTIONAL{?work cdm:work_date_document ?date.} OPTIONAL{?work cdm:resource_legal_in-force ?force.} FILTER not exists{?work cdm:do_not_index \"true\"^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }"</span>
-<span class="r-in"><span><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"regulation"</span>, include_corrigenda <span class="op">=</span> <span class="cn">TRUE</span>, order <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"regulation"</span>, include_corrigenda <span class="op">=</span> <span class="cn">TRUE</span>, order <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_IMPL&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_FINANC&gt;||\n  ?type=&lt;http://publications.europa.eu/resource/authority/resource-type/REG_DEL&gt;) OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index \"true\"^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. } order by str(?date)"</span>
-<span class="r-in"><span><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"any"</span>, sector <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"any"</span>, sector <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex where{\n    ?work cdm:resource_legal_id_sector ?sector.\n    FILTER(str(?sector)='2')\n     \n FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index \"true\"^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }"</span>
-<span class="r-in"><span><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"manual"</span>, manual_type <span class="op">=</span> <span class="st">"SWD"</span><span class="op">)</span></span></span>
+<span class="r-in"><span class="fu">elx_make_query</span><span class="op">(</span>resource_type <span class="op">=</span> <span class="st">"manual"</span>, manual_type <span class="op">=</span> <span class="st">"SWD"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt;\n  PREFIX annot: &lt;http://publications.europa.eu/ontology/annotation#&gt;\n  PREFIX skos:&lt;http://www.w3.org/2004/02/skos/core#&gt;\n  PREFIX dc:&lt;http://purl.org/dc/elements/1.1/&gt;\n  PREFIX xsd:&lt;http://www.w3.org/2001/XMLSchema#&gt;\n  PREFIX rdf:&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;\n  PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type.FILTER(?type=&lt;http://publications.europa.eu/resource/authority/resource-type/SWD&gt;) \n FILTER not exists{?work cdm:work_has_resource-type &lt;http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM&gt;} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index \"true\"^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;}. }"</span>
 </code></pre></div>
     </div>
@@ -239,7 +182,7 @@ Note that not all resource types are compatible with default parameter values.</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
