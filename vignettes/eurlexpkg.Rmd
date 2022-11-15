@@ -186,7 +186,7 @@ elx_fetch_data(url = results$work[1], type = "title")
 library(purrr)
 
 dir_titles <- results[1:10,] %>% # take the first 10 directives only to save time
-  mutate(title = map_chr(work, possibly(elx_fetch_data))) %>% 
+  mutate(title = map_chr(work, possibly(elx_fetch_data, otherwise = NA))) %>% 
   as_tibble() %>% 
   select(celex, title)
 
@@ -235,7 +235,7 @@ We want to know a bit more about the directives from 1970s that are still in for
 dirs_1970_title <- dirs %>% 
   filter(between(as.Date(date), as.Date("1970-01-01"), as.Date("1980-01-01")),
          force == "true") %>% 
-  mutate(title = map_chr(work,elx_fetch_data,"title")) %>% 
+  mutate(title = map_chr(work,possibly(elx_fetch_data, otherwise = NA))) %>% 
   as_tibble()
 
 print(dirs_1970_title)
