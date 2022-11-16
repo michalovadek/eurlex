@@ -13,7 +13,7 @@
 #' @importFrom rlang .data
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' elx_curia_list(data = "cst_all")
 #' }
 

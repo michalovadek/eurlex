@@ -13,7 +13,7 @@
 #' A character vector of length one containing the result. When `type = "text"`, named character vector where the name contains the source of the text.
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' elx_fetch_data(url = "http://publications.europa.eu/resource/celex/32014R0001", type = "title")
 #' }
 
