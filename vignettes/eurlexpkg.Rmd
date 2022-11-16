@@ -44,7 +44,7 @@ query_dir <- elx_make_query(resource_type = "directive")
 
 
 ```{r precompute, include=FALSE}
-dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE, limit = 100) %>% 
+dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
   elx_run_query()
 
 results <- dirs %>% select(-force,-date)
@@ -257,7 +257,7 @@ dirs_1970_title %>%
   count(celex, word, sort = TRUE) %>% 
   filter(!grepl("\\d", word)) %>% 
   bind_tf_idf(word, celex, n) %>% 
-  with(wordcloud(word, tf_idf, max.words = 40, scale = c(1.8,0.1)))
+  with(wordcloud(word, tf_idf, max.words = 40))
 
 ```
 

@@ -36,7 +36,7 @@ A character vector of length one containing the result. When `type = "text"`, na
 Wraps httr::GET with pre-specified headers and parses retrieved data.
 }
 \examples{
-\donttest{
+\dontrun{
 elx_fetch_data(url = "http://publications.europa.eu/resource/celex/32014R0001", type = "title")
 }
 }

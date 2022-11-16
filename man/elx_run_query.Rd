@@ -25,6 +25,6 @@ Results are capped at 1 million rows.
 }
 \examples{
 \donttest{
-elx_run_query(elx_make_query("directive", include_force = TRUE))
+elx_run_query(elx_make_query("directive", include_force = TRUE, limit = 10))
 }
 }

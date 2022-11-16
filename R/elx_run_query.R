@@ -49,7 +49,7 @@ graceful_http <- function(remote_file, headers, verb = c("GET","HEAD")) {
   try_GET <- function(x, ...) {
     tryCatch(
       httr::GET(url = x,
-                httr::timeout(1000000000),
+                #httr::timeout(1000000000),
                 headers),
       error = function(e) conditionMessage(e),
       warning = function(w) conditionMessage(w)
@@ -59,7 +59,7 @@ graceful_http <- function(remote_file, headers, verb = c("GET","HEAD")) {
   try_HEAD <- function(x, ...) {
     tryCatch(
       httr::HEAD(url = x,
-                httr::timeout(1000000000),
+                #httr::timeout(1000000000),
                 headers),
       error = function(e) conditionMessage(e),
       warning = function(w) conditionMessage(w)
@@ -116,12 +116,6 @@ graceful_http <- function(remote_file, headers, verb = c("GET","HEAD")) {
 #'
 
 elx_parse_xml <- function(sparql_response = ""){
-  
-  if (is.na(sparql_response) | is.null(sparql_response)){
-    
-    return(NA_character_)
-    
-  }
 
   res_binding <- sparql_response %>% 
     xml2::read_xml() %>% 
