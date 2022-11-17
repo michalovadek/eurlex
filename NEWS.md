@@ -1,3 +1,9 @@
+# eurlex 0.4.4
+
+## Minor changes
+
+- minor changes to vignettes and examples to reduce build time
+
 # eurlex 0.4.3
 
 ## Major changes
