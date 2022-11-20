@@ -25,7 +25,7 @@ Harvests data from lists of EU court cases from curia.europa.eu.
 CELEX identifiers are extracted from hyperlinks where available.
 }
 \examples{
-\dontrun{
-elx_curia_list(data = "cst_all")
+\donttest{
+elx_curia_list(data = "cst_all", parse = FALSE)
 }
 }

@@ -7,7 +7,7 @@ Authors@R: c(person(given = "Michal",
              role = c("aut", "cre", "cph"),
              email = "michal.ovadek@gmail.com",
              comment = c(ORCID = "0000-0002-2552-2580")))
-Description: Access to data on European Union laws and court decisions made easy with pre-defined 'SPARQL' queries and 'GET' requests.
+Description: Access to data on European Union laws and court decisions made easy with pre-defined 'SPARQL' queries and 'GET' requests. See Ovadek (2021) <doi:10.1080/2474736X.2020.1870150> .
 License: GPL-3
 Encoding: UTF-8
 Language: en-US

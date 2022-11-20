@@ -39,7 +39,9 @@ Downloads an XML notice of a given type associated with a Cellar resource.
 To retrieve all identifiers associated with a url, use elx_fetch_data(type = "ids").
 }
 \examples{
-\dontrun{
-elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "object")
+\donttest{
+temploc <- paste(tempdir(), "elxnotice.xml", sep = "\\\\")
+elx_download_xml(url = "http://publications.europa.eu/resource/celex/32022D0154",
+ file = temploc, notice = "object")
 }
 }

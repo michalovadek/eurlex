@@ -3,6 +3,8 @@
 ## Minor changes
 
 - minor changes to vignettes and examples to reduce build time
+- more stable connection through `elx_curia_list()`
+- fun CRAN policy compliance stuff
 
 # eurlex 0.4.3
 

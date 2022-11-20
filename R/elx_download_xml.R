@@ -15,8 +15,10 @@
 #' Path of downloaded file (invisibly) if server validates request (http status code has to be 200). For more information about notices, see Cellar documentation.
 #' @export
 #' @examples
-#' \dontrun{
-#' elx_download_xml(url = "http://publications.europa.eu/resource/celex/32014R0001", notice = "object")
+#' \donttest{
+#' temploc <- paste(tempdir(), "elxnotice.xml", sep = "\\")
+#' elx_download_xml(url = "http://publications.europa.eu/resource/celex/32022D0154",
+#'  file = temploc, notice = "object")
 #' }
 
 elx_download_xml <- function(url, file = paste(basename(url), ".xml", sep = ""),

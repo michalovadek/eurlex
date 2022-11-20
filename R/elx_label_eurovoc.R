@@ -9,9 +9,8 @@
 #' A `tibble` containing EuroVoc unique concept identifiers and labels.
 #' @export
 #' @examples
-#' \dontrun{
-#' elx_label_eurovoc(uri_eurovoc = "http://eurovoc.europa.eu/5760", alt_labels = TRUE, language = "fr")
-#' elx_label_eurovoc(uri_eurovoc = c("http://eurovoc.europa.eu/5760","http://eurovoc.europa.eu/576"))
+#' \donttest{
+#' elx_label_eurovoc(uri_eurovoc = "http://eurovoc.europa.eu/5760", language = "fr")
 #' }
 
 
