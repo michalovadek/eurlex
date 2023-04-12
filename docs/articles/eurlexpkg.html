@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.5</span>
       </span>
     </div>
 
@@ -321,14 +321,14 @@ to official EU publications).</p>
 <span><span class="co">#   elx_run_query()</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,401 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,418 × 3</span></span></span>
 <span><span class="co">#&gt;   work                                                               type  celex</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> http://publications.europa.eu/resource/cellar/469391ea-6c79-4680-… http… 3197…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/e8fcaf0d-443a-40ec-… http… 3198…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/52639f5f-ecaf-4f99-… http… 3198…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/c7560407-689b-4752-… http… 3196…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 4,397 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,414 more rows</span></span></span></code></pre></div>
 <p>The function outputs a <code>data.frame</code> where each column
 corresponds to one of the requested variables, while the rows accumulate
 observations of the resource type satisfying the query criteria.
@@ -393,7 +393,7 @@ variables.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 31962H0816 http://eurovoc.europa.eu/1004</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 31974H0435 http://eurovoc.europa.eu/1085</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 31996H0592 http://eurovoc.europa.eu/1076</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 6 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more rows</span></span></span></code></pre></div>
 <p>By default, the endpoint returns the EuroVoc concept codes rather
 than the labels (keywords). The function
 <code><a href="../reference/elx_label_eurovoc.html">elx_label_eurovoc()</a></code> needs to be called to obtain a look-up
@@ -409,14 +409,14 @@ table with the labels.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://eurovoc.europa.eu/1442 food inspection</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://eurovoc.europa.eu/1076 form           </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://eurovoc.europa.eu/1318 Germany        </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 5 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more rows</span></span></span></code></pre></div>
 <p>The results include labels only for unique identifiers, but with
 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code> it is straightforward to append the
 labels to the entire dataset.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rec_eurovoc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">eurovoc_lookup</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining, by = "eurovoc"</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(eurovoc)`</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 5</span></span></span>
 <span><span class="co">#&gt;   work                                                type  celex eurovoc labels</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
@@ -424,7 +424,7 @@ labels to the entire dataset.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/120a… http… 3196… http:/… welfa…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/123d… http… 3197… http:/… France</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/8a36… http… 3199… http:/… form  </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 6 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more rows</span></span></span></code></pre></div>
 <p>As elsewhere in the API, we can tap into the multilingual nature of
 EU documents also when it comes to the EuroVoc keywords. Moreover, most
 concepts in the thesaurus are associated with alternative labels; these
@@ -437,7 +437,7 @@ can be returned as well (separated by a comma).</p>
 <span><span class="va">rec_eurovoc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">eurovoc_lookup</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">celex</span>, <span class="va">eurovoc</span>, <span class="va">labels</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining, by = "eurovoc"</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(eurovoc)`</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 3</span></span></span>
 <span><span class="co">#&gt;   celex      eurovoc                       labels                               </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                </span></span>
@@ -445,7 +445,7 @@ can be returned as well (separated by a comma).</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 31962H0816 http://eurovoc.europa.eu/1004 blahobyt                             </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 31974H0435 http://eurovoc.europa.eu/1085 Francúzska republika,Francúzsko      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 31996H0592 http://eurovoc.europa.eu/1076 formulár                             </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 6 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more rows</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -469,11 +469,11 @@ the document. For both you can specify also the desired language
 <span><span class="co"># elx_fetch_data(url = results$work[1], type = "title")</span></span>
 <span></span>
 <span><span class="co"># we can use purrr::map() to play that role</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># wrapping in possibly() catches errors in case there is a server issue</span></span>
 <span><span class="va">dir_titles</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># take the first 5 directives only to save time</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span><span class="va">work</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html" class="external-link">possibly</a></span><span class="op">(</span><span class="va">elx_fetch_data</span>, otherwise <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span><span class="va">work</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="va">elx_fetch_data</span>, otherwise <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span>,</span>
 <span>                         <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">celex</span>, <span class="va">title</span><span class="op">)</span></span>
@@ -486,7 +486,7 @@ the document. For both you can specify also the desired language
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 31989L0194 Council Directive 89/194/EEC of 13 March 1989 amending Directive 6…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 31984L0378 Council Directive 84/378/EEC of 28 June 1984 amending the Annexes …</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 31966L0683 Commission Directive 66/683/EEC of 7 November 1966 eliminating all…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 1 more row</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more row</span></span></span></code></pre></div>
 <p>Note that text requests are by far the most time-intensive;
 requesting the full text for thousands of documents is liable to extend
 the run-time into hours. Texts are retrieved from html by priority, but
@@ -535,7 +535,7 @@ that are still in force today. Their titles could give us a clue.</p>
 <code class="sourceCode R"><span><span class="va">dirs_1970_title</span> <span class="op">&lt;-</span> <span class="va">dirs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/between.html" class="external-link">between</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"1970-01-01"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"1973-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>         <span class="va">force</span> <span class="op">==</span> <span class="st">"true"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span><span class="va">work</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html" class="external-link">possibly</a></span><span class="op">(</span><span class="va">elx_fetch_data</span>, otherwise <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span><span class="va">work</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="va">elx_fetch_data</span>, otherwise <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span>,</span>
 <span>                         <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -547,7 +547,7 @@ that are still in force today. Their titles could give us a clue.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/f… http… 3197… 1972… true  Coun…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/a… http… 3197… 1971… true  Coun…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/c… http… 3197… 1970… true  Coun…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 6 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more rows</span></span></span></code></pre></div>
 <p>I will use the <code>tidytext</code> package to get a quick idea of
 what the legislation is about.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -607,7 +607,7 @@ European Union laws, Political Research Exchange, 3:1, DOI: <a href="https://www
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
