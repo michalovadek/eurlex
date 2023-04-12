@@ -23,7 +23,8 @@
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
 #' @param include_citations_detailed If `TRUE`, results include citations (CELEX-labelled) with additional details
 #' @param include_author If `TRUE`, results include document author(s)
-#' @param include_directory If `TRUE`, results include the Eur-Lex directory code
+#' @param include_directory If `TRUE`, results include the label of the Eur-Lex directory code
+#' @param include_directory_code If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param include_ecli If `TRUE`, results include the ECLI identifier for court documents
 #' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
@@ -51,7 +52,8 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                            include_force = FALSE, include_eurovoc = FALSE,
                            include_citations = FALSE, include_citations_detailed = FALSE,
                            include_author = FALSE,
-                           include_directory = FALSE, include_sector = FALSE,
+                           include_directory = FALSE, include_directory_code = FALSE,
+                           include_sector = FALSE,
                            include_ecli = FALSE, include_court_procedure = FALSE,
                            include_judge_rapporteur = FALSE,
                            include_advocate_general = FALSE,
@@ -176,7 +178,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   }
 
-  if (include_directory == TRUE){
+  if (include_directory == TRUE | include_directory_code == TRUE){
 
     query <- paste(query, "?directory", sep = " ")
 
@@ -522,6 +524,12 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
     query <- paste(query, "OPTIONAL{?work cdm:resource_legal_is_about_concept_directory-code ?directoryx.
                    ?directoryx skos:prefLabel ?directory. FILTER(lang(?directory)='en').}")
 
+  }
+  
+  if (include_directory_code == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_is_about_concept_directory-code ?directory.}")
+    
   }
 
   if (include_sector == TRUE){

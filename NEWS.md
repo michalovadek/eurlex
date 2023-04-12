@@ -1,3 +1,9 @@
+# eurlex 0.4.5
+
+## Minor changes
+
+- new feature: `elx_make_query(..., include_directory_code = TRUE)` retrieves the directory code of the document in question rather than its label (which can still be retrieved using `include_directory = TRUE`). This is useful to distinguish identical labels in different directories
+
 # eurlex 0.4.4
 
 ## Minor changes
