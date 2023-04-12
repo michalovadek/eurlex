@@ -106,7 +106,8 @@ elx_curia_scraper <- function(url, ...){
   tab <- page %>%
     rvest::html_node("table") %>%
     rvest::html_table(header = FALSE, fill = TRUE) %>%
-    dplyr::na_if("") %>%
+    dplyr::mutate(dplyr::across(.cols = dplyr::everything(),
+                                .fns = ~dplyr::na_if(., ""))) %>%
     dplyr::filter(!is.na(.data$X1) & !is.na(.data$X2)) %>%
     dplyr::rename(case_id = .data$X1,
                   case_info = .data$X2) %>%

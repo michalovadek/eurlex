@@ -24,6 +24,7 @@ elx_make_query(
   include_citations_detailed = FALSE,
   include_author = FALSE,
   include_directory = FALSE,
+  include_directory_code = FALSE,
   include_sector = FALSE,
   include_ecli = FALSE,
   include_court_procedure = FALSE,
@@ -71,7 +72,9 @@ elx_make_query(
 
 \item{include_author}{If `TRUE`, results include document author(s)}
 
-\item{include_directory}{If `TRUE`, results include the Eur-Lex directory code}
+\item{include_directory}{If `TRUE`, results include the label of the Eur-Lex directory code}
+
+\item{include_directory_code}{If `TRUE`, results include the Eur-Lex directory code}
 
 \item{include_sector}{If `TRUE`, results include the Eur-Lex sector code}
 
