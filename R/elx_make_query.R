@@ -32,6 +32,8 @@
 #' @param include_advocate_general If `TRUE`, results include the Advocate General
 #' @param include_court_formation If `TRUE`, results include the court formation
 #' @param include_court_scholarship If `TRUE`, results include court-curated relevant scholarship
+#' @param include_court_origin If `TRUE`, results include country of origin of court case
+#' @param include_original_language If `TRUE`, results include authentic language of document (usually case)
 #' @param include_proposal If `TRUE`, results include the CELEX of the proposal of the adopted legal act
 #' @param order Order results by ids
 #' @param limit Limit the number of results, for testing purposes mainly
@@ -59,6 +61,8 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                            include_advocate_general = FALSE,
                            include_court_formation = FALSE,
                            include_court_scholarship = FALSE,
+                           include_court_origin = FALSE,
+                           include_original_language = FALSE,
                            include_proposal = FALSE,
                            order = FALSE, limit = NULL){
 
@@ -211,6 +215,18 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   if (include_court_scholarship == TRUE){
     
     query <- paste(query, "?scholarship", sep = " ")
+    
+  }
+  
+  if (include_court_origin == TRUE){
+    
+    query <- paste(query, "?courtorigin", sep = " ")
+    
+  }
+  
+  if (include_original_language == TRUE){
+    
+    query <- paste(query, "?origlang", sep = " ")
     
   }
   
@@ -503,6 +519,18 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   if (include_court_scholarship == TRUE){
     
     query <- paste(query, "OPTIONAL{?work cdm:case-law_article_journal_related ?scholarship.}")
+    
+  }
+  
+  if (include_court_origin == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_originates_in_country ?courtorigin.}")
+    
+  }
+  
+  if (include_original_language == TRUE){
+    
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_uses_originally_language ?origlang.}")
     
   }
   
