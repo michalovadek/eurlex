@@ -524,13 +524,15 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   
   if (include_court_origin == TRUE){
     
-    query <- paste(query, "OPTIONAL{?work cdm:case-law_originates_in_country ?courtorigin.}")
+    query <- paste(query, "OPTIONAL{?work cdm:case-law_originates_in_country ?courtoriginx.
+                   ?courtoriginx skos:prefLabel ?courtorigin. FILTER(lang(?courtorigin)='en')}.")
     
   }
   
   if (include_original_language == TRUE){
     
-    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_uses_originally_language ?origlang.}")
+    query <- paste(query, "OPTIONAL{?work cdm:resource_legal_uses_originally_language ?origlang.
+                   ?origlangx skos:prefLabel ?origlang. FILTER(lang(?origlang)='en')}.")
     
   }
   
