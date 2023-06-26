@@ -115,7 +115,7 @@ graceful_http <- function(remote_file, headers, verb = c("GET","HEAD")) {
 #' @importFrom rlang .data
 #'
 
-elx_parse_xml <- function(sparql_response = ""){
+elx_parse_xml <- function(sparql_response = "", strip_uri = TRUE){
 
   res_binding <- sparql_response %>% 
     xml2::read_xml() %>% 
@@ -151,6 +151,17 @@ elx_parse_xml <- function(sparql_response = ""){
       tidyr::pivot_wider(names_from = res_cols, values_from = res_text) %>%
       dplyr::select(-.data$triplet)
 
+  }
+  
+  # strip URI
+  if (strip_uri == TRUE){
+    
+    out <- out |> 
+      dplyr::mutate(
+        dplyr::across(dplyr::everything(), 
+                      ~gsub("^http://publications.europa.eu/resource/cellar/|^http://publications.europa.eu/resource/authority/resource-type/","",.))
+      )
+    
   }
 
   return(out)
