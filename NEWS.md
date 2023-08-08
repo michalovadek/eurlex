@@ -3,6 +3,7 @@
 ## Major changes
 
 - breaking change: `elx_run_query()` now strips URIs (except Eurovoc ones) by default and keeps only the identifier to reduce object size
+- where `elx_fetch_data()` is used to retrieve texts from an html document, it now uses by default `rvest::html_text2()` instead of `rvest::html_text()`. This is slower but more resembling of how the page renders in some cases. New argument `html_text = "text2"` controls the setting.
 - new feature: `elx_make_query(..., include_court_origin = TRUE)` retrieves the country of origin of a court case. As per Eur-Lex documentation, this is primarily intended to be the country of the national court referring a preliminary question, but other countries are present in the data as well at the moment. Recommended to interact with court procedure
 - new feature: `elx_make_query(..., include_original_language = TRUE)` retrieves the authentic language of a document, typically a court case
 

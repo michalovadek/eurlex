@@ -9,6 +9,7 @@
 #' @param language_2 If data not available in `language_1`, try `language_2`
 #' @param language_3 If data not available in `language_2`, try `language_3`
 #' @param include_breaks If TRUE, text includes tags showing where pages ("---pagebreak---", for pdfs) and documents ("---documentbreak---") were concatenated
+#' @param html_text Choose whether to read text from html using `rvest::html_text2` ("text2") or `rvest::html_text` ("text")
 #' @return
 #' A character vector of length one containing the result. When `type = "text"`, named character vector where the name contains the source of the text.
 #' @export
@@ -20,8 +21,17 @@
 elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
                            notice = c("tree","branch", "object"),
                            language_1 = "en", language_2 = "fr", language_3 = "de",
-                           include_breaks = TRUE){
+                           include_breaks = TRUE,
+                           html_text = c("text2","text")){
   
+  # html_text option
+  if (missing(html_text)){
+    
+    html_text <- "text2"
+    
+  }
+  
+  # stopping criteria
   stopifnot("url must be specified" = !missing(url),
             "type must be specified" = !missing(type),
             "type must be correctly specified" = type %in% c("title","text","ids","notice"))
@@ -71,7 +81,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
     if (httr::status_code(response)==200){
 
-      out <- elx_read_text(response)
+      out <- elx_read_text(response, html_text = html_text)
 
     }
 
@@ -99,7 +109,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
         if (httr::status_code(multiresponse)==200){
 
-          multiout[q] <- elx_read_text(multiresponse)
+          multiout[q] <- elx_read_text(multiresponse, html_text = html_text)
 
           multiout <- paste0(multiout, collapse = " ---documentbreak--- ")
 
@@ -194,14 +204,33 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 #' @noRd
 #'
 
-elx_read_text <- function(http_response){
+elx_read_text <- function(http_response, html_text = "text2"){
 
+  # html_text option
+  if (missing(html_text)){
+    
+    html_text_engine <- rvest::html_text2
+    
+  }
+  
+  else if (html_text == "text2"){
+    
+    html_text_engine <- rvest::html_text2
+    
+  }
+  
+  else if (html_text == "text"){
+    
+    html_text_engine <- rvest::html_text
+    
+  }
+  
     if (stringr::str_detect(http_response$headers$`content-type`,"html")){
 
       out <- http_response %>%
         xml2::read_html() %>%
         rvest::html_node("body") %>%
-        rvest::html_text() %>%
+        html_text_engine() %>%
         paste0(collapse = " ---pagebreak--- ")
 
       names(out) <- "html"
