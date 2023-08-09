@@ -321,14 +321,14 @@ to official EU publications).</p>
 <span><span class="co">#   elx_run_query()</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,418 × 3</span></span></span>
-<span><span class="co">#&gt;   work                                                               type  celex</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> http://publications.europa.eu/resource/cellar/469391ea-6c79-4680-… http… 3197…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/e8fcaf0d-443a-40ec-… http… 3198…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/52639f5f-ecaf-4f99-… http… 3198…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/c7560407-689b-4752-… http… 3196…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,414 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,429 × 3</span></span></span>
+<span><span class="co">#&gt;   work                                 type  celex     </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 469391ea-6c79-4680-84aa-c33db274e271 DIR   31979L0173</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> e8fcaf0d-443a-40ec-b778-34b7d895d334 DIR   31989L0194</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 52639f5f-ecaf-4f99-b633-e954cea5c8f3 DIR   31984L0378</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> c7560407-689b-4752-9fb0-d0624ed83a19 DIR   31966L0683</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,425 more rows</span></span></span></code></pre></div>
 <p>The function outputs a <code>data.frame</code> where each column
 corresponds to one of the requested variables, while the rows accumulate
 observations of the resource type satisfying the query criteria.
@@ -350,20 +350,16 @@ adjustments. The queries are expansive by default in the spirit of
 erring on the side of over-inclusiveness rather than vice versa.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">type</span>,<span class="fl">5</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span></span>
-<span><span class="co">#&gt; [2] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span></span>
-<span><span class="co">#&gt; [3] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span></span>
-<span><span class="co">#&gt; [4] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span></span>
-<span><span class="co">#&gt; [5] "http://publications.europa.eu/resource/authority/resource-type/DIR"</span></span>
+<span><span class="co">#&gt; [1] "DIR" "DIR" "DIR" "DIR" "DIR"</span></span>
 <span></span>
 <span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 1</span></span></span>
-<span><span class="co">#&gt;   type                                                                   </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> http://publications.europa.eu/resource/authority/resource-type/DIR     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/authority/resource-type/DIR_DEL</span></span></code></pre></div>
+<span><span class="co">#&gt;   type    </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> DIR     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> DIR_IMPL</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> DIR_DEL</span></span></code></pre></div>
 <p>The data is returned in the long format, which means that rows are
 recycled up to the length of the variable with the most data points. For
 example, if 20 directives are returned, each with two legal bases, the
@@ -418,12 +414,12 @@ labels to the entire dataset.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">eurovoc_lookup</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(eurovoc)`</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 5</span></span></span>
-<span><span class="co">#&gt;   work                                                type  celex eurovoc labels</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> http://publications.europa.eu/resource/cellar/e46f… http… 3201… http:/… consu…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/120a… http… 3196… http:/… welfa…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/123d… http… 3197… http:/… France</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/8a36… http… 3199… http:/… form  </span></span>
+<span><span class="co">#&gt;   work                                 type  celex      eurovoc           labels</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> e46f89c5-2db2-4157-9f24-644b32b64070 RECO  32012H0090 http://eurovoc.e… consu…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 120a2b97-ef75-494e-ad48-1fa46932e26a RECO  31962H0816 http://eurovoc.e… welfa…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 123da027-350c-4c61-bc40-8e46869b89cb RECO  31974H0435 http://eurovoc.e… France</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 8a363aee-7d70-4d41-b8df-3bf487320572 RECO  31996H0592 http://eurovoc.e… form  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more rows</span></span></span></code></pre></div>
 <p>As elsewhere in the API, we can tap into the multilingual nature of
 EU documents also when it comes to the EuroVoc keywords. Moreover, most
@@ -471,8 +467,9 @@ the document. For both you can specify also the desired language
 <span><span class="co"># we can use purrr::map() to play that role</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># wrapping in possibly() catches errors in case there is a server issue</span></span>
+<span><span class="co"># wrapping in possibly() would catch errors in case there is a server issue</span></span>
 <span><span class="va">dir_titles</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># take the first 5 directives only to save time</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>work <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"http://publications.europa.eu/resource/cellar/"</span>, <span class="va">work</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span><span class="va">work</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="va">elx_fetch_data</span>, otherwise <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span>,</span>
 <span>                         <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -535,6 +532,7 @@ that are still in force today. Their titles could give us a clue.</p>
 <code class="sourceCode R"><span><span class="va">dirs_1970_title</span> <span class="op">&lt;-</span> <span class="va">dirs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/between.html" class="external-link">between</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"1970-01-01"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"1973-01-01"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>         <span class="va">force</span> <span class="op">==</span> <span class="st">"true"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>work <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"http://publications.europa.eu/resource/cellar/"</span>, <span class="va">work</span>, sep <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_chr</a></span><span class="op">(</span><span class="va">work</span>, <span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="va">elx_fetch_data</span>, otherwise <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span>,</span>
 <span>                         <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -543,10 +541,10 @@ that are still in force today. Their titles could give us a clue.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 6</span></span></span>
 <span><span class="co">#&gt;   work                                             type  celex date  force title</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> http://publications.europa.eu/resource/cellar/c… http… 3197… 1972… true  Coun…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/f… http… 3197… 1972… true  Coun…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/a… http… 3197… 1971… true  Coun…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/c… http… 3197… 1970… true  Coun…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> http://publications.europa.eu/resource/cellar/c… DIR   3197… 1972… true  Coun…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> http://publications.europa.eu/resource/cellar/f… DIR   3197… 1972… true  Coun…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> http://publications.europa.eu/resource/cellar/a… DIR   3197… 1971… true  Coun…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> http://publications.europa.eu/resource/cellar/c… DIR   3197… 1970… true  Coun…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more rows</span></span></span></code></pre></div>
 <p>I will use the <code>tidytext</code> package to get a quick idea of
 what the legislation is about.</p>

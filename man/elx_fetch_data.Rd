@@ -11,7 +11,8 @@ elx_fetch_data(
   language_1 = "en",
   language_2 = "fr",
   language_3 = "de",
-  include_breaks = TRUE
+  include_breaks = TRUE,
+  html_text = c("text2", "text")
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ elx_fetch_data(
 \item{language_3}{If data not available in `language_2`, try `language_3`}
 
 \item{include_breaks}{If TRUE, text includes tags showing where pages ("---pagebreak---", for pdfs) and documents ("---documentbreak---") were concatenated}
+
+\item{html_text}{Choose whether to read text from html using `rvest::html_text2` ("text2") or `rvest::html_text` ("text")}
 }
 \value{
 A character vector of length one containing the result. When `type = "text"`, named character vector where the name contains the source of the text.

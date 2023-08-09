@@ -97,8 +97,9 @@ rec_eurovoc %>%
 # we can use purrr::map() to play that role
 library(purrr)
 
-# wrapping in possibly() catches errors in case there is a server issue
+# wrapping in possibly() would catch errors in case there is a server issue
 dir_titles <- results[1:5,] %>% # take the first 5 directives only to save time
+  mutate(work = paste("http://publications.europa.eu/resource/cellar/", work, sep = "")) |> 
   mutate(title = map_chr(work, possibly(elx_fetch_data, otherwise = NA_character_),
                          "title")) %>% 
   as_tibble() %>% 
@@ -133,6 +134,7 @@ dirs %>%
 dirs_1970_title <- dirs %>% 
   filter(between(as.Date(date), as.Date("1970-01-01"), as.Date("1973-01-01")),
          force == "true") %>% 
+  mutate(work = paste("http://publications.europa.eu/resource/cellar/", work, sep = "")) |> 
   mutate(title = map_chr(work, possibly(elx_fetch_data, otherwise = NA_character_),
                          "title")) %>%  
   as_tibble()

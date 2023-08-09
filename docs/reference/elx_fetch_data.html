@@ -64,7 +64,8 @@
 <span>  language_1 <span class="op">=</span> <span class="st">"en"</span>,</span>
 <span>  language_2 <span class="op">=</span> <span class="st">"fr"</span>,</span>
 <span>  language_3 <span class="op">=</span> <span class="st">"de"</span>,</span>
-<span>  include_breaks <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  include_breaks <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  html_text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"text2"</span>, <span class="st">"text"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -96,6 +97,10 @@
 
 <dt>include_breaks</dt>
 <dd><p>If TRUE, text includes tags showing where pages ("---pagebreak---", for pdfs) and documents ("---documentbreak---") were concatenated</p></dd>
+
+
+<dt>html_text</dt>
+<dd><p>Choose whether to read text from html using `rvest::html_text2` ("text2") or `rvest::html_text` ("text")</p></dd>
 
 </dl></div>
     <div id="value">

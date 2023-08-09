@@ -54,6 +54,13 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.5" id="eurlex-045">eurlex 0.4.5<a class="anchor" aria-label="anchor" href="#eurlex-045"></a></h2>
 <div class="section level3">
+<h3 id="major-changes-0-4-5">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-5"></a></h3>
+<ul><li>breaking change: <code><a href="../reference/elx_run_query.html">elx_run_query()</a></code> now strips URIs (except Eurovoc ones) by default and keeps only the identifier to reduce object size</li>
+<li>where <code><a href="../reference/elx_fetch_data.html">elx_fetch_data()</a></code> is used to retrieve texts from an html document, it now uses by default <code><a href="https://rvest.tidyverse.org/reference/html_text.html" class="external-link">rvest::html_text2()</a></code> instead of <code><a href="https://rvest.tidyverse.org/reference/html_text.html" class="external-link">rvest::html_text()</a></code>. This is slower but more resembling of how the page renders in some cases. New argument <code>html_text = "text2"</code> controls the setting.</li>
+<li>new feature: <code>elx_make_query(..., include_court_origin = TRUE)</code> retrieves the country of origin of a court case. As per Eur-Lex documentation, this is primarily intended to be the country of the national court referring a preliminary question, but other countries are present in the data as well at the moment. Recommended to interact with court procedure</li>
+<li>new feature: <code>elx_make_query(..., include_original_language = TRUE)</code> retrieves the authentic language of a document, typically a court case</li>
+</ul></div>
+<div class="section level3">
 <h3 id="minor-changes-0-4-5">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-5"></a></h3>
 <ul><li>new feature: <code>elx_make_query(..., include_directory_code = TRUE)</code> retrieves the directory code of the document in question rather than its label (which can still be retrieved using <code>include_directory = TRUE</code>). This is useful to distinguish identical labels in different directories</li>
 </ul></div>
