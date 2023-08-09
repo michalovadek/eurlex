@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.5</span>
       </span>
     </div>
 
@@ -51,6 +51,20 @@
       
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.5" id="eurlex-045">eurlex 0.4.5<a class="anchor" aria-label="anchor" href="#eurlex-045"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-0-4-5">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-5"></a></h3>
+<ul><li>breaking change: <code><a href="../reference/elx_run_query.html">elx_run_query()</a></code> now strips URIs (except Eurovoc ones) by default and keeps only the identifier to reduce object size</li>
+<li>where <code><a href="../reference/elx_fetch_data.html">elx_fetch_data()</a></code> is used to retrieve texts from an html document, it now uses by default <code><a href="https://rvest.tidyverse.org/reference/html_text.html" class="external-link">rvest::html_text2()</a></code> instead of <code><a href="https://rvest.tidyverse.org/reference/html_text.html" class="external-link">rvest::html_text()</a></code>. This is slower but more resembling of how the page renders in some cases. New argument <code>html_text = "text2"</code> controls the setting.</li>
+<li>new feature: <code>elx_make_query(..., include_court_origin = TRUE)</code> retrieves the country of origin of a court case. As per Eur-Lex documentation, this is primarily intended to be the country of the national court referring a preliminary question, but other countries are present in the data as well at the moment. Recommended to interact with court procedure</li>
+<li>new feature: <code>elx_make_query(..., include_original_language = TRUE)</code> retrieves the authentic language of a document, typically a court case</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-0-4-5">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-5"></a></h3>
+<ul><li>new feature: <code>elx_make_query(..., include_directory_code = TRUE)</code> retrieves the directory code of the document in question rather than its label (which can still be retrieved using <code>include_directory = TRUE</code>). This is useful to distinguish identical labels in different directories</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.4" id="eurlex-044">eurlex 0.4.4<small>2022-11-20</small><a class="anchor" aria-label="anchor" href="#eurlex-044"></a></h2>
 <div class="section level3">
@@ -86,7 +100,8 @@
 <div class="section level3">
 <h3 id="minor-changes-0-4-2">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-2"></a></h3>
 <ul><li>
-<code>elx_make_query(include_author = TRUE)</code> now returns the human-readable label (institutional authors) instead of URI</li></ul></div>
+<code>elx_make_query(include_author = TRUE)</code> now returns the human-readable label (institutional authors) instead of URI</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.1" id="eurlex-041">eurlex 0.4.1<small>2022-03-31</small><a class="anchor" aria-label="anchor" href="#eurlex-041"></a></h2>
@@ -169,13 +184,15 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-0-3-4">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-3-4"></a></h3>
-<ul><li>fixed bug in elx_label_eurovoc whereby resulting data frames contained list-columns</li></ul></div>
+<ul><li>fixed bug in elx_label_eurovoc whereby resulting data frames contained list-columns</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="eurlex-033">eurlex 0.3.3<a class="anchor" aria-label="anchor" href="#eurlex-033"></a></h2>
 <div class="section level3">
 <h3 id="minor-changes-0-3-3">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-3-3"></a></h3>
-<ul><li>hotfix for critical bug in xml parsing that scrambled column with legal basis where this was requested</li></ul></div>
+<ul><li>hotfix for critical bug in xml parsing that scrambled column with legal basis where this was requested</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.2" id="eurlex-032">eurlex 0.3.2<a class="anchor" aria-label="anchor" href="#eurlex-032"></a></h2>
@@ -187,14 +204,16 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-0-3-2">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-3-2"></a></h3>
-<ul><li>minor updates to documentation</li></ul></div>
+<ul><li>minor updates to documentation</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.1" id="eurlex-031">eurlex 0.3.1<small>2020-09-11</small><a class="anchor" aria-label="anchor" href="#eurlex-031"></a></h2>
 <div class="section level3">
 <h3 id="minor-changes-0-3-1">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-3-1"></a></h3>
 <ul><li>
-<code><a href="../reference/elx_fetch_data.html">elx_fetch_data()</a></code> now prefers CELEX-based URLs (instead of Cellar URIs) as input, as they appear to yield fewer missing documents</li></ul></div>
+<code><a href="../reference/elx_fetch_data.html">elx_fetch_data()</a></code> now prefers CELEX-based URLs (instead of Cellar URIs) as input, as they appear to yield fewer missing documents</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="eurlex-030">eurlex 0.3.0<a class="anchor" aria-label="anchor" href="#eurlex-030"></a></h2>
@@ -222,13 +241,15 @@
 <div class="section level3">
 <h3 id="major-changes-0-2-2">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-2-2"></a></h3>
 <ul><li>
-<code><a href="../reference/elx_council_votes.html">elx_council_votes()</a></code> made fully operational</li></ul></div>
+<code><a href="../reference/elx_council_votes.html">elx_council_votes()</a></code> made fully operational</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.1" id="eurlex-021">eurlex 0.2.1<small>2020-08-19</small><a class="anchor" aria-label="anchor" href="#eurlex-021"></a></h2>
 <div class="section level3">
 <h3 id="minor-changes-0-2-1">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-1"></a></h3>
-<ul><li>optimization, reducing dependencies, etc.</li></ul></div>
+<ul><li>optimization, reducing dependencies, etc.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="eurlex-020">eurlex 0.2.0<a class="anchor" aria-label="anchor" href="#eurlex-020"></a></h2>
@@ -261,7 +282,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
