@@ -34,6 +34,7 @@ Suggests:
     wordcloud,
     purrr,
     ggplot2,
+    ggiraph,
     testthat (>= 3.0.0)
 URL: https://michalovadek.github.io/eurlex/
 VignetteBuilder: knitr

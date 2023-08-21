@@ -108,7 +108,7 @@ dir_titles <- results[1:5,] %>% # take the first 5 directives only to save time
 print(dir_titles)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----dirsdata, eval=FALSE-----------------------------------------------------
 #  dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>%
 #    elx_run_query()
 
@@ -120,7 +120,7 @@ dirs %>%
   ggplot(aes(x = force, y = n)) +
   geom_col()
 
-## -----------------------------------------------------------------------------
+## ----dirforce-----------------------------------------------------------------
 dirs %>% 
   filter(!is.na(force)) %>% 
   mutate(date = as.Date(date)) %>% 
@@ -130,7 +130,7 @@ dirs %>%
         axis.line.y = element_blank(),
         axis.ticks.y = element_blank())
 
-## -----------------------------------------------------------------------------
+## ----dirtitles----------------------------------------------------------------
 dirs_1970_title <- dirs %>% 
   filter(between(as.Date(date), as.Date("1970-01-01"), as.Date("1973-01-01")),
          force == "true") %>% 
@@ -140,12 +140,12 @@ dirs_1970_title <- dirs %>%
   as_tibble()
 
 print(dirs_1970_title)
-  
 
 ## ----wordcloud, message = FALSE, warning=FALSE, error=FALSE-------------------
 library(tidytext)
 library(wordcloud)
 
+# wordcloud
 dirs_1970_title %>% 
   select(celex,title) %>% 
   unnest_tokens(word, title) %>% 
@@ -153,5 +153,4 @@ dirs_1970_title %>%
   filter(!grepl("\\d", word)) %>% 
   bind_tf_idf(word, celex, n) %>% 
   with(wordcloud(word, tf_idf, max.words = 40))
-
 

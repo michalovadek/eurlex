@@ -203,7 +203,7 @@ Note that text requests are by far the most time-intensive; requesting the full 
 
 In this section I showcase a simple application of `eurlex` on making overviews of EU legislation. First, we collate data on directives.
 
-```{r, eval=FALSE}
+```{r dirsdata, eval=FALSE}
 dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
   elx_run_query()
 ```
@@ -221,7 +221,7 @@ dirs %>%
 
 Directives become naturally outdated with time. It might be all the more interesting to see which older acts are thus still surviving.
 
-```{r}
+```{r dirforce}
 dirs %>% 
   filter(!is.na(force)) %>% 
   mutate(date = as.Date(date)) %>% 
@@ -234,7 +234,7 @@ dirs %>%
 
 We want to know a bit more about some directives from the early 1970s that are still in force today. Their titles could give us a clue.
 
-```{r}
+```{r dirtitles}
 dirs_1970_title <- dirs %>% 
   filter(between(as.Date(date), as.Date("1970-01-01"), as.Date("1973-01-01")),
          force == "true") %>% 
@@ -244,7 +244,6 @@ dirs_1970_title <- dirs %>%
   as_tibble()
 
 print(dirs_1970_title)
-  
 ```
 
 I will use the `tidytext` package to get a quick idea of what the legislation is about.
@@ -253,6 +252,7 @@ I will use the `tidytext` package to get a quick idea of what the legislation is
 library(tidytext)
 library(wordcloud)
 
+# wordcloud
 dirs_1970_title %>% 
   select(celex,title) %>% 
   unnest_tokens(word, title) %>% 
@@ -260,7 +260,6 @@ dirs_1970_title %>%
   filter(!grepl("\\d", word)) %>% 
   bind_tf_idf(word, celex, n) %>% 
   with(wordcloud(word, tf_idf, max.words = 40))
-
 ```
 
 I use term-frequency inverse-document frequency (tf-idf) to weight the importance of the words in the wordcloud. If we used pure frequencies, the wordcloud would largely consist of words conveying little meaning ("the", "and", ...).
