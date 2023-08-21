@@ -1,15 +1,16 @@
-citHeader("To cite eurlex in publications use:")
-
-citEntry(
-  entry    = "Article",
-  title    = "Facilitating access to data on European Union laws",
-  author   = "Michal Ovadek",
-  year     = "2021",
-  journal  = "Political Research Exchange",
-  volume   = "3",
-  issue    = "1",
-  doi      = "10.1080/2474736X.2020.1870150",
-  textVersion = paste(
-
-  )
+bibentry(
+     bibtype = "Article",
+     title = "Facilitating access to data on European Union laws",
+     author = person(given = "Michal",
+                     family = "Ovadek",
+                     email = "michal.ovadek@gmail.com"),
+     year = "2021",
+     journal = "Political Research Exchange",
+     volume = "3",
+     number = "1",
+     pages = "1870150",
+     doi = "10.1080/2474736X.2020.1870150",
+     publisher = "Taylor & Francis",
+     key = "eurlex-package",
+     header = "To cite eurlex in publications use:"
 )
