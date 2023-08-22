@@ -13,7 +13,7 @@ elx_curia_list(
 \item{data}{Data to be scraped from four separate lists of cases maintained by Curia, defaults to "all"
 which contains cases from Court of Justice, General Court and Civil Service Tribunal.}
 
-\item{parse}{If `TRUE`, references to cases and appeals are parsed out from `case_info` into separate columns}
+\item{parse}{If \code{TRUE}, references to cases and appeals are parsed out from \code{case_info} into separate columns}
 }
 \value{
 A data frame containing case identifiers and information as character columns. Where the case id

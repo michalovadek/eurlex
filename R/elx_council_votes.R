@@ -99,5 +99,3 @@ elx_council_votes <- function(){
     return(votes)
 
 }
-
-

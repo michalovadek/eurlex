@@ -1,3 +1,9 @@
+# eurlex 0.4.6
+
+## Minor changes
+
+- minor changes to documentation
+
 # eurlex 0.4.5
 
 ## Major changes

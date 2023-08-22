@@ -48,55 +48,55 @@ elx_make_query(
 
 \item{sector}{Restrict the results to a given sector code}
 
-\item{include_corrigenda}{If `TRUE`, results include corrigenda}
+\item{include_corrigenda}{If \code{TRUE}, results include corrigenda}
 
-\item{include_celex}{If `TRUE`, results include CELEX identifier for each resource URI}
+\item{include_celex}{If \code{TRUE}, results include CELEX identifier for each resource URI}
 
-\item{include_lbs}{If `TRUE`, results include legal bases of legislation}
+\item{include_lbs}{If \code{TRUE}, results include legal bases of legislation}
 
-\item{include_date}{If `TRUE`, results include document date}
+\item{include_date}{If \code{TRUE}, results include document date}
 
-\item{include_date_force}{If `TRUE`, results include date of entry into force}
+\item{include_date_force}{If \code{TRUE}, results include date of entry into force}
 
-\item{include_date_endvalid}{If `TRUE`, results include date of end of validity}
+\item{include_date_endvalid}{If \code{TRUE}, results include date of end of validity}
 
-\item{include_date_transpos}{If `TRUE`, results include date of transposition deadline for directives}
+\item{include_date_transpos}{If \code{TRUE}, results include date of transposition deadline for directives}
 
-\item{include_date_lodged}{If `TRUE`, results include date a court case was lodged with the court}
+\item{include_date_lodged}{If \code{TRUE}, results include date a court case was lodged with the court}
 
-\item{include_force}{If `TRUE`, results include whether legislation is in force}
+\item{include_force}{If \code{TRUE}, results include whether legislation is in force}
 
-\item{include_eurovoc}{If `TRUE`, results include EuroVoc descriptors of subject matter}
+\item{include_eurovoc}{If \code{TRUE}, results include EuroVoc descriptors of subject matter}
 
-\item{include_citations}{If `TRUE`, results include citations (CELEX-labelled)}
+\item{include_citations}{If \code{TRUE}, results include citations (CELEX-labelled)}
 
-\item{include_citations_detailed}{If `TRUE`, results include citations (CELEX-labelled) with additional details}
+\item{include_citations_detailed}{If \code{TRUE}, results include citations (CELEX-labelled) with additional details}
 
-\item{include_author}{If `TRUE`, results include document author(s)}
+\item{include_author}{If \code{TRUE}, results include document author(s)}
 
-\item{include_directory}{If `TRUE`, results include the label of the Eur-Lex directory code}
+\item{include_directory}{If \code{TRUE}, results include the label of the Eur-Lex directory code}
 
-\item{include_directory_code}{If `TRUE`, results include the Eur-Lex directory code}
+\item{include_directory_code}{If \code{TRUE}, results include the Eur-Lex directory code}
 
-\item{include_sector}{If `TRUE`, results include the Eur-Lex sector code}
+\item{include_sector}{If \code{TRUE}, results include the Eur-Lex sector code}
 
-\item{include_ecli}{If `TRUE`, results include the ECLI identifier for court documents}
+\item{include_ecli}{If \code{TRUE}, results include the ECLI identifier for court documents}
 
-\item{include_court_procedure}{If `TRUE`, results include type of court procedure and outcome}
+\item{include_court_procedure}{If \code{TRUE}, results include type of court procedure and outcome}
 
-\item{include_judge_rapporteur}{If `TRUE`, results include the Judge-Rapporteur}
+\item{include_judge_rapporteur}{If \code{TRUE}, results include the Judge-Rapporteur}
 
-\item{include_advocate_general}{If `TRUE`, results include the Advocate General}
+\item{include_advocate_general}{If \code{TRUE}, results include the Advocate General}
 
-\item{include_court_formation}{If `TRUE`, results include the court formation}
+\item{include_court_formation}{If \code{TRUE}, results include the court formation}
 
-\item{include_court_scholarship}{If `TRUE`, results include court-curated relevant scholarship}
+\item{include_court_scholarship}{If \code{TRUE}, results include court-curated relevant scholarship}
 
-\item{include_court_origin}{If `TRUE`, results include country of origin of court case}
+\item{include_court_origin}{If \code{TRUE}, results include country of origin of court case}
 
-\item{include_original_language}{If `TRUE`, results include authentic language of document (usually case)}
+\item{include_original_language}{If \code{TRUE}, results include authentic language of document (usually case)}
 
-\item{include_proposal}{If `TRUE`, results include the CELEX of the proposal of the adopted legal act}
+\item{include_proposal}{If \code{TRUE}, results include the CELEX of the proposal of the adopted legal act}
 
 \item{order}{Order results by ids}
 

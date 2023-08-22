@@ -4,7 +4,7 @@
 #' Relies on elx_make_query to generate valid SPARQL queries.
 #' Results are capped at 1 million rows.
 #'
-#' @param query A valid SPARQL query specified by `elx_make_query()` or manually
+#' @param query A valid SPARQL query specified by [elx_make_query()] or manually
 #' @param endpoint SPARQL endpoint
 #' @return
 #' A data frame containing the results of the SPARQL query.

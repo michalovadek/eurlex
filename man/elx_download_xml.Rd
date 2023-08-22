@@ -23,9 +23,9 @@ elx_download_xml(
 
 \item{language_1}{The priority language in which the data will be attempted to be retrieved, in ISO 639 2-char code}
 
-\item{language_2}{If data not available in `language_1`, try `language_2`}
+\item{language_2}{If data not available in \code{language_1}, try \code{language_2}}
 
-\item{language_3}{If data not available in `language_2`, try `language_3`}
+\item{language_3}{If data not available in \code{language_2}, try \code{language_3}}
 
 \item{mode}{A character string specifying the mode with which to write the file. Useful values are "w", "wb" (binary), "a" (append) and "ab".}
 }

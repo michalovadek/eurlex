@@ -24,16 +24,16 @@ elx_fetch_data(
 
 \item{language_1}{The priority language in which the data will be attempted to be retrieved, in ISO 639 2-char code}
 
-\item{language_2}{If data not available in `language_1`, try `language_2`}
+\item{language_2}{If data not available in \code{language_1}, try \code{language_2}}
 
-\item{language_3}{If data not available in `language_2`, try `language_3`}
+\item{language_3}{If data not available in \code{language_2}, try \code{language_3}}
 
 \item{include_breaks}{If TRUE, text includes tags showing where pages ("---pagebreak---", for pdfs) and documents ("---documentbreak---") were concatenated}
 
-\item{html_text}{Choose whether to read text from html using `rvest::html_text2` ("text2") or `rvest::html_text` ("text")}
+\item{html_text}{Choose whether to read text from html using \code{\link[rvest:html_text]{rvest::html_text2()}} ("text2") or \code{\link[rvest:html_text]{rvest::html_text()}} ("text")}
 }
 \value{
-A character vector of length one containing the result. When `type = "text"`, named character vector where the name contains the source of the text.
+A character vector of length one containing the result. When \code{type = "text"}, named character vector where the name contains the source of the text.
 }
 \description{
 Wraps httr::GET with pre-specified headers and parses retrieved data.

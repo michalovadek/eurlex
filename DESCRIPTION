@@ -26,7 +26,6 @@ Imports:
     readr,
     pdftools,
     antiword
-RoxygenNote: 7.2.3
 Suggests:
     knitr,
     rmarkdown,
@@ -37,5 +36,7 @@ Suggests:
     ggiraph,
     testthat (>= 3.0.0)
 URL: https://michalovadek.github.io/eurlex/
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3

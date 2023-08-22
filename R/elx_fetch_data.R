@@ -9,7 +9,7 @@
 #' @param language_2 If data not available in `language_1`, try `language_2`
 #' @param language_3 If data not available in `language_2`, try `language_3`
 #' @param include_breaks If TRUE, text includes tags showing where pages ("---pagebreak---", for pdfs) and documents ("---documentbreak---") were concatenated
-#' @param html_text Choose whether to read text from html using `rvest::html_text2` ("text2") or `rvest::html_text` ("text")
+#' @param html_text Choose whether to read text from html using [rvest::html_text2()] ("text2") or [rvest::html_text()] ("text")
 #' @return
 #' A character vector of length one containing the result. When `type = "text"`, named character vector where the name contains the source of the text.
 #' @export

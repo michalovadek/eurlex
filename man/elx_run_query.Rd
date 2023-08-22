@@ -10,13 +10,13 @@ elx_run_query(
 )
 }
 \arguments{
-\item{query}{A valid SPARQL query specified by `elx_make_query()` or manually}
+\item{query}{A valid SPARQL query specified by \code{\link[=elx_make_query]{elx_make_query()}} or manually}
 
 \item{endpoint}{SPARQL endpoint}
 }
 \value{
 A data frame containing the results of the SPARQL query.
-Column `work` contains the Cellar URI of the resource.
+Column \code{work} contains the Cellar URI of the resource.
 }
 \description{
 Executes cURL request to a pre-defined endpoint of the EU Publications Office.
