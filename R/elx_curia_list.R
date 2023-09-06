@@ -101,7 +101,16 @@ elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all","cst_all"
 
 elx_curia_scraper <- function(url, ...){
 
-  page <- xml2::read_html(url(url, open = "rb"))
+  response <- graceful_http(url, verb = "GET")
+  
+  # if var not created, break
+  if (is.null(response)){
+    
+    return(invisible(NULL))
+    
+  }
+  
+  page <- xml2::read_html(response)
 
   tab <- page %>%
     rvest::html_node("table") %>%
@@ -131,7 +140,7 @@ elx_curia_scraper <- function(url, ...){
     dplyr::ungroup()
 
   out <- dplyr::left_join(tab, linked, by = c("case_id"="linked_id","n_id"="n_id")) %>%
-    dplyr::select(.data$case_id, .data$linked_celex, .data$case_info) %>%
+    dplyr::select("case_id", "linked_celex", "case_info") %>%
     dplyr::rename(case_id_celex = linked_celex)
 
   return(out)
@@ -152,16 +161,13 @@ elx_curia_parse <- function(x, ...){
                   see_case = stringr::str_extract(.data$case_info, "see Case .+") %>%
                     stringr::str_remove("see Case ") %>%
                     stringr::str_remove("APPEAL.*") %>%
-                    stringr::str_squish() %>%
-                    stringr::str_trim(),
+                    stringr::str_squish(),
                   appeal = stringr::str_extract(.data$case_info, "APPEAL.*") %>%
                     stringr::str_remove("APPEAL.? :") %>%
                     stringr::str_remove_all("\\;|\\,|\\.") %>%
-                    stringr::str_squish() %>%
-                    stringr::str_trim()
+                    stringr::str_squish()
     )
 
   return(out)
 
 }
-

@@ -89,13 +89,30 @@ elx_council_votes <- function(){
           }
               ORDER BY DESC(?decisionDate), ?votingInstCode
 "
-
-    votes <- httr::POST(url = "https://data.consilium.europa.eu/sparql",
-                        body = list(query = query),
-                        httr::add_headers('Accept' = 'text/csv')) %>%
+  
+    # run query
+    votes_resp <- graceful_http(
+      remote_file = "https://data.consilium.europa.eu/sparql",
+      body = list(query = query),
+      httr::content_type("multipart"),
+      headers = httr::add_headers('Accept' = 'text/csv'),
+      encode = "multipart",
+      verb = "POST"
+    )
+    
+    # if var not created, break
+    if (is.null(votes_resp)){
+      
+      return(invisible(NULL))
+      
+    } 
+    
+    # process response
+    votes <- votes_resp %>%
       httr::content("text") %>%
       readr::read_csv(col_types = readr::cols(.default = "c"))
 
+    # return
     return(votes)
 
 }

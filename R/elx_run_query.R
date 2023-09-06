@@ -27,10 +27,15 @@ elx_run_query <- function(query = "", endpoint = "http://publications.europa.eu/
   sparql_response <- graceful_http(curlready,
                                    headers = httr::add_headers('Accept' = 'application/sparql-results+xml'),
                                    verb = "GET")
-
-  # parse response
-  sparql_response_parsed <- sparql_response %>% 
-    elx_parse_xml()
+  
+  # if var created, continue
+  if (!is.null(sparql_response)){
+    
+    # parse response
+    sparql_response_parsed <- sparql_response %>% 
+      elx_parse_xml()
+    
+  } else {return(invisible(NULL))}
 
   # return
   return(sparql_response_parsed)
@@ -44,68 +49,48 @@ elx_run_query <- function(query = "", endpoint = "http://publications.europa.eu/
 #' @noRd
 #'
 
-graceful_http <- function(remote_file, headers, verb = c("GET","HEAD")) {
-
-  try_GET <- function(x, ...) {
-    tryCatch(
-      httr::GET(url = x,
-                #httr::timeout(1000000000),
-                headers),
-      error = function(e) conditionMessage(e),
-      warning = function(w) conditionMessage(w)
-    )
-  }
+graceful_http <- function(remote_file, headers = NULL, body = NULL, 
+                          verb = c("GET", "HEAD", "POST"), timeout = 100000, 
+                          content_type = NULL, encode = NULL) {
   
-  try_HEAD <- function(x, ...) {
-    tryCatch(
-      httr::HEAD(url = x,
-                #httr::timeout(1000000000),
-                headers),
-      error = function(e) conditionMessage(e),
-      warning = function(w) conditionMessage(w)
-    )
-  }
-
-  is_response <- function(x) {
-    class(x) == "response"
-  }
-
-  # First check internet connection
+  # Check internet connection
   if (!curl::has_internet()) {
     message("No internet connection.")
     return(invisible(NULL))
   }
   
-  if (verb == "GET"){
-    
-    # Then try for timeout problems
-    resp <- try_GET(remote_file)
-    if (!is_response(resp)) {
-      message(resp)
+  # Make the HTTP request based on the verb
+  make_request <- function(verb) {
+    tryCatch({
+      if (verb == "GET") {
+        httr::GET(url = remote_file, config = httr::timeout(timeout), headers)
+      } else if (verb == "HEAD") {
+        httr::HEAD(url = remote_file, config = httr::timeout(timeout), headers)
+      } else if (verb == "POST") {
+        httr::POST(url = remote_file, body = body, headers, 
+                   content_type = content_type, encode = encode)
+      }
+    },
+    error = function(e) {
+      message("Error: ", conditionMessage(e))
       return(invisible(NULL))
-    } 
-    
+    },
+    warning = function(w) {
+      message("Warning: ", conditionMessage(w))
+      return(invisible(NULL))
+    })
   }
   
-  else if (verb == "HEAD"){
-    
-    # Then try for timeout problems
-    resp <- try_HEAD(remote_file)
-    if (!is_response(resp)) {
-      message(resp)
-      return(invisible(NULL))
-    } 
-    
-  }
-
-  # Then stop if status > 400
+  # Execute the request
+  resp <- make_request(verb)
+  
+  # Check for HTTP errors
   if (httr::http_error(resp)) {
     httr::message_for_status(resp)
     return(invisible(NULL))
   }
-
+  
   return(resp)
-
 }
 
 #' Parse RDF/XML triplets to data frame
@@ -117,6 +102,7 @@ graceful_http <- function(remote_file, headers, verb = c("GET","HEAD")) {
 
 elx_parse_xml <- function(sparql_response = "", strip_uri = TRUE){
 
+  # process XML response
   res_binding <- sparql_response %>% 
     xml2::read_xml() %>% 
     xml2::xml_find_all("//d1:binding")
@@ -125,7 +111,8 @@ elx_parse_xml <- function(sparql_response = "", strip_uri = TRUE){
 
   res_cols <- xml2::xml_attr(res_binding, "name")
 
-  if (identical(unique(res_cols), c("eurovoc","labels"))){ # for use in elx_label_eurovoc
+  # eurovoc labels
+  if (identical(unique(res_cols), c("eurovoc","labels"))){
 
     out <- data.frame(res_cols, res_text) %>%
       dplyr::mutate(is_work = dplyr::if_else(res_cols=="eurovoc", T, NA)) %>%
@@ -134,11 +121,14 @@ elx_parse_xml <- function(sparql_response = "", strip_uri = TRUE){
                     triplet = dplyr::if_else(.data$is_work==T, .data$triplet, NA_integer_)) %>%
       dplyr::ungroup() %>%
       tidyr::fill(.data$triplet) %>%
-      dplyr::select(-.data$is_work) %>%
+      dplyr::select(-"is_work") %>%
       tidyr::pivot_wider(names_from = res_cols, values_from = res_text) %>%
-      dplyr::select(-.data$triplet)
+      dplyr::select(-"triplet")
 
-  } else {
+  } 
+  
+  # regular result
+  else {
 
     out <- data.frame(res_cols, res_text) %>%
       dplyr::mutate(is_work = dplyr::if_else(res_cols=="work", T, NA)) %>%
@@ -147,9 +137,9 @@ elx_parse_xml <- function(sparql_response = "", strip_uri = TRUE){
                     triplet = dplyr::if_else(.data$is_work==T, .data$triplet, NA_integer_)) %>%
       dplyr::ungroup() %>%
       tidyr::fill(.data$triplet) %>%
-      dplyr::select(-.data$is_work) %>%
+      dplyr::select(-"is_work") %>%
       tidyr::pivot_wider(names_from = res_cols, values_from = res_text) %>%
-      dplyr::select(-.data$triplet)
+      dplyr::select(-"triplet")
 
   }
   
@@ -164,6 +154,7 @@ elx_parse_xml <- function(sparql_response = "", strip_uri = TRUE){
     
   }
 
+  # end
   return(out)
 
 }

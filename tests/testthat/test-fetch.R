@@ -1,4 +1,4 @@
-testthat::test_that("fetching data works", {
+testthat::test_that("fetching notices works", {
   
   testthat::skip_on_cran()
   

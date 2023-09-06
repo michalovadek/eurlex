@@ -1,6 +1,6 @@
 #' Retrieve additional data on EU documents
 #'
-#' Wraps httr::GET with pre-specified headers and parses retrieved data.
+#' Get titles, texts, identifiers and XML notices for EU resources.
 #'
 #' @param url A valid url as character vector of length one based on a resource identifier such as CELEX or Cellar URI.
 #' @param type The type of data to be retrieved. When type = "text", the returned list contains named elements reflecting the source of each text. When type = "notice", the results return an XML notice associated with the url.
@@ -38,8 +38,10 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
   
   if (type == "notice" & missing(notice)){stop("notice type must be given")}
 
+  # format language query
   language <- paste(language_1,", ",language_2,";q=0.8, ",language_3,";q=0.7", sep = "")
 
+  # process URL
   if (stringr::str_detect(url,"celex.*[\\(|\\)|\\/]")){
 
     clx <- stringr::str_extract(url, "(?<=celex\\/).*") %>% 
@@ -53,12 +55,20 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   }
 
+  # titles
   if (type == "title"){
     
     response <- graceful_http(url,
                               headers = httr::add_headers('Accept-Language' = language,
                                                           'Accept' = 'application/xml; notice=object'),
                               verb = "GET")
+    
+    # if var not created, break
+    if (is.null(response)){
+      
+      return(invisible(NULL))
+      
+    }
 
     if (httr::status_code(response)==200){
 
@@ -71,6 +81,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   }
 
+  # full text
   if (type == "text"){
     
     response <- graceful_http(url,
@@ -79,6 +90,13 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
                                                           'Accept' = 'text/html, text/html;type=simplified, text/plain, application/xhtml+xml, application/xhtml+xml;type=simplified, application/pdf, application/pdf;type=pdf1x, application/pdf;type=pdfa1a, application/pdf;type=pdfx, application/pdf;type=pdfa1b, application/msword'),
                               verb = "GET")
 
+    # if var not created, break
+    if (is.null(response)){
+      
+      return(invisible(NULL))
+      
+    }
+    
     if (httr::status_code(response)==200){
 
       out <- elx_read_text(response, html_text = html_text)
@@ -142,12 +160,20 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   }
 
+  # identifiers
   if (type == "ids"){
     
     response <- graceful_http(url,
                               headers = httr::add_headers('Accept-Language' = language,
                                                           'Accept' = 'application/xml; notice=identifiers'),
                               verb = "GET")
+    
+    # if var not created, break
+    if (is.null(response)){
+      
+      return(invisible(NULL))
+      
+    }
 
     if (httr::status_code(response)==200){
 
@@ -160,6 +186,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
   }
   
+  # notices
   if (type == "notice"){
     
     accept_header <- paste('application/xml; notice=',
@@ -184,6 +211,13 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
       
     }
     
+    # if var not created, break
+    if (is.null(response)){
+      
+      return(invisible(NULL))
+      
+    }
+    
     if (httr::status_code(response)==200){
       
       out <- httr::content(response)
@@ -192,6 +226,7 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
     
   }
 
+  # end
   return(out)
 
 }
@@ -225,40 +260,40 @@ elx_read_text <- function(http_response, html_text = "text2"){
     
   }
   
-    if (stringr::str_detect(http_response$headers$`content-type`,"html")){
+  if (stringr::str_detect(http_response$headers$`content-type`,"html")){
+    
+    out <- http_response %>%
+      xml2::read_html() %>%
+      rvest::html_node("body") %>%
+      html_text_engine() %>%
+      paste0(collapse = " ---pagebreak--- ")
+    
+    names(out) <- "html"
+    
+  }
 
-      out <- http_response %>%
-        xml2::read_html() %>%
-        rvest::html_node("body") %>%
-        html_text_engine() %>%
-        paste0(collapse = " ---pagebreak--- ")
+  else if (stringr::str_detect(http_response$headers$`content-type`,"pdf")){
+    
+    out <- http_response$url %>%
+      pdftools::pdf_text() %>%
+      paste0(collapse = " ---pagebreak--- ")
+    
+    names(out) <- "pdf"
+    
+  }
 
-      names(out) <- "html"
-
-    }
-
-    else if (stringr::str_detect(http_response$headers$`content-type`,"pdf")){
-
-      out <- http_response$url %>%
-        pdftools::pdf_text() %>%
-        paste0(collapse = " ---pagebreak--- ")
-
-      names(out) <- "pdf"
-
-    }
-
-    else if (stringr::str_detect(http_response$headers$`content-type`,"msword")){
-
-      out <- http_response$url %>%
-        antiword::antiword() %>%
-        paste0(collapse = " ---pagebreak--- ")
-
-      names(out) <- "word"
-
-    } else {
-      out <- "unsupported format"
-      names(out) <- "unsupported"
-    }
+  else if (stringr::str_detect(http_response$headers$`content-type`,"msword")){
+    
+    out <- http_response$url %>%
+      antiword::antiword() %>%
+      paste0(collapse = " ---pagebreak--- ")
+    
+    names(out) <- "word"
+    
+  } else {
+    out <- "unsupported format"
+    names(out) <- "unsupported"
+  }
 
   return(out)
 

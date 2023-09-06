@@ -36,7 +36,7 @@ elx_fetch_data(
 A character vector of length one containing the result. When \code{type = "text"}, named character vector where the name contains the source of the text.
 }
 \description{
-Wraps httr::GET with pre-specified headers and parses retrieved data.
+Get titles, texts, identifiers and XML notices for EU resources.
 }
 \examples{
 \donttest{

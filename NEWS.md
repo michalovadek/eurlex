@@ -3,6 +3,10 @@
 ## Minor changes
 
 - minor changes to documentation
+- cleaned up http calls code
+- calls to `elx_council_votes()` and `elx_curia_list()` now fail gracefully
+- .data replaced by quoted variables for tidyselect functions
+- Internet-using vignettes moved to site-only articles
 
 # eurlex 0.4.5
 

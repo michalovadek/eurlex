@@ -1,13 +1,13 @@
 ---
-title: "Data on votes in the Council of the EU"
+title: "Voting in the Council of the EU"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Data on votes in the Council of the EU}
+  %\VignetteIndexEntry{Voting in the Council of the EU}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, echo = FALSE, message = FALSE, warning=FALSE, error=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -18,7 +18,9 @@ Few would disagree that the Council of the European Union (EU) -- sometimes also
 
 Under the OLP, which is nowadays the most common type of law-making procedure, the Council should make decisions by qualified majority. In practice, it often decides by consensus, as Member States tend to avoid open disagreements. Still, enough votes are taken to give us some insight into the variation in Member State governments' behaviour. We access these through a dedicated API maintained by the Council, which is also wrapped in the `eurlex` package.
 
-## Council votes
+## Data on Council votes
+
+First we obtain the available data on Council votes using `eurlex::elx_council_votes()` and process the API response.
 
 ```{r votingdata}
 # packages
@@ -60,7 +62,6 @@ country_votes_prop <- country_votes_n %>%
             n_votes = sum(n),
             prop = round(value / n_votes, 3)) %>% 
   ungroup()
-
 ```
 
 Excluding votes where all governments voted in favour, we are left with between ```r max(country_votes_prop$n_votes, na.rm = T)``` and ```r min(country_votes_prop$n_votes, na.rm = T)``` votes per Member State. While these numbers do not represent the entire historical voting record, they should still help us lift the veil on variation in Member States' propensity to disagree. Note that due to opt-outs not all countries have participated in every vote.
