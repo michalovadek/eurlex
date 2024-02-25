@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.7</span>
       </span>
     </div>
 
@@ -327,14 +327,14 @@ to official EU publications).</p>
 <span><span class="co">#   elx_run_query()</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,429 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,449 × 3</span></span></span>
 <span><span class="co">#&gt;   work                                 type  celex     </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 469391ea-6c79-4680-84aa-c33db274e271 DIR   31979L0173</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> e8fcaf0d-443a-40ec-b778-34b7d895d334 DIR   31989L0194</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 52639f5f-ecaf-4f99-b633-e954cea5c8f3 DIR   31984L0378</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> c7560407-689b-4752-9fb0-d0624ed83a19 DIR   31966L0683</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,425 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,445 more rows</span></span></span></code></pre></div>
 <p>The function outputs a <code>data.frame</code> where each column
 corresponds to one of the requested variables, while the rows accumulate
 observations of the resource type satisfying the query criteria.
