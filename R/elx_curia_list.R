@@ -33,7 +33,6 @@ elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all","cst_all"
 
   else {data <- match.arg(data)}
 
-
   if (data == "all"){
 
     res_c1 <- elx_curia_scraper(url_c1)
@@ -89,7 +88,6 @@ elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all","cst_all"
 
   }
 
-
 }
 
 #' Curia scraper function
@@ -118,8 +116,8 @@ elx_curia_scraper <- function(url, ...){
     dplyr::mutate(dplyr::across(.cols = dplyr::everything(),
                                 .fns = ~dplyr::na_if(., ""))) %>%
     dplyr::filter(!is.na(.data$X1) & !is.na(.data$X2)) %>%
-    dplyr::rename(case_id = .data$X1,
-                  case_info = .data$X2) %>%
+    dplyr::rename(case_id = "X1",
+                  case_info = "X2") %>%
     dplyr::group_by(.data$case_id) %>%
     dplyr::mutate(n_id = dplyr::row_number()) %>%
     dplyr::ungroup()
@@ -127,7 +125,7 @@ elx_curia_scraper <- function(url, ...){
   hrefs <- page %>%
     xml2::xml_find_all('//a[contains(@href, "numdoc")]')
 
-  linked_id <- rvest::html_text(hrefs, "href")
+  linked_id <- rvest::html_text(hrefs, trim = TRUE)
 
   linked_celex <- rvest::html_attr(hrefs, "href") %>%
     stringr::str_extract("numdoc=.*") %>%
@@ -141,7 +139,7 @@ elx_curia_scraper <- function(url, ...){
 
   out <- dplyr::left_join(tab, linked, by = c("case_id"="linked_id","n_id"="n_id")) %>%
     dplyr::select("case_id", "linked_celex", "case_info") %>%
-    dplyr::rename(case_id_celex = linked_celex)
+    dplyr::rename(case_id_celex = "linked_celex")
 
   return(out)
 

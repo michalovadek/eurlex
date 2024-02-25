@@ -11,7 +11,14 @@ vignette: >
 ---
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, error=FALSE}
-knitr::opts_chunk$set(collapse = T, comment = "#>")
+# Sys.setenv(NOT_CRAN='true')
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN,
+  eval = NOT_CRAN
+)
 options(tibble.print_min = 4, tibble.print_max = 4)
 ```
 
@@ -135,7 +142,7 @@ The data is returned in the long format, which means that rows are recycled up t
 
 EuroVoc is a multilingual thesaurus, keywords from which are used to describe the content of European Union documents. Most resource types that can be retrieved with the pre-defined queries in this package can be accompanied by EuroVoc keywords and these can be retrieved as other variables.
 
-```{r eurovoc}
+```{r eurovoc, eval = NOT_CRAN}
 
 rec_eurovoc <- elx_make_query("recommendation", include_eurovoc = TRUE, limit = 10) %>% 
   elx_run_query() # truncated results for sake of the example
@@ -147,7 +154,7 @@ rec_eurovoc %>%
 
 By default, the endpoint returns the EuroVoc concept codes rather than the labels (keywords). The function `elx_label_eurovoc()` needs to be called to obtain a look-up table with the labels.
 
-```{r eurovoctable}
+```{r eurovoctable, eval = NOT_CRAN}
 eurovoc_lookup <- elx_label_eurovoc(uri_eurovoc = rec_eurovoc$eurovoc)
 
 print(eurovoc_lookup)
@@ -155,14 +162,14 @@ print(eurovoc_lookup)
 
 The results include labels only for unique identifiers, but with `dplyr::left_join()` it is straightforward to append the labels to the entire dataset.
 
-```{r appendlabs}
+```{r appendlabs, eval = NOT_CRAN}
 rec_eurovoc %>% 
   left_join(eurovoc_lookup)
 ```
 
 As elsewhere in the API, we can tap into the multilingual nature of EU documents also when it comes to the EuroVoc keywords. Moreover, most concepts in the thesaurus are associated with alternative labels; these can be returned as well (separated by a comma).
 
-```{r}
+```{r eurovoclookup, eval = NOT_CRAN}
 eurovoc_lookup <- elx_label_eurovoc(uri_eurovoc = rec_eurovoc$eurovoc,
                                     alt_labels = TRUE,
                                     language = "sk")
@@ -178,7 +185,7 @@ A core contribution of the SPARQL requests is that we obtain a comprehensive lis
 
 One of the most sought-after data in the Eur-Lex dataverse is the text. It is possible now to automate the pipeline for downloading html and plain texts from Eur-Lex. Similarly, you can retrieve the title of the document. For both you can specify also the desired language (English by default). Other metadata might be added in the future.
 
-```{r getdatapur, message = FALSE, warning=FALSE, error=FALSE}
+```{r getdatapur, message = FALSE, warning=FALSE, error=FALSE, eval = NOT_CRAN}
 # the function is not vectorized by default
 # elx_fetch_data(url = results$work[1], type = "title")
 
@@ -203,14 +210,14 @@ Note that text requests are by far the most time-intensive; requesting the full 
 
 In this section I showcase a simple application of `eurlex` on making overviews of EU legislation. First, we collate data on directives.
 
-```{r dirsdata, eval=FALSE}
+```{r dirsdata, eval=FALSE, eval = NOT_CRAN}
 dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
   elx_run_query()
 ```
 
 Let's calculate the proportion of directives currently in force in the entire set of directives ever adopted. This variable offers a particularly good demonstration of the usefulness of the package to retrieve EU law data, because it changes every day, as new acts enter into force and old ones drop out. Regularly scraping webpages for this purpose and scale is simply impractical and disproportional.
 
-```{r firstplot, message = FALSE, warning=FALSE, error=FALSE}
+```{r firstplot, message = FALSE, warning=FALSE, error=FALSE, eval = NOT_CRAN}
 library(ggplot2)
 
 dirs %>% 
@@ -221,7 +228,7 @@ dirs %>%
 
 Directives become naturally outdated with time. It might be all the more interesting to see which older acts are thus still surviving.
 
-```{r dirforce}
+```{r dirforce, eval = NOT_CRAN}
 dirs %>% 
   filter(!is.na(force)) %>% 
   mutate(date = as.Date(date)) %>% 
@@ -234,7 +241,7 @@ dirs %>%
 
 We want to know a bit more about some directives from the early 1970s that are still in force today. Their titles could give us a clue.
 
-```{r dirtitles}
+```{r dirtitles, eval = NOT_CRAN}
 dirs_1970_title <- dirs %>% 
   filter(between(as.Date(date), as.Date("1970-01-01"), as.Date("1973-01-01")),
          force == "true") %>% 
@@ -248,7 +255,7 @@ print(dirs_1970_title)
 
 I will use the `tidytext` package to get a quick idea of what the legislation is about.
 
-```{r wordcloud, message = FALSE, warning=FALSE, error=FALSE}
+```{r wordcloud, message = FALSE, warning=FALSE, error=FALSE, eval = NOT_CRAN}
 library(tidytext)
 library(wordcloud)
 

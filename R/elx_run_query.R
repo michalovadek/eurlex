@@ -59,6 +59,11 @@ graceful_http <- function(remote_file, headers = NULL, body = NULL,
     return(invisible(NULL))
   }
   
+  # if missing verb pick GET
+  if (missing(verb)){
+    verb <- "GET"
+  }
+  
   # Make the HTTP request based on the verb
   make_request <- function(verb) {
     tryCatch({
@@ -72,11 +77,11 @@ graceful_http <- function(remote_file, headers = NULL, body = NULL,
       }
     },
     error = function(e) {
-      message("Error: ", conditionMessage(e))
+      message(conditionMessage(e), " (Error)")
       return(invisible(NULL))
     },
     warning = function(w) {
-      message("Warning: ", conditionMessage(w))
+      message(conditionMessage(w), " (Warning)")
       return(invisible(NULL))
     })
   }
@@ -84,13 +89,9 @@ graceful_http <- function(remote_file, headers = NULL, body = NULL,
   # Execute the request
   resp <- make_request(verb)
   
-  # Check for HTTP errors
-  if (httr::http_error(resp)) {
-    httr::message_for_status(resp)
-    return(invisible(NULL))
-  }
-  
+  # return
   return(resp)
+  
 }
 
 #' Parse RDF/XML triplets to data frame

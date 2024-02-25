@@ -1,3 +1,9 @@
+# eurlex 0.4.7
+
+## Minor changes
+- some http calls were still not failing gracefully
+- some leftover .data in tidyselect
+
 # eurlex 0.4.6
 
 ## Minor changes

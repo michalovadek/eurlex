@@ -8,9 +8,13 @@ vignette: >
 ---
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, error=FALSE, include=FALSE}
+# Sys.setenv(NOT_CRAN='true')
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  purl = NOT_CRAN,
+  eval = NOT_CRAN
 )
 ```
 
@@ -22,7 +26,7 @@ Under the OLP, which is nowadays the most common type of law-making procedure, t
 
 First we obtain the available data on Council votes using `eurlex::elx_council_votes()` and process the API response.
 
-```{r votingdata}
+```{r votingdata, eval=NOT_CRAN}
 # packages
 library(eurlex)
 library(ggplot2)
@@ -72,7 +76,7 @@ To highlight that votes against tend to represent a strong signal of disagreemen
 
 The data on votes are easy enough to plot interactively with `ggplot2` and `ggiraph`. The following plot shows the variation in $p_i$ where $i$ indexes Member States.
 
-```{r votesproportion}
+```{r votesproportion, eval=NOT_CRAN}
 # viz Council votes and weighted proportion
 iplot_votes_prop <- country_votes_prop %>% 
   mutate(tooltip = str_c(country,": ", prop, ". Total number of votes: ", n_votes)) %>% 
