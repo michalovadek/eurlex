@@ -35,7 +35,8 @@ Suggests:
     ggplot2,
     ggiraph,
     testthat (>= 3.0.0)
-URL: https://michalovadek.github.io/eurlex/
+URL: https://michalovadek.github.io/eurlex/, https://github.com/michalovadek/eurlex
+BugReports: https://github.com/michalovadek/eurlex/issues
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
