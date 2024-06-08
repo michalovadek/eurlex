@@ -1,3 +1,8 @@
+# eurlex 0.5.0
+
+## Major changes
+- the Council votes API was discontinued in May 2024. Hopefully there is a new one to replace it soon
+
 # eurlex 0.4.7
 
 ## Minor changes
