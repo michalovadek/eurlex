@@ -18,7 +18,20 @@ Install from CRAN via `install.packages("eurlex")`.
 The development version is available via `remotes::install_github("michalovadek/eurlex")`.
 
 ## Cite
-Michal Ovádek (2021) **Facilitating access to data on European Union laws**, *Political Research Exchange*, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)
+Michal Ovádek (2021) **Facilitating access to data on European Union laws**, *Political Research Exchange*, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://doi.org/10.1080/2474736X.2020.1870150)
+
+``` r
+@article{ovadek2021facilitating,
+  author       = {Ovádek, Michal},
+  title        = {Facilitating access to data on European Union laws},
+  year         = {2021},
+  journal      = {Political Research Exchange},
+  volume       = {3},
+  number       = {1},
+  pages        = {Article No. 1870150},
+  url          = {https://doi.org/10.1080/2474736X.2020.1870150}
+}
+```
 
 ## Basic usage
 The `eurlex` package currently envisions the typical use-case to consist of getting bulk information about EU legislation into R as fast as possible. The package contains three core functions to achieve that objective: `elx_make_query()` to create pre-defined or customized SPARQL queries; `elx_run_query()` to execute the pre-made or any other manually input query; and `elx_fetch_data()` to fire GET requests for certain metadata to the REST API.

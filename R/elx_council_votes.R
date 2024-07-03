@@ -1,15 +1,11 @@
 #' Retrieve Council votes on EU acts
+#' NOTE: The Council votes API was discontinued in May 2024.
 #'
 #' Executes a SPARQL query to the Council's endpoint.
-#'
 #' @importFrom rlang .data
-#' @return
-#' A data frame with Council votes on EU acts.
-#' @export
-#' @examples
-#' \donttest{
-#' votes <- elx_council_votes()
-#' }
+#' 
+#' @noRd
+#' 
 
 elx_council_votes <- function(){
 

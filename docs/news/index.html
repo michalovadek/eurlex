@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.8</span>
       </span>
     </div>
 
@@ -44,7 +44,13 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/michalovadek/eurlex/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -54,11 +60,22 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      
+      <small>Source: <a href="https://github.com/michalovadek/eurlex/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.4.7" id="eurlex-047">eurlex 0.4.7<a class="anchor" aria-label="anchor" href="#eurlex-047"></a></h2>
+<h2 class="page-header" data-toc-text="0.4.8" id="eurlex-048">eurlex 0.4.8<a class="anchor" aria-label="anchor" href="#eurlex-048"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-0-4-8">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-8"></a></h3>
+<ul><li>the Council votes API was discontinued in May 2024. The function <code>elx_council_votes()</code> is no longer exported</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-0-4-8">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-8"></a></h3>
+<ul><li>tempfile created for XML download now gets deleted</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.7" id="eurlex-047">eurlex 0.4.7<small>2024-02-27</small><a class="anchor" aria-label="anchor" href="#eurlex-047"></a></h2>
 <div class="section level3">
 <h3 id="minor-changes-0-4-7">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-7"></a></h3>
 <ul><li>some http calls were still not failing gracefully</li>
@@ -71,7 +88,7 @@
 <h3 id="minor-changes-0-4-6">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-4-6"></a></h3>
 <ul><li>minor changes to documentation</li>
 <li>cleaned up http calls code</li>
-<li>calls to <code><a href="../reference/elx_council_votes.html">elx_council_votes()</a></code> and <code><a href="../reference/elx_curia_list.html">elx_curia_list()</a></code> now fail gracefully</li>
+<li>calls to <code>elx_council_votes()</code> and <code><a href="../reference/elx_curia_list.html">elx_curia_list()</a></code> now fail gracefully</li>
 <li>.data replaced by quoted variables for tidyselect functions</li>
 <li>Internet-using vignettes moved to site-only articles</li>
 </ul></div>
@@ -266,7 +283,7 @@
 <div class="section level3">
 <h3 id="major-changes-0-2-2">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-2-2"></a></h3>
 <ul><li>
-<code><a href="../reference/elx_council_votes.html">elx_council_votes()</a></code> made fully operational</li>
+<code>elx_council_votes()</code> made fully operational</li>
 </ul></div>
 </div>
     <div class="section level2">

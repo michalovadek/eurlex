@@ -1,7 +1,10 @@
-# eurlex 0.5.0
+# eurlex 0.4.8
 
 ## Major changes
-- the Council votes API was discontinued in May 2024. Hopefully there is a new one to replace it soon
+- the Council votes API was discontinued in May 2024. The function `elx_council_votes()` is no longer exported
+
+## Minor changes
+- tempfile created for XML download now gets deleted
 
 # eurlex 0.4.7
 

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eurlex</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.8</span>
       </span>
     </div>
 
@@ -71,7 +71,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/michalovadek/eurlex/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -87,7 +94,7 @@
       <h1 data-toc-skip>Make SPARQL queries with eurlex</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/michalovadek/eurlex/blob/HEAD/vignettes/sparql-queries.Rmd" class="external-link"><code>vignettes/sparql-queries.Rmd</code></a></small>
       <div class="hidden name"><code>sparql-queries.Rmd</code></div>
 
     </div>
@@ -139,9 +146,10 @@ pre-made or any other manually input query; and
 to the REST API.</p>
 <p>The package also contains largely self-explanatory functions for
 retrieving data on EU court cases (<code><a href="../reference/elx_curia_list.html">elx_curia_list()</a></code>) and
-Council votes (<code><a href="../reference/elx_council_votes.html">elx_council_votes()</a></code>) from outside Eur-Lex.
-More advanced users might be interested in downloading and
-custom-parsing XML notices with <code><a href="../reference/elx_download_xml.html">elx_download_xml()</a></code>.</p>
+Council votes (<code>elx_council_votes()</code>, currently
+dysfunctional) from outside Eur-Lex. More advanced users might be
+interested in downloading and custom-parsing XML notices with
+<code><a href="../reference/elx_download_xml.html">elx_download_xml()</a></code>.</p>
 <div class="section level3">
 <h3 id="elx_make_query-generate-sparql-queries">
 <code>elx_make_query()</code>: Generate SPARQL queries<a class="anchor" aria-label="anchor" href="#elx_make_query-generate-sparql-queries"></a>

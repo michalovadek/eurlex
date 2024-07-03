@@ -19,6 +19,7 @@
 #' temploc <- paste(tempdir(), "elxnotice.xml", sep = "\\")
 #' elx_download_xml(url = "http://publications.europa.eu/resource/celex/32022D0154",
 #'  file = temploc, notice = "object")
+#' unlink(temploc)
 #' }
 
 elx_download_xml <- function(url, file = paste(basename(url), ".xml", sep = ""),
