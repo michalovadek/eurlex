@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/eurlex)](https://cran.r-project.org/package=eurlex)
-[![CRAN_Downloads](http://cranlogs.r-pkg.org/badges/grand-total/eurlex)](https://cran.r-project.org/package=eurlex)
+[![CRAN_Downloads](https://cranlogs.r-pkg.org/badges/grand-total/eurlex)](https://cran.r-project.org/package=eurlex)
 [![R-CMD-check](https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/michalovadek/eurlex/actions/workflows/check-standard.yaml)
 <!-- badges: end -->
 
