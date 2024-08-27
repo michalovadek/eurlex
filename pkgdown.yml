@@ -1,9 +1,8 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
-  council: council.html
-  eurlexpkg: eurlexpkg.html
+  articles/council: council.html
+  articles/eurlexpkg: eurlexpkg.html
   sparql-queries: sparql-queries.html
-last_built: 2024-07-03T00:28Z
-
+last_built: 2024-08-27T13:33Z
