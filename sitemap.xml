@@ -1,18 +1,18 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/articles/council.html</loc></url>
-<url><loc>/articles/eurlexpkg.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/articles/sparql-queries.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/news/index.html</loc></url>
-<url><loc>/reference/elx_curia_list.html</loc></url>
-<url><loc>/reference/elx_download_xml.html</loc></url>
-<url><loc>/reference/elx_fetch_data.html</loc></url>
-<url><loc>/reference/elx_label_eurovoc.html</loc></url>
-<url><loc>/reference/elx_make_query.html</loc></url>
-<url><loc>/reference/elx_run_query.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/404.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/articles/council.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/articles/eurlexpkg.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/articles/index.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/articles/sparql-queries.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/authors.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/index.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/news/index.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/reference/elx_curia_list.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/reference/elx_download_xml.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/reference/elx_fetch_data.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/reference/elx_label_eurovoc.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/reference/elx_make_query.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/reference/elx_run_query.html</loc></url>
+<url><loc>https://michalovadek.github.io/eurlex/reference/index.html</loc></url>
 </urlset>
 

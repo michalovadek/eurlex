@@ -1,0 +1,74 @@
+# Download XML notice associated with a URL
+
+Downloads an XML notice of a given type associated with a Cellar
+resource.
+
+## Usage
+
+``` r
+elx_download_xml(
+  url,
+  file = paste(basename(url), ".xml", sep = ""),
+  notice = c("tree", "branch", "object"),
+  language_1 = "en",
+  language_2 = "fr",
+  language_3 = "de",
+  mode = "wb"
+)
+```
+
+## Arguments
+
+- url:
+
+  A valid url as character vector of length one based on a resource
+  identifier such as CELEX or Cellar URI.
+
+- file:
+
+  A character string with the name where the downloaded file is saved.
+
+- notice:
+
+  The type of notice requested controls what kind of metadata are
+  returned.
+
+- language_1:
+
+  The priority language in which the data will be attempted to be
+  retrieved, in ISO 639 2-char code
+
+- language_2:
+
+  If data not available in `language_1`, try `language_2`
+
+- language_3:
+
+  If data not available in `language_2`, try `language_3`
+
+- mode:
+
+  A character string specifying the mode with which to write the file.
+  Useful values are "w", "wb" (binary), "a" (append) and "ab".
+
+## Value
+
+Path of downloaded file (invisibly) if server validates request (http
+status code has to be 200). For more information about notices, see
+Cellar documentation.
+
+## Details
+
+To retrieve all identifiers associated with a url, use
+elx_fetch_data(type = "ids").
+
+## Examples
+
+``` r
+# \donttest{
+temploc <- file.path(tempdir(), "elxnotice.xml")
+elx_download_xml(url = "http://publications.europa.eu/resource/celex/32022D0154",
+ file = temploc, notice = "object")
+unlink(temploc)
+# }
+```
