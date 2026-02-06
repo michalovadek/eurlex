@@ -12,7 +12,6 @@ vignette: >
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, error=FALSE}
 knitr::opts_chunk$set(collapse = T, comment = "#>")
-options(tibble.print_min = 4, tibble.print_max = 4)
 ```
 
 This vignette shows how to use the `eurlex` R package to retrieve data on European Union law.
@@ -113,7 +112,7 @@ results <- elx_run_query(query = query_dir)
 ```
 
 ```{r}
-as_tibble(results)
+head(results)
 ```
 
 The function outputs a `data.frame` where each column corresponds to one of the requested variables, while the rows accumulate observations of the resource type satisfying the query criteria. Obviously, the more data is to be returned, the longer the execution time, varying from a few seconds to several minutes, depending also on your connection.
@@ -187,10 +186,9 @@ library(purrr)
 
 # wrapping in possibly() would catch errors in case there is a server issue
 dir_titles <- results[1:5,] %>% # take the first 5 directives only to save time
-  mutate(work = paste("http://publications.europa.eu/resource/cellar/", work, sep = "")) |> 
+  mutate(work = paste("http://publications.europa.eu/resource/cellar/", work, sep = "")) |>
   mutate(title = map_chr(work, possibly(elx_fetch_data, otherwise = NA_character_),
-                         "title")) %>% 
-  as_tibble() %>% 
+                         "title")) %>%
   select(celex, title)
 
 print(dir_titles)
@@ -237,31 +235,33 @@ We want to know a bit more about some directives from the early 1970s that are s
 ```{r dirtitles}
 dirs_1970_title <- dirs %>% 
   filter(between(as.Date(date), as.Date("1970-01-01"), as.Date("1973-01-01")),
-         force == "true") %>% 
-  mutate(work = paste("http://publications.europa.eu/resource/cellar/", work, sep = "")) |> 
+         force == "true") %>%
+  mutate(work = paste("http://publications.europa.eu/resource/cellar/", work, sep = "")) |>
   mutate(title = map_chr(work, possibly(elx_fetch_data, otherwise = NA_character_),
-                         "title")) %>%  
-  as_tibble()
+                         "title"))
 
 print(dirs_1970_title)
 ```
 
-I will use the `tidytext` package to get a quick idea of what the legislation is about.
+I will use the `tidytext` package to get a quick idea of what the legislation is about by visualizing the most distinctive words in the titles.
 
-```{r wordcloud, message = FALSE, warning=FALSE, error=FALSE}
+```{r toptokens, message = FALSE, warning=FALSE, error=FALSE}
 library(tidytext)
-library(wordcloud)
 
-# wordcloud
-dirs_1970_title %>% 
-  select(celex,title) %>% 
-  unnest_tokens(word, title) %>% 
-  count(celex, word, sort = TRUE) %>% 
-  filter(!grepl("\\d", word)) %>% 
-  bind_tf_idf(word, celex, n) %>% 
-  with(wordcloud(word, tf_idf, max.words = 40))
+# calculate tf-idf and plot top words
+dirs_1970_title %>%
+  select(celex, title) %>%
+  unnest_tokens(word, title) %>%
+  count(celex, word, sort = TRUE) %>%
+  filter(!grepl("\\d", word)) %>%
+  bind_tf_idf(word, celex, n) %>%
+  slice_max(tf_idf, n = 15) %>%
+  ggplot(aes(x = reorder(word, tf_idf), y = tf_idf)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL, y = "TF-IDF", title = "Top words in directive titles (1970-1973)")
 ```
 
-I use term-frequency inverse-document frequency (tf-idf) to weight the importance of the words in the wordcloud. If we used pure frequencies, the wordcloud would largely consist of words conveying little meaning ("the", "and", ...).
+I use term-frequency inverse-document frequency (tf-idf) to weight the importance of the words. This down-weights common words like "the" and "and" that convey little meaning, highlighting instead the more distinctive terms.
 
 This is an extremely basic application of the `eurlex` package. Much more sophisticated methods can be used to analyse both the content and metadata of European Union legislation. If the package is useful for your research, please cite the [accompanying paper](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150).^[Michal Ovádek (2021) Facilitating access to data on European Union laws, Political Research Exchange, 3:1, DOI: [10.1080/2474736X.2020.1870150](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150)]

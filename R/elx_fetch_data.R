@@ -42,12 +42,12 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
   language <- paste(language_1,", ",language_2,";q=0.8, ",language_3,";q=0.7", sep = "")
 
   # process URL
-  if (stringr::str_detect(url,"celex.*[\\(|\\)|\\/]")){
+  if (grepl("celex.*[\\(|\\)|\\/]", url)){
 
-    clx <- stringr::str_extract(url, "(?<=celex\\/).*") %>% 
-      stringr::str_replace_all("\\(","%28") %>% 
-      stringr::str_replace_all("\\)","%29") %>% 
-      stringr::str_replace_all("\\/","%2F")
+    clx <- sub(".*celex/", "", url)
+    clx <- gsub("\\(", "%28", clx)
+    clx <- gsub("\\)", "%29", clx)
+    clx <- gsub("/", "%2F", clx)
 
     url <- paste("http://publications.europa.eu/resource/celex/",
                  clx,
@@ -72,10 +72,10 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
     if (httr::status_code(response)==200){
 
-      out <- httr::content(response) %>% 
-          xml2::xml_find_first("//EXPRESSION_TITLE") %>% 
-          xml2::xml_find_first("VALUE") %>% 
-          xml2::xml_text()
+      content <- httr::content(response)
+      expr_title <- xml2::xml_find_first(content, "//EXPRESSION_TITLE")
+      value_node <- xml2::xml_find_first(expr_title, "VALUE")
+      out <- xml2::xml_text(value_node)
 
     } else {out <- httr::status_code(response)}
 
@@ -105,19 +105,18 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
     else if (httr::status_code(response)==300){
 
-      links <- response %>%
-        httr::content(as = "text") %>%
-        xml2::read_html() %>%
-        rvest::html_node("body") %>%
-        rvest::html_nodes("a") %>%
-        rvest::html_attrs() %>% 
-        unlist()
+      content <- httr::content(response, as = "text")
+      html_doc <- xml2::read_html(content)
+      body_node <- rvest::html_node(html_doc, "body")
+      a_nodes <- rvest::html_nodes(body_node, "a")
+      attrs <- rvest::html_attrs(a_nodes)
+      links <- unlist(attrs)
 
       names(links) <- NULL
 
       multiout <- ""
 
-      for (q in 1:length(links)){
+      for (q in seq_along(links)){
         
         multiresponse <- graceful_http(links[q],
                                        headers = httr::add_headers('Accept-Language' = language,
@@ -153,9 +152,9 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
     }
     
     if (include_breaks == FALSE){
-      
-      out <- stringr::str_remove_all(out,"---pagebreak---|---documentbreak---")
-      
+
+      out <- gsub("---pagebreak---|---documentbreak---", "", out)
+
     }
 
   }
@@ -177,10 +176,10 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
     if (httr::status_code(response)==200){
 
-      out <- httr::content(response) %>%
-        xml2::xml_children() %>%
-        xml2::xml_find_all(".//VALUE") %>%
-        xml2::xml_text()
+      content <- httr::content(response)
+      children <- xml2::xml_children(content)
+      values <- xml2::xml_find_all(children, ".//VALUE")
+      out <- xml2::xml_text(values)
 
     } else {out <- httr::status_code(response)}
 
@@ -234,8 +233,6 @@ elx_fetch_data <- function(url, type = c("title","text","ids","notice"),
 
 #' Read text from http response
 #'
-#' @importFrom rlang .data
-#'
 #' @noRd
 #'
 
@@ -260,36 +257,33 @@ elx_read_text <- function(http_response, html_text = "text2"){
     
   }
   
-  if (stringr::str_detect(http_response$headers$`content-type`,"html")){
-    
-    out <- http_response %>%
-      xml2::read_html() %>%
-      rvest::html_node("body") %>%
-      html_text_engine() %>%
-      paste0(collapse = " ---pagebreak--- ")
-    
+  if (grepl("html", http_response$headers$`content-type`)){
+
+    html_doc <- xml2::read_html(http_response)
+    body_node <- rvest::html_node(html_doc, "body")
+    text_content <- html_text_engine(body_node)
+    out <- paste0(text_content, collapse = " ---pagebreak--- ")
+
     names(out) <- "html"
-    
+
   }
 
-  else if (stringr::str_detect(http_response$headers$`content-type`,"pdf")){
-    
-    out <- http_response$url %>%
-      pdftools::pdf_text() %>%
-      paste0(collapse = " ---pagebreak--- ")
-    
+  else if (grepl("pdf", http_response$headers$`content-type`)){
+
+    pdf_text <- pdftools::pdf_text(http_response$url)
+    out <- paste0(pdf_text, collapse = " ---pagebreak--- ")
+
     names(out) <- "pdf"
-    
+
   }
 
-  else if (stringr::str_detect(http_response$headers$`content-type`,"msword")){
-    
-    out <- http_response$url %>%
-      antiword::antiword() %>%
-      paste0(collapse = " ---pagebreak--- ")
-    
+  else if (grepl("msword", http_response$headers$`content-type`)){
+
+    word_text <- antiword::antiword(http_response$url)
+    out <- paste0(word_text, collapse = " ---pagebreak--- ")
+
     names(out) <- "word"
-    
+
   } else {
     out <- "unsupported format"
     names(out) <- "unsupported"

@@ -4,8 +4,6 @@
 #' List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
 #' Note that not all resource types are compatible with default parameter values.
 #'
-#' @importFrom magrittr %>%
-#'
 #' @param resource_type Type of resource to be retrieved via SPARQL query
 #' @param manual_type Define manually the type of resource to be retrieved
 #' @param directory Restrict the results to a given directory code

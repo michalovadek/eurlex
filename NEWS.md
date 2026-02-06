@@ -1,3 +1,15 @@
+# eurlex 0.4.9
+
+## Major changes
+
+- replaced dplyr, tidyr, stringr, and purrr with base R equivalents, reducing package dependencies
+- removed rlang and magrittr from Imports
+
+## Minor changes
+
+- `elx_label_eurovoc()` now returns a data frame instead of tibble
+- documentation updates
+
 # eurlex 0.4.8
 
 ## Major changes

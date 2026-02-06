@@ -50,7 +50,7 @@ query_dir <- elx_make_query(resource_type = "directive")
 dirs <- elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
   elx_run_query()
 
-results <- dirs %>% select(-force,-date)
+results <- dplyr::select(dirs, -force,-date)
 ```
 
 Currently, it is possible to choose from among a host of resource types, including directives, regulations and even case law (see function description for the full list). It is also possible to manually specify a resource type from the [eligible list](http://publications.europa.eu/resource/authority/resource-type).^[Note, however, that not all resource types will work properly with the pre-specified query.]
@@ -76,16 +76,13 @@ The other arguments in `elx_make_query()` relate to additional metadata to be re
 Note that availability of data for each variable might have an impact on the results. The data frame returned by the query might be shrunken to the size of the variable with most missing data. It is recommended to always compare results from a desired query to a minimal query requesting only celex ids.
 
 ```{r}
+# minimal query: elx_make_query(resource_type = "directive")
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE) %>% 
   cat()
 
-# minimal query: elx_make_query(resource_type = "directive")
-
+# minimal query: elx_make_query(resource_type = "recommendation")
 elx_make_query(resource_type = "recommendation", include_date = TRUE, include_lbs = TRUE) %>% 
   cat()
-
-# minimal query: elx_make_query(resource_type = "recommendation")
-
 ```
 
 You can also decide to not specify any resource types, in which case all types of documents will be returned. As there are over a million documents with a CELEX identifier, this is likely not efficient for a majority of users. But since version 0.3.5 it is possible to request documents belonging to a particular ["sector"](https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html) or [directory code](https://eur-lex.europa.eu/browse/directories/legislation.html).
@@ -93,7 +90,6 @@ You can also decide to not specify any resource types, in which case all types o
 ```{r}
 # request documents from directory 18 ("Common Foreign and Security Policy")
 # and sector 3 ("Legal acts")
-
 elx_make_query(resource_type = "any",
                directory = "18",
                sector = 3) %>% 

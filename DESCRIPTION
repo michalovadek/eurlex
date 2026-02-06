@@ -1,7 +1,7 @@
 Package: eurlex
 Type: Package
 Title: Retrieve Data on European Union Law
-Version: 0.4.8
+Version: 0.4.9
 Authors@R: c(person(given = "Michal",
              family = "Ovadek",
              role = c("aut", "cre", "cph"),
@@ -12,31 +12,25 @@ License: GPL-3
 Encoding: UTF-8
 Language: en-US
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.6.0)
 Imports:
-    magrittr,
-    dplyr,
     xml2,
-    tidyr,
     httr,
     curl,
     rvest,
-    rlang,
-    stringr,
     pdftools,
     antiword
 Suggests:
-    knitr,
-    rmarkdown,
-    tidytext,
-    wordcloud,
-    purrr,
+    dplyr,
     ggplot2,
-    ggiraph,
-    testthat (>= 3.0.0)
+    knitr,
+    purrr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    tidytext
 URL: https://michalovadek.github.io/eurlex/, https://github.com/michalovadek/eurlex
 BugReports: https://github.com/michalovadek/eurlex/issues
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3

@@ -58,33 +58,6 @@ This package nor its author are in any way affiliated with the EU, its instituti
 
 Please consider contributing to the maintenance and development of the package by reporting bugs or suggesting new features.
 
-## Latest changes
-
-### eurlex 0.4.5
-
-- breaking change: `elx_run_query()` now strips URIs (except Eurovoc ones) by default and keeps only the identifier to reduce object size
-- where `elx_fetch_data()` is used to retrieve texts from an html document, it now uses by default `rvest::html_text2()` instead of `rvest::html_text()`. This is slower but more resembling of how the page renders in some cases. New argument `html_text = "text2"` controls the setting.
-- new feature: `elx_make_query(..., include_court_origin = TRUE)` retrieves the country of origin of a court case. As per Eur-Lex documentation, this is primarily intended to be the country of the national court referring a preliminary question, but other countries are present in the data as well at the moment. Recommended to interact with court procedure
-- new feature: `elx_make_query(..., include_original_language = TRUE)` retrieves the authentic language of a document, typically a court case
-
-### eurlex 0.4.3
-
-- all date variables retrieved through `elx_make_query(include_... = TRUE)` are now properly named
-- new experimental feature: `elx_make_query(include_citations_detailed = TRUE)` retrieves additional details about the citation where available; the retrieval is currently slow
-- `elx_make_query(include_directory = TRUE)` now retrieves the directory code instead of URI
-
-### eurlex 0.4.2
-
-- new feature: `elx_make_query(include_proposal = TRUE)` retrieves the CELEX of a proposal of a requested legal act
-- the returned results from `elx_make_query()` no longer include previous versions of the same record (new versions typically fix incorrect or missing metadata)
-
-### eurlex 0.4.1
-
-- `elx_fetch_data(type = "notice", notice = c("tree","branch", "object"))` now mirrors the behaviour of `elx_download_xml()` but instead of saving to path gives access to XML notice in R
-- retrieve data on the Judge-Rapporteur, Advocate-General, court formation and court-curated scholarship using new `include_` options in `elx_make_query()`
-- fixed bug in `elx_download_xml()` parameter checking
-- `elx_download_xml(notice = "object")` now retrieves metadata correctly
-
 ## Useful resources
 Guide to CELEX numbers: https://eur-lex.europa.eu/content/tools/TableOfSectors/types_of_documents_in_eurlex.html
 

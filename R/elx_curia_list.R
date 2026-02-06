@@ -10,7 +10,6 @@
 #' A data frame containing case identifiers and information as character columns. Where the case id
 #' contains a hyperlink to Eur-Lex, the CELEX identifier is retrieved as well. Hyperlinks to Eur-Lex
 #' disappeared from more recent cases.
-#' @importFrom rlang .data
 #' @export
 #' @examples
 #' \donttest{
@@ -92,54 +91,44 @@ elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all","cst_all"
 
 #' Curia scraper function
 #'
-#' @importFrom rlang .data
-#'
 #' @noRd
 #'
 
 elx_curia_scraper <- function(url, ...){
 
   response <- graceful_http(url, verb = "GET")
-  
+
   # if var not created, break
   if (is.null(response)){
-    
+
     return(invisible(NULL))
-    
+
   }
-  
+
   page <- xml2::read_html(response)
 
-  tab <- page %>%
-    rvest::html_node("table") %>%
-    rvest::html_table(header = FALSE, fill = TRUE) %>%
-    dplyr::mutate(dplyr::across(.cols = dplyr::everything(),
-                                .fns = ~dplyr::na_if(., ""))) %>%
-    dplyr::filter(!is.na(.data$X1) & !is.na(.data$X2)) %>%
-    dplyr::rename(case_id = "X1",
-                  case_info = "X2") %>%
-    dplyr::group_by(.data$case_id) %>%
-    dplyr::mutate(n_id = dplyr::row_number()) %>%
-    dplyr::ungroup()
+  table_node <- rvest::html_node(page, "table")
+  tab <- rvest::html_table(table_node, header = FALSE, fill = TRUE)
+  tab[] <- lapply(tab, function(x) { x[x == ""] <- NA; x })
+  tab <- tab[!is.na(tab$X1) & !is.na(tab$X2), , drop = FALSE]
+  names(tab)[names(tab) == "X1"] <- "case_id"
+  names(tab)[names(tab) == "X2"] <- "case_info"
+  tab$n_id <- stats::ave(seq_len(nrow(tab)), tab$case_id, FUN = seq_along)
 
-  hrefs <- page %>%
-    xml2::xml_find_all('//a[contains(@href, "numdoc")]')
+  hrefs <- xml2::xml_find_all(page, '//a[contains(@href, "numdoc")]')
 
   linked_id <- rvest::html_text(hrefs, trim = TRUE)
 
-  linked_celex <- rvest::html_attr(hrefs, "href") %>%
-    stringr::str_extract("numdoc=.*") %>%
-    stringr::str_remove("\\'.*") %>%
-    stringr::str_remove("numdoc=")
+  href_attr <- rvest::html_attr(hrefs, "href")
+  linked_celex <- sub(".*numdoc=", "", href_attr)
+  linked_celex <- sub("\\'.*", "", linked_celex)
 
-  linked <- data.frame(linked_id, linked_celex, stringsAsFactors = FALSE) %>%
-    dplyr::group_by(.data$linked_id) %>%
-    dplyr::mutate(n_id = dplyr::row_number()) %>%
-    dplyr::ungroup()
+  linked <- data.frame(linked_id = linked_id, linked_celex = linked_celex, stringsAsFactors = FALSE)
+  linked$n_id <- stats::ave(seq_len(nrow(linked)), linked$linked_id, FUN = seq_along)
 
-  out <- dplyr::left_join(tab, linked, by = c("case_id"="linked_id","n_id"="n_id")) %>%
-    dplyr::select("case_id", "linked_celex", "case_info") %>%
-    dplyr::rename(case_id_celex = "linked_celex")
+  out <- merge(tab, linked, by.x = c("case_id", "n_id"), by.y = c("linked_id", "n_id"), all.x = TRUE)
+  out <- out[, c("case_id", "linked_celex", "case_info")]
+  names(out)[names(out) == "linked_celex"] <- "case_id_celex"
 
   return(out)
 
@@ -147,24 +136,37 @@ elx_curia_scraper <- function(url, ...){
 
 #' Curia parser function
 #'
-#' @importFrom rlang .data
-#'
 #' @noRd
 #'
 
 elx_curia_parse <- function(x, ...){
 
-  out <- x %>%
-    dplyr::mutate(ecli = stringr::str_extract(.data$case_info, "ECLI:EU:[:upper:]:[:digit:]{4}:[:digit:]+"),
-                  see_case = stringr::str_extract(.data$case_info, "see Case .+") %>%
-                    stringr::str_remove("see Case ") %>%
-                    stringr::str_remove("APPEAL.*") %>%
-                    stringr::str_squish(),
-                  appeal = stringr::str_extract(.data$case_info, "APPEAL.*") %>%
-                    stringr::str_remove("APPEAL.? :") %>%
-                    stringr::str_remove_all("\\;|\\,|\\.") %>%
-                    stringr::str_squish()
-    )
+  # Helper for str_extract (returns NA for no match)
+  extract_first <- function(text, pattern) {
+    m <- regexpr(pattern, text, perl = TRUE)
+    result <- rep(NA_character_, length(text))
+    matched <- m != -1
+    result[matched] <- regmatches(text[matched], m[matched])
+    result
+  }
+
+  # Helper for str_squish
+  squish <- function(text) {
+    trimws(gsub("\\s+", " ", text))
+  }
+
+  out <- x
+  out$ecli <- extract_first(out$case_info, "ECLI:EU:[A-Z]:[0-9]{4}:[0-9]+")
+
+  see_case <- extract_first(out$case_info, "see Case .+")
+  see_case <- sub("see Case ", "", see_case)
+  see_case <- sub("APPEAL.*", "", see_case)
+  out$see_case <- squish(see_case)
+
+  appeal <- extract_first(out$case_info, "APPEAL.*")
+  appeal <- sub("APPEAL.? :", "", appeal)
+  appeal <- gsub("[;,.]", "", appeal)
+  out$appeal <- squish(appeal)
 
   return(out)
 

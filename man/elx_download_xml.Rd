@@ -40,7 +40,7 @@ To retrieve all identifiers associated with a url, use elx_fetch_data(type = "id
 }
 \examples{
 \donttest{
-temploc <- paste(tempdir(), "elxnotice.xml", sep = "\\\\")
+temploc <- file.path(tempdir(), "elxnotice.xml")
 elx_download_xml(url = "http://publications.europa.eu/resource/celex/32022D0154",
  file = temploc, notice = "object")
 unlink(temploc)

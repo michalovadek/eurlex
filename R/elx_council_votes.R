@@ -2,14 +2,12 @@
 #' NOTE: The Council votes API was discontinued in May 2024.
 #'
 #' Executes a SPARQL query to the Council's endpoint.
-#' @importFrom rlang .data
-#' 
+#'
 #' @noRd
-#' 
+#'
 
-elx_council_votes <- function(){
-
-  query <- "PREFIX acts: <http://data.consilium.europa.eu/id/acts/>
+elx_council_votes <- function() {
+       query <- "PREFIX acts: <http://data.consilium.europa.eu/id/acts/>
             PREFIX tax: <http://data.consilium.europa.eu/id/taxonomy/>
             PREFIX codi: <http://data.consilium.europa.eu/def/codi/>
             PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
@@ -85,32 +83,31 @@ elx_council_votes <- function(){
           }
               ORDER BY DESC(?decisionDate), ?votingInstCode
 "
-  
-    # # run query
-    # votes_resp <- graceful_http(
-    #   remote_file = "https://data.consilium.europa.eu/sparql",
-    #   body = list(query = query),
-    #   httr::content_type("multipart"),
-    #   headers = httr::add_headers('Accept' = 'text/csv'),
-    #   encode = "multipart",
-    #   verb = "POST"
-    # )
-    # 
-    # # if var not created, break
-    # if (is.null(votes_resp)){
-    #   
-    #   return(invisible(NULL))
-    #   
-    # } 
-    # 
-    # # process response
-    # votes <- votes_resp %>%
-    #   httr::content("text") %>%
-    #   readr::read_csv(col_types = readr::cols(.default = "c"))
-    # 
-    # # return
-    # return(votes)
-  
-  return("The Council votes API was discontinued in May 2024.")
 
+       # # run query
+       # votes_resp <- graceful_http(
+       #   remote_file = "https://data.consilium.europa.eu/sparql",
+       #   body = list(query = query),
+       #   httr::content_type("multipart"),
+       #   headers = httr::add_headers('Accept' = 'text/csv'),
+       #   encode = "multipart",
+       #   verb = "POST"
+       # )
+       #
+       # # if var not created, break
+       # if (is.null(votes_resp)){
+       #
+       #   return(invisible(NULL))
+       #
+       # }
+       #
+       # # process response
+       # votes <- votes_resp %>%
+       #   httr::content("text") %>%
+       #   readr::read_csv(col_types = readr::cols(.default = "c"))
+       #
+       # # return
+       # return(votes)
+
+       return("The Council votes API was discontinued in May 2024.")
 }
