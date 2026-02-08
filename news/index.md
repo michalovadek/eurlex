@@ -2,6 +2,8 @@
 
 ## eurlex 0.4.9
 
+CRAN release: 2026-02-06
+
 ### Major changes
 
 - replaced dplyr, tidyr, stringr, and purrr with base R equivalents,

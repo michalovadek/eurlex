@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/michalovadek/eurlex/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/michalovadek/eurlex/blob/v.0.4.9/inst/CITATION)
 
 Ovadek M (2021). “Facilitating access to data on European Union laws.”
 *Political Research Exchange*, **3**(1), 1870150.
