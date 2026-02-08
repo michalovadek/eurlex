@@ -236,7 +236,7 @@ CRAN release: 2020-11-08
   elx_make_query(include_citations = TRUE); retrieved in CELEX form
 - new feature: request document author(s) with
   `elx_make_query(include_author = TRUE)`
-- XML parsing is now more efficient due to utilising (rather than
+- XML parsing is now more efficient due to utilizing (rather than
   stripping) namespaces (but still room for improvement)
 
 ### Minor changes
