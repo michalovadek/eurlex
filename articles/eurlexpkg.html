@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="eurlex: Retrieve data on European Union law in R">
 <meta name="description" content="Retrieve data on European Union law in R with pre-defined SPARQL and REST queries.
@@ -308,12 +308,12 @@ to official EU publications).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                    work type      celex</span></span>
-<span><span class="co">#&gt; 1  469391ea-6c79-4680-84aa-c33db274e271  DIR 31979L0173</span></span>
-<span><span class="co">#&gt; 6  e8fcaf0d-443a-40ec-b778-34b7d895d334  DIR 31989L0194</span></span>
-<span><span class="co">#&gt; 11 52639f5f-ecaf-4f99-b633-e954cea5c8f3  DIR 31984L0378</span></span>
-<span><span class="co">#&gt; 16 c7560407-689b-4752-9fb0-d0624ed83a19  DIR 31966L0683</span></span>
-<span><span class="co">#&gt; 21 803aa7a4-5a22-493a-ae02-eb2751bff578  DIR 31993L0004</span></span>
-<span><span class="co">#&gt; 26 a9ab7f4b-0630-49f4-b6e1-2a92c635fefa  DIR 31992L0017</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  0d76f53e-267f-495c-9854-15e8c3ee05c5  DIR 31965L0066</span></span>
+<span><span class="co">#&gt; 6  47ba284d-04b9-11e3-a352-01aa75ed71a1  DIR 32013L0038</span></span>
+<span><span class="co">#&gt; 11 899b6c44-84ec-11e4-91cd-01aa75ed71a1  DIR 32014L0107</span></span>
+<span><span class="co">#&gt; 16 931d7a62-e01e-4f41-a318-a048818fc71d  DIR 31985L0346</span></span>
+<span><span class="co">#&gt; 21 9e1d16c5-8aef-42ee-874c-283a182c49a9  DIR 31974L0394</span></span>
+<span><span class="co">#&gt; 26 a5d0648f-2957-11e6-b616-01aa75ed71a1  DIR 32016L0882</span></span></code></pre></div>
 <p>The function outputs a <code>data.frame</code> where each column
 corresponds to one of the requested variables, while the rows accumulate
 observations of the resource type satisfying the query criteria.
@@ -343,8 +343,8 @@ erring on the side of over-inclusiveness rather than vice versa.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       type</span></span>
 <span><span class="co">#&gt; 1      DIR</span></span>
-<span><span class="co">#&gt; 2 DIR_IMPL</span></span>
-<span><span class="co">#&gt; 3  DIR_DEL</span></span></code></pre></div>
+<span><span class="co">#&gt; 2  DIR_DEL</span></span>
+<span><span class="co">#&gt; 3 DIR_IMPL</span></span></code></pre></div>
 <p>The data is returned in the long format, which means that rows are
 recycled up to the length of the variable with the most data points. For
 example, if 20 directives are returned, each with two legal bases, the
@@ -366,17 +366,17 @@ variables.</p>
 <span></span>
 <span><span class="va">rec_eurovoc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">celex</span>, <span class="va">eurovoc</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             celex                       eurovoc</span></span>
-<span><span class="co">#&gt; 1      31962H0816 http://eurovoc.europa.eu/1004</span></span>
-<span><span class="co">#&gt; 5  32015H0818(10) http://eurovoc.europa.eu/1021</span></span>
-<span><span class="co">#&gt; 9  32016H0818(09) http://eurovoc.europa.eu/1021</span></span>
-<span><span class="co">#&gt; 13 32017H0809(10) http://eurovoc.europa.eu/1021</span></span>
-<span><span class="co">#&gt; 17    52011SC0804 http://eurovoc.europa.eu/1074</span></span>
-<span><span class="co">#&gt; 21 32011H0723(02) http://eurovoc.europa.eu/1074</span></span>
-<span><span class="co">#&gt; 25     31996H0592 http://eurovoc.europa.eu/1076</span></span>
-<span><span class="co">#&gt; 29     32005H0011 http://eurovoc.europa.eu/1076</span></span>
-<span><span class="co">#&gt; 33     31974H0435 http://eurovoc.europa.eu/1085</span></span>
-<span><span class="co">#&gt; 37     31970H0128 http://eurovoc.europa.eu/1085</span></span></code></pre></div>
+<span><span class="co">#&gt;          celex                       eurovoc</span></span>
+<span><span class="co">#&gt; 1  52002SC1118 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 5  52016PC0294 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 9  52007SC0621 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 13 52015PC0243 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 17 52008SC0572 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 21 52016PC0293 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 25 52008SC0571 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 29 51991PC0494 http://eurovoc.europa.eu/1102</span></span>
+<span><span class="co">#&gt; 33 52016PC0517 http://eurovoc.europa.eu/1018</span></span>
+<span><span class="co">#&gt; 37 52008SC2011 http://eurovoc.europa.eu/1018</span></span></code></pre></div>
 <p>By default, the endpoint returns the EuroVoc concept codes rather
 than the labels (keywords). The function
 <code><a href="../reference/elx_label_eurovoc.html">elx_label_eurovoc()</a></code> needs to be called to obtain a look-up
@@ -385,12 +385,9 @@ table with the labels.</p>
 <code class="sourceCode R"><span><span class="va">eurovoc_lookup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/elx_label_eurovoc.html">elx_label_eurovoc</a></span><span class="op">(</span>uri_eurovoc <span class="op">=</span> <span class="va">rec_eurovoc</span><span class="op">$</span><span class="va">eurovoc</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">eurovoc_lookup</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                         eurovoc              labels</span></span>
-<span><span class="co">#&gt; 1 http://eurovoc.europa.eu/1085              France</span></span>
-<span><span class="co">#&gt; 3 http://eurovoc.europa.eu/1074 vocational training</span></span>
-<span><span class="co">#&gt; 5 http://eurovoc.europa.eu/1076                form</span></span>
-<span><span class="co">#&gt; 7 http://eurovoc.europa.eu/1004             welfare</span></span>
-<span><span class="co">#&gt; 9 http://eurovoc.europa.eu/1021          tax system</span></span></code></pre></div>
+<span><span class="co">#&gt;                         eurovoc         labels</span></span>
+<span><span class="co">#&gt; 1 http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 3 http://eurovoc.europa.eu/1102         cheese</span></span></code></pre></div>
 <p>The results include labels only for unique identifiers, but with
 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code> it is straightforward to append the
 labels to the entire dataset.</p>
@@ -398,28 +395,28 @@ labels to the entire dataset.</p>
 <code class="sourceCode R"><span><span class="va">rec_eurovoc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">eurovoc_lookup</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(eurovoc)`</span></span>
-<span><span class="co">#&gt;                                    work type          celex</span></span>
-<span><span class="co">#&gt; 1  120a2b97-ef75-494e-ad48-1fa46932e26a RECO     31962H0816</span></span>
-<span><span class="co">#&gt; 2  2f78b64a-456d-11e5-9f5a-01aa75ed71a1 RECO 32015H0818(10)</span></span>
-<span><span class="co">#&gt; 3  7b22147a-650d-11e6-9b08-01aa75ed71a1 RECO 32016H0818(09)</span></span>
-<span><span class="co">#&gt; 4  ac38e55c-7cc9-11e7-b2f2-01aa75ed71a1 RECO 32017H0809(10)</span></span>
-<span><span class="co">#&gt; 5  7fddd51e-ef33-40f9-8acf-93f752118230 RECO    52011SC0804</span></span>
-<span><span class="co">#&gt; 6  8212f1aa-0a3d-4c5c-8920-c37269e9a026 RECO 32011H0723(02)</span></span>
-<span><span class="co">#&gt; 7  8a363aee-7d70-4d41-b8df-3bf487320572 RECO     31996H0592</span></span>
-<span><span class="co">#&gt; 8  c9d8cbf8-ad86-4fd8-b417-290ef7003692 RECO     32005H0011</span></span>
-<span><span class="co">#&gt; 9  123da027-350c-4c61-bc40-8e46869b89cb RECO     31974H0435</span></span>
-<span><span class="co">#&gt; 10 17d54bb6-4021-4efe-aa2f-90246bd6c13c RECO     31970H0128</span></span>
-<span><span class="co">#&gt;                          eurovoc              labels</span></span>
-<span><span class="co">#&gt; 1  http://eurovoc.europa.eu/1004             welfare</span></span>
-<span><span class="co">#&gt; 2  http://eurovoc.europa.eu/1021          tax system</span></span>
-<span><span class="co">#&gt; 3  http://eurovoc.europa.eu/1021          tax system</span></span>
-<span><span class="co">#&gt; 4  http://eurovoc.europa.eu/1021          tax system</span></span>
-<span><span class="co">#&gt; 5  http://eurovoc.europa.eu/1074 vocational training</span></span>
-<span><span class="co">#&gt; 6  http://eurovoc.europa.eu/1074 vocational training</span></span>
-<span><span class="co">#&gt; 7  http://eurovoc.europa.eu/1076                form</span></span>
-<span><span class="co">#&gt; 8  http://eurovoc.europa.eu/1076                form</span></span>
-<span><span class="co">#&gt; 9  http://eurovoc.europa.eu/1085              France</span></span>
-<span><span class="co">#&gt; 10 http://eurovoc.europa.eu/1085              France</span></span></code></pre></div>
+<span><span class="co">#&gt;                                    work     type       celex</span></span>
+<span><span class="co">#&gt; 1  db3c2cd0-d78e-4c60-a942-6e88df7fe4b3 RECO_DEC 52002SC1118</span></span>
+<span><span class="co">#&gt; 2  88e6faca-4450-11e6-9c64-01aa75ed71a1 RECO_DEC 52016PC0294</span></span>
+<span><span class="co">#&gt; 3  3a5c2cfe-52c9-41d5-ad59-4e1a8da29f0f RECO_DEC 52007SC0621</span></span>
+<span><span class="co">#&gt; 4  5899347a-f951-11e4-a4c8-01aa75ed71a1 RECO_DEC 52015PC0243</span></span>
+<span><span class="co">#&gt; 5  66b3f9ab-cb63-4c56-a122-948a1425ab27 RECO_DEC 52008SC0572</span></span>
+<span><span class="co">#&gt; 6  5d433748-444f-11e6-9c64-01aa75ed71a1 RECO_DEC 52016PC0293</span></span>
+<span><span class="co">#&gt; 7  6b79f264-5bc6-4301-904f-ba813557de67 RECO_DEC 52008SC0571</span></span>
+<span><span class="co">#&gt; 8  95b58211-8885-421c-92c4-ee48fb954a8e RECO_DEC 51991PC0494</span></span>
+<span><span class="co">#&gt; 9  6e14fc24-54ed-11e6-89bd-01aa75ed71a1 RECO_DEC 52016PC0517</span></span>
+<span><span class="co">#&gt; 10 9a092f33-2660-4ed2-b90f-4c86ba85fde1 RECO_DEC 52008SC2011</span></span>
+<span><span class="co">#&gt;                          eurovoc         labels</span></span>
+<span><span class="co">#&gt; 1  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 2  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 3  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 4  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 5  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 6  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 7  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 8  http://eurovoc.europa.eu/1102         cheese</span></span>
+<span><span class="co">#&gt; 9  http://eurovoc.europa.eu/1018 public finance</span></span>
+<span><span class="co">#&gt; 10 http://eurovoc.europa.eu/1018 public finance</span></span></code></pre></div>
 <p>As elsewhere in the API, we can tap into the multilingual nature of
 EU documents also when it comes to the EuroVoc keywords. Moreover, most
 concepts in the thesaurus are associated with alternative labels; these
@@ -433,28 +430,17 @@ can be returned as well (separated by a comma).</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">eurovoc_lookup</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">celex</span>, <span class="va">eurovoc</span>, <span class="va">labels</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(eurovoc)`</span></span>
-<span><span class="co">#&gt;             celex                       eurovoc</span></span>
-<span><span class="co">#&gt; 1      31962H0816 http://eurovoc.europa.eu/1004</span></span>
-<span><span class="co">#&gt; 2  32015H0818(10) http://eurovoc.europa.eu/1021</span></span>
-<span><span class="co">#&gt; 3  32016H0818(09) http://eurovoc.europa.eu/1021</span></span>
-<span><span class="co">#&gt; 4  32017H0809(10) http://eurovoc.europa.eu/1021</span></span>
-<span><span class="co">#&gt; 5     52011SC0804 http://eurovoc.europa.eu/1074</span></span>
-<span><span class="co">#&gt; 6  32011H0723(02) http://eurovoc.europa.eu/1074</span></span>
-<span><span class="co">#&gt; 7      31996H0592 http://eurovoc.europa.eu/1076</span></span>
-<span><span class="co">#&gt; 8      32005H0011 http://eurovoc.europa.eu/1076</span></span>
-<span><span class="co">#&gt; 9      31974H0435 http://eurovoc.europa.eu/1085</span></span>
-<span><span class="co">#&gt; 10     31970H0128 http://eurovoc.europa.eu/1085</span></span>
-<span><span class="co">#&gt;                                                                                      labels</span></span>
-<span><span class="co">#&gt; 1                                                                                  blahobyt</span></span>
-<span><span class="co">#&gt; 2                                                              daňová sústava,daňový systém</span></span>
-<span><span class="co">#&gt; 3                                                              daňová sústava,daňový systém</span></span>
-<span><span class="co">#&gt; 4                                                              daňová sústava,daňový systém</span></span>
-<span><span class="co">#&gt; 5  kombinovaná príprava,odborná príprava,predprofesijná príprava,vzdelávanie pracovných síl</span></span>
-<span><span class="co">#&gt; 6  kombinovaná príprava,odborná príprava,predprofesijná príprava,vzdelávanie pracovných síl</span></span>
-<span><span class="co">#&gt; 7                                                                                  formulár</span></span>
-<span><span class="co">#&gt; 8                                                                                  formulár</span></span>
-<span><span class="co">#&gt; 9                                                           Francúzska republika,Francúzsko</span></span>
-<span><span class="co">#&gt; 10                                                          Francúzska republika,Francúzsko</span></span></code></pre></div>
+<span><span class="co">#&gt;          celex                       eurovoc           labels</span></span>
+<span><span class="co">#&gt; 1  52002SC1118 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 2  52016PC0294 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 3  52007SC0621 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 4  52015PC0243 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 5  52008SC0572 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 6  52016PC0293 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 7  52008SC0571 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 8  51991PC0494 http://eurovoc.europa.eu/1102              syr</span></span>
+<span><span class="co">#&gt; 9  52016PC0517 http://eurovoc.europa.eu/1018 verejné financie</span></span>
+<span><span class="co">#&gt; 10 52008SC2011 http://eurovoc.europa.eu/1018 verejné financie</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -489,17 +475,17 @@ the document. For both you can specify also the desired language
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dir_titles</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         celex</span></span>
-<span><span class="co">#&gt; 1  31979L0173</span></span>
-<span><span class="co">#&gt; 6  31989L0194</span></span>
-<span><span class="co">#&gt; 11 31984L0378</span></span>
-<span><span class="co">#&gt; 16 31966L0683</span></span>
-<span><span class="co">#&gt; 21 31993L0004</span></span>
-<span><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                title</span></span>
-<span><span class="co">#&gt; 1                                                                                                                                                                                                                                                                                                                       Council Directive 79/173/EEC of 6 February 1979 on the programme for the acceleration and guidance of collective irrigation works in Corsica</span></span>
-<span><span class="co">#&gt; 6                                                                                                                                                                                                                                                            Council Directive 89/194/EEC of 13 March 1989 amending Directive 69/169/EEC as regards a derogation granted to the Kingdom of Denmark relating to the rules governing travellers' allowances on imports</span></span>
-<span><span class="co">#&gt; 11                                                                                                                                                                                                                                                  Council Directive 84/378/EEC of 28 June 1984 amending the Annexes to Directive 77/93/EEC on protective measures against the introduction into the Member States of organisms harmful to plants or plant products</span></span>
-<span><span class="co">#&gt; 16 Commission Directive 66/683/EEC of 7 November 1966 eliminating all differences between the treatment of national products and that of products which, under Articles 9 and 10 of the Treaty, must be admitted for free movement, as regards laws, regulations or administrative provisions prohibiting the use of the said products and prescribing the use of national products or making such use subject to profitability /* unofficial English translation */</span></span>
-<span><span class="co">#&gt; 21                                                                                                                                                                                                                                                                                                     Council Directive 93/4/EEC of 8 February 1993 amending Directive 71/305/EEC concerning the coordination of procedures for the award of public works contracts</span></span></code></pre></div>
+<span><span class="co">#&gt; 1  31965L0066</span></span>
+<span><span class="co">#&gt; 6  32013L0038</span></span>
+<span><span class="co">#&gt; 11 32014L0107</span></span>
+<span><span class="co">#&gt; 16 31985L0346</span></span>
+<span><span class="co">#&gt; 21 31974L0394</span></span>
+<span><span class="co">#&gt;                                                                                                                                                                                                                                                 title</span></span>
+<span><span class="co">#&gt; 1                                                                            Council Directive 65/66/EEC of 26 January 1965 laying down specific criteria of purity for preservatives authorised for use in foodstuffs intended for human consumption</span></span>
+<span><span class="co">#&gt; 6                                                                                   Directive 2013/38/EU of the European Parliament and of the Council of 12 August 2013 amending Directive 2009/16/EC on port State control  Text with EEA relevance</span></span>
+<span><span class="co">#&gt; 11                                                                                     Council Directive 2014/107/EU of 9 December 2014 amending Directive 2011/16/EU as regards mandatory automatic exchange of information in the field of taxation</span></span>
+<span><span class="co">#&gt; 16                  Council Directive 85/346/EEC of 8 July 1985 amending Directive 83/181/EEC determining the scope of Article 14 (1) (d) of Directive 77/388/EEC as regards exemption from value added tax on the final importation of certain goods</span></span>
+<span><span class="co">#&gt; 21 Council Directive 74/394/EEC of 22 July 1974 making a tenth amendment to Directive No 64/54/EEC on the approximation of the laws of the Member States concerning the preservatives authorized for use in foodstuffs intended for human consumption</span></span></code></pre></div>
 <p>Note that text requests are by far the most time-intensive;
 requesting the full text for thousands of documents is liable to extend
 the run-time into hours. Texts are retrieved from html by priority, but
@@ -557,38 +543,38 @@ that are still in force today. Their titles could give us a clue.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dirs_1970_title</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                                                                  work</span></span>
-<span><span class="co">#&gt; 1  http://publications.europa.eu/resource/cellar/c9c0e382-b55c-4bd5-9a02-d616e80eb4b1</span></span>
-<span><span class="co">#&gt; 2  http://publications.europa.eu/resource/cellar/f1470a0a-489a-48b8-8fd4-4162abce1481</span></span>
-<span><span class="co">#&gt; 3  http://publications.europa.eu/resource/cellar/a82fea91-74c7-4a6b-9b33-3135073f0d65</span></span>
-<span><span class="co">#&gt; 4  http://publications.europa.eu/resource/cellar/c7b98d2f-948e-4d87-85e6-0228021c752d</span></span>
+<span><span class="co">#&gt; 1  http://publications.europa.eu/resource/cellar/675f4ee1-be6f-4d60-b062-87d8deef23be</span></span>
+<span><span class="co">#&gt; 2  http://publications.europa.eu/resource/cellar/c9c0e382-b55c-4bd5-9a02-d616e80eb4b1</span></span>
+<span><span class="co">#&gt; 3  http://publications.europa.eu/resource/cellar/dac7b9d9-a3b3-448d-9747-18f842cbe930</span></span>
+<span><span class="co">#&gt; 4  http://publications.europa.eu/resource/cellar/f1470a0a-489a-48b8-8fd4-4162abce1481</span></span>
 <span><span class="co">#&gt; 5  http://publications.europa.eu/resource/cellar/0960fa20-bda1-40ef-832f-99788c7d0271</span></span>
-<span><span class="co">#&gt; 6  http://publications.europa.eu/resource/cellar/4100178a-846e-432d-b8d4-6400f9fc6465</span></span>
-<span><span class="co">#&gt; 7  http://publications.europa.eu/resource/cellar/675f4ee1-be6f-4d60-b062-87d8deef23be</span></span>
-<span><span class="co">#&gt; 8  http://publications.europa.eu/resource/cellar/dac7b9d9-a3b3-448d-9747-18f842cbe930</span></span>
-<span><span class="co">#&gt; 9  http://publications.europa.eu/resource/cellar/bca01e38-d764-4f2d-b96b-4962979326dd</span></span>
-<span><span class="co">#&gt; 10 http://publications.europa.eu/resource/cellar/2a022c3d-9a2c-45a8-95e9-076a4f0bf5de</span></span>
+<span><span class="co">#&gt; 6  http://publications.europa.eu/resource/cellar/bca01e38-d764-4f2d-b96b-4962979326dd</span></span>
+<span><span class="co">#&gt; 7  http://publications.europa.eu/resource/cellar/c7b98d2f-948e-4d87-85e6-0228021c752d</span></span>
+<span><span class="co">#&gt; 8  http://publications.europa.eu/resource/cellar/a82fea91-74c7-4a6b-9b33-3135073f0d65</span></span>
+<span><span class="co">#&gt; 9  http://publications.europa.eu/resource/cellar/2a022c3d-9a2c-45a8-95e9-076a4f0bf5de</span></span>
+<span><span class="co">#&gt; 10 http://publications.europa.eu/resource/cellar/4100178a-846e-432d-b8d4-6400f9fc6465</span></span>
 <span><span class="co">#&gt;    type      celex       date force</span></span>
-<span><span class="co">#&gt; 1   DIR 31972L0159 1972-04-17  true</span></span>
-<span><span class="co">#&gt; 2   DIR 31972L0418 1972-12-06  true</span></span>
-<span><span class="co">#&gt; 3   DIR 31971L0086 1971-02-01  true</span></span>
-<span><span class="co">#&gt; 4   DIR 31970L0157 1970-02-06  true</span></span>
+<span><span class="co">#&gt; 1   DIR 31972L0160 1972-04-17  true</span></span>
+<span><span class="co">#&gt; 2   DIR 31972L0159 1972-04-17  true</span></span>
+<span><span class="co">#&gt; 3   DIR 31972L0161 1972-04-17  true</span></span>
+<span><span class="co">#&gt; 4   DIR 31972L0418 1972-12-06  true</span></span>
 <span><span class="co">#&gt; 5   DIR 31972L0274 1972-07-20  true</span></span>
-<span><span class="co">#&gt; 6   DIR 31971L0140 1971-03-22  true</span></span>
-<span><span class="co">#&gt; 7   DIR 31972L0160 1972-04-17  true</span></span>
-<span><span class="co">#&gt; 8   DIR 31972L0161 1972-04-17  true</span></span>
-<span><span class="co">#&gt; 9   DIR 31971L0162 1971-03-30  true</span></span>
-<span><span class="co">#&gt; 10  DIR 31972L0221 1972-06-06  true</span></span>
+<span><span class="co">#&gt; 6   DIR 31971L0162 1971-03-30  true</span></span>
+<span><span class="co">#&gt; 7   DIR 31970L0157 1970-02-06  true</span></span>
+<span><span class="co">#&gt; 8   DIR 31971L0086 1971-02-01  true</span></span>
+<span><span class="co">#&gt; 9   DIR 31972L0221 1972-06-06  true</span></span>
+<span><span class="co">#&gt; 10  DIR 31971L0140 1971-03-22  true</span></span>
 <span><span class="co">#&gt;                                                                                                                                                                                                                                                                                                                                                                                                                   title</span></span>
-<span><span class="co">#&gt; 1                                                                                                                                                                                                                                                                                                                                           Council Directive 72/159/EEC of 17 April 1972 on the modernization of farms</span></span>
-<span><span class="co">#&gt; 2  Council Directive 72/418/EEC of 6 December 1972 amending the Directives of 14 June 1966 on the marketing of beet seed, of fodder-crop seed, of cereal seed, of seed potatoes, the Directive of 30 June 1969 on the marketing of oleaginous and fibrous plant seed, and the Directives of 29 September 1970 on the marketing of vegetable seed and on the Common Catalogue of Varieties of Agricultural Plant Species</span></span>
-<span><span class="co">#&gt; 3                                                                                                                                                                                                              Council Directive 71/86/EEC of 1 February 1971 on harmonisation of the basic provisions in respect of guarantees for short-term transactions (political risks) with public buyers or with private buyers</span></span>
-<span><span class="co">#&gt; 4                                                                                                                                                                                                                                Council Directive 70/157/EEC of 6 February 1970 on the approximation of the laws of the Member States relating to the permissible sound level and the exhaust system of motor vehicles</span></span>
+<span><span class="co">#&gt; 1                                                                                                                                                                                                                 Council Directive 72/160/EEC of 17 April 1972 concerning measures to encourage the cessation of farming and the reallocation of utilized agricultural area for the purposes of structural improvement</span></span>
+<span><span class="co">#&gt; 2                                                                                                                                                                                                                                                                                                                                           Council Directive 72/159/EEC of 17 April 1972 on the modernization of farms</span></span>
+<span><span class="co">#&gt; 3                                                                                                                                                                                                                                    Council Directive 72/161/EEC of 17 April 1972 concerning the provision of socio-economic guidance for and the acquisition of occupational skills by persons engaged in agriculture</span></span>
+<span><span class="co">#&gt; 4  Council Directive 72/418/EEC of 6 December 1972 amending the Directives of 14 June 1966 on the marketing of beet seed, of fodder-crop seed, of cereal seed, of seed potatoes, the Directive of 30 June 1969 on the marketing of oleaginous and fibrous plant seed, and the Directives of 29 September 1970 on the marketing of vegetable seed and on the Common Catalogue of Varieties of Agricultural Plant Species</span></span>
 <span><span class="co">#&gt; 5                         Council Directive 72/274/EEC of 20 July 1972 amending the Directives of 14 June 1966 on the marketing of beet seed, fodder plant seed, cereal seed, seed potatoes, the Directive of 30 June 1969 on the marketing of seed of oil and fibre plants and the Directives of 29 September 1970 on the marketing of vegetable seed and on the common catalogue of varieties of agricultural species</span></span>
-<span><span class="co">#&gt; 6                                                                                                                                                                                                                                                          Council Directive 71/140/EEC of 22 March 1971 amending the Directive of 9 April 1968 on the marketing of material for the vegetative propagation of the vine</span></span>
-<span><span class="co">#&gt; 7                                                                                                                                                                                                                 Council Directive 72/160/EEC of 17 April 1972 concerning measures to encourage the cessation of farming and the reallocation of utilized agricultural area for the purposes of structural improvement</span></span>
-<span><span class="co">#&gt; 8                                                                                                                                                                                                                                    Council Directive 72/161/EEC of 17 April 1972 concerning the provision of socio-economic guidance for and the acquisition of occupational skills by persons engaged in agriculture</span></span>
-<span><span class="co">#&gt; 9                                                                                                  Council Directive of 30 March 1971 amending the Directives of 14 June 1966 on the marketing of beet seed, fodder plant seed, cereal seed and seed potatoes, the Directive of 30 June 1969 on the marketing of seed of oil and fibre plants and the Directive of 29 September 1970 on the marketing of vegetable seed</span></span>
-<span><span class="co">#&gt; 10                                                                                                                                                                                                                                                                                                             Council Directive 72/221/EEC of 6 June 1972 concerning coordinated annual surveys of industrial activity</span></span></code></pre></div>
+<span><span class="co">#&gt; 6                                                                                                  Council Directive of 30 March 1971 amending the Directives of 14 June 1966 on the marketing of beet seed, fodder plant seed, cereal seed and seed potatoes, the Directive of 30 June 1969 on the marketing of seed of oil and fibre plants and the Directive of 29 September 1970 on the marketing of vegetable seed</span></span>
+<span><span class="co">#&gt; 7                                                                                                                                                                                                                                Council Directive 70/157/EEC of 6 February 1970 on the approximation of the laws of the Member States relating to the permissible sound level and the exhaust system of motor vehicles</span></span>
+<span><span class="co">#&gt; 8                                                                                                                                                                                                              Council Directive 71/86/EEC of 1 February 1971 on harmonisation of the basic provisions in respect of guarantees for short-term transactions (political risks) with public buyers or with private buyers</span></span>
+<span><span class="co">#&gt; 9                                                                                                                                                                                                                                                                                                              Council Directive 72/221/EEC of 6 June 1972 concerning coordinated annual surveys of industrial activity</span></span>
+<span><span class="co">#&gt; 10                                                                                                                                                                                                                                                         Council Directive 71/140/EEC of 22 March 1971 amending the Directive of 9 April 1968 on the marketing of material for the vegetative propagation of the vine</span></span></code></pre></div>
 <p>I will use the <code>tidytext</code> package to get a quick idea of
 what the legislation is about by visualizing the most distinctive words
 in the titles.</p>
