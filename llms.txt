@@ -14,7 +14,8 @@ cases are shown in this
 [paper](https://www.tandfonline.com/doi/full/10.1080/2474736X.2020.1870150).
 
 You can use `eurlex` to create automatically updated overviews of EU
-decision-making activity, as shown [here](NA).
+decision-making activity, as shown
+[here](https://michalovadek.github.io/euverse/).
 
 ## Installation
 
