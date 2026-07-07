@@ -385,7 +385,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   }
 
   if (resource_type == "national_impl"){
-    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/MEAS_NATION_IMPL>", sep = " ")
+    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/MEAS_NATION_IMPL>)", sep = " ")
   }
 
   if (nchar(manual_type) > 1 & resource_type == "manual"){
