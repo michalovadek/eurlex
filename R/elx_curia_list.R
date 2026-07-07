@@ -12,7 +12,7 @@
 #' disappeared from more recent cases.
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' elx_curia_list(data = "cst_all", parse = FALSE)
 #' }
 
