@@ -4,9 +4,8 @@
 
 ### Major changes
 
-- [`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md)
-  is no longer exported because the Curia sites are not reliably
-  available anymore
+- `elx_curia_list()` is no longer exported because the Curia sites are
+  not reliably available anymore
 
 ### Minor changes
 
@@ -59,9 +58,8 @@ CRAN release: 2023-09-08
 
 - minor changes to documentation
 - cleaned up http calls code
-- calls to `elx_council_votes()` and
-  [`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md)
-  now fail gracefully
+- calls to `elx_council_votes()` and `elx_curia_list()` now fail
+  gracefully
 - .data replaced by quoted variables for tidyselect functions
 - Internet-using vignettes moved to site-only articles
 
@@ -108,8 +106,7 @@ CRAN release: 2022-11-20
 ### Minor changes
 
 - minor changes to vignettes and examples to reduce build time
-- more stable connection through
-  [`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md)
+- more stable connection through `elx_curia_list()`
 - fun CRAN policy compliance stuff
 
 ## eurlex 0.4.3
@@ -234,10 +231,9 @@ CRAN release: 2021-03-14
   `elx_make_query(include_court_procedure = TRUE)`
 - new feature: request directory code of legal act
   `elx_make_query(include_directory = TRUE)`
-- [`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md)
-  has a new default parameter `parse = TRUE` which creates separate
-  columns for `ecli`, `see_case`, `appeal` applying regular expressions
-  on `case_info`
+- `elx_curia_list()` has a new default parameter `parse = TRUE` which
+  creates separate columns for `ecli`, `see_case`, `appeal` applying
+  regular expressions on `case_info`
 
 ## eurlex 0.3.4
 
@@ -304,8 +300,7 @@ CRAN release: 2020-09-11
 
 ### Minor changes
 
-- fixed serious bugs in
-  [`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md)
+- fixed serious bugs in `elx_curia_list()`
 - fixed bug in
   [`elx_label_eurovoc()`](https://michalovadek.github.io/eurlex/reference/elx_label_eurovoc.md)
 
@@ -332,9 +327,7 @@ CRAN release: 2020-08-19
 - EuroVoc topics, retrievable in all EU languages, can now be included
   in SPARQL results
 - new date options (force, end of validity, transposition)
-- added
-  [`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md)
-  to retrieve full list of EU court cases
+- added `elx_curia_list()` to retrieve full list of EU court cases
 
 ### Minor changes
 

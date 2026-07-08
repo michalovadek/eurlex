@@ -45,11 +45,10 @@ to execute the pre-made or any other manually input query; and
 to fire GET requests for certain metadata to the REST API.
 
 The package also contains largely self-explanatory functions for
-retrieving data on EU court cases
-([`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md))
-and Council votes (`elx_council_votes()`, currently dysfunctional) from
-outside Eur-Lex. More advanced users might be interested in downloading
-and custom-parsing XML notices with
+retrieving data on EU court cases (`elx_curia_list()`) and Council votes
+(`elx_council_votes()`, currently dysfunctional) from outside Eur-Lex.
+More advanced users might be interested in downloading and
+custom-parsing XML notices with
 [`elx_download_xml()`](https://michalovadek.github.io/eurlex/reference/elx_download_xml.md).
 
 ### `elx_make_query()`: Generate SPARQL queries
