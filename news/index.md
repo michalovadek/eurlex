@@ -1,5 +1,18 @@
 # Changelog
 
+## eurlex 0.5.0
+
+### Major changes
+
+- [`elx_curia_list()`](https://michalovadek.github.io/eurlex/reference/elx_curia_list.md)
+  is no longer exported because the Curia sites are not reliably
+  available anymore
+
+### Minor changes
+
+- fixed `elx_make_query(resource_type = "national_impl")`
+- vignette no longer makes API calls
+
 ## eurlex 0.4.9
 
 CRAN release: 2026-02-06

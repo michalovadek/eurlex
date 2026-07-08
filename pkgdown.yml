@@ -1,11 +1,11 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   articles/council: council.html
   articles/eurlexpkg: eurlexpkg.html
   sparql-queries: sparql-queries.html
-last_built: 2026-07-07T23:11Z
+last_built: 2026-07-08T09:54Z
 urls:
   reference: https://michalovadek.github.io/eurlex/reference
   article: https://michalovadek.github.io/eurlex/articles
