@@ -15,6 +15,7 @@
 #' \dontrun{
 #' elx_curia_list(data = "cst_all", parse = FALSE)
 #' }
+#' @noRd
 
 elx_curia_list <- function(data = c("all","ecj_old","ecj_new","gc_all","cst_all"),
                            parse = TRUE){
