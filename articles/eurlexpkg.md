@@ -258,12 +258,12 @@ results <- elx_run_query(query = query_dir)
 
 head(results)
 #>                                    work type      celex
-#> 1  2ecb0332-5fb2-11f1-9af0-01aa75ed71a1  DIR 32026L1194
-#> 6  86beade5-741e-11f1-9800-01aa75ed71a1  DIR 32026L1472
-#> 11 0d76f53e-267f-495c-9854-15e8c3ee05c5  DIR 31965L0066
-#> 16 47ba284d-04b9-11e3-a352-01aa75ed71a1  DIR 32013L0038
-#> 21 899b6c44-84ec-11e4-91cd-01aa75ed71a1  DIR 32014L0107
-#> 26 931d7a62-e01e-4f41-a318-a048818fc71d  DIR 31985L0346
+#> 1  0d76f53e-267f-495c-9854-15e8c3ee05c5  DIR 31965L0066
+#> 6  47ba284d-04b9-11e3-a352-01aa75ed71a1  DIR 32013L0038
+#> 11 899b6c44-84ec-11e4-91cd-01aa75ed71a1  DIR 32014L0107
+#> 16 931d7a62-e01e-4f41-a318-a048818fc71d  DIR 31985L0346
+#> 21 9e1d16c5-8aef-42ee-874c-283a182c49a9  DIR 31974L0394
+#> 26 a5d0648f-2957-11e6-b616-01aa75ed71a1  DIR 32016L0882
 ```
 
 The function outputs a `data.frame` where each column corresponds to one
@@ -446,17 +446,17 @@ dir_titles <- results[1:5,] %>% # take the first 5 directives only to save time
 
 print(dir_titles)
 #>         celex
-#> 1  32026L1194
-#> 6  32026L1472
-#> 11 31965L0066
-#> 16 32013L0038
-#> 21 32014L0107
-#>                                                                                                                                                                                                                                                                   title
-#> 1     Council Directive (EU) 2026/1194 of 26 May 2026 laying down detailed arrangements for the exercise of the right to vote and to stand as a candidate in municipal elections for Union citizens residing in a Member State of which they are not nationals (recast)
-#> 6  Directive (EU) 2026/1472 of the European Parliament and of the Council of 17 June 2026 amending Directive 2012/29/EU establishing minimum standards on the rights, support and protection of victims of crime, and replacing Council Framework Decision 2001/220/JHA
-#> 11                                                                                             Council Directive 65/66/EEC of 26 January 1965 laying down specific criteria of purity for preservatives authorised for use in foodstuffs intended for human consumption
-#> 16                                                                                                    Directive 2013/38/EU of the European Parliament and of the Council of 12 August 2013 amending Directive 2009/16/EC on port State control  Text with EEA relevance
-#> 21                                                                                                       Council Directive 2014/107/EU of 9 December 2014 amending Directive 2011/16/EU as regards mandatory automatic exchange of information in the field of taxation
+#> 1  31965L0066
+#> 6  32013L0038
+#> 11 32014L0107
+#> 16 31985L0346
+#> 21 31974L0394
+#>                                                                                                                                                                                                                                                 title
+#> 1                                                                            Council Directive 65/66/EEC of 26 January 1965 laying down specific criteria of purity for preservatives authorised for use in foodstuffs intended for human consumption
+#> 6                                                                                   Directive 2013/38/EU of the European Parliament and of the Council of 12 August 2013 amending Directive 2009/16/EC on port State control  Text with EEA relevance
+#> 11                                                                                     Council Directive 2014/107/EU of 9 December 2014 amending Directive 2011/16/EU as regards mandatory automatic exchange of information in the field of taxation
+#> 16                  Council Directive 85/346/EEC of 8 July 1985 amending Directive 83/181/EEC determining the scope of Article 14 (1) (d) of Directive 77/388/EEC as regards exemption from value added tax on the final importation of certain goods
+#> 21 Council Directive 74/394/EEC of 22 July 1974 making a tenth amendment to Directive No 64/54/EEC on the approximation of the laws of the Member States concerning the preservatives authorized for use in foodstuffs intended for human consumption
 ```
 
 Note that text requests are by far the most time-intensive; requesting
