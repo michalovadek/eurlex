@@ -1,3 +1,14 @@
+# eurlex 0.5.0
+
+## Major changes
+
+- `elx_curia_list()` is no longer exported because the Curia sites are not reliably available anymore
+
+## Minor changes
+
+- fixed `elx_make_query(resource_type = "national_impl")`
+- vignette no longer makes API calls
+
 # eurlex 0.4.9
 
 ## Major changes
@@ -13,14 +24,17 @@
 # eurlex 0.4.8
 
 ## Major changes
+
 - the Council votes API was discontinued in May 2024. The function `elx_council_votes()` is no longer exported
 
 ## Minor changes
+
 - tempfile created for XML download now gets deleted
 
 # eurlex 0.4.7
 
 ## Minor changes
+
 - some http calls were still not failing gracefully
 - some leftover .data in tidyselect
 

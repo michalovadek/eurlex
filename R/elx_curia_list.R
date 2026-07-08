@@ -10,7 +10,7 @@
 #' A data frame containing case identifiers and information as character columns. Where the case id
 #' contains a hyperlink to Eur-Lex, the CELEX identifier is retrieved as well. Hyperlinks to Eur-Lex
 #' disappeared from more recent cases.
-#' @export
+
 #' @examples
 #' \dontrun{
 #' elx_curia_list(data = "cst_all", parse = FALSE)
