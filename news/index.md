@@ -2,6 +2,8 @@
 
 ## eurlex 0.5.0
 
+CRAN release: 2026-07-08
+
 ### Major changes
 
 - `elx_curia_list()` is no longer exported because the Curia sites are
