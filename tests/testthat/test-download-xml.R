@@ -60,8 +60,3 @@ testthat::test_that("elx_download_xml requires url and notice", {
   )
   
 })
-
-
-
-devtools::load_all()
-devtools::test()
