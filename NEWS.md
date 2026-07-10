@@ -1,9 +1,16 @@
+# eurlex 0.5.1
+
+## Major changes
+
+## Minor changes
+
+- `elx_council_votes()` has been removed entirely due to the Council API being taken offline
+
 # eurlex 0.5.0
 
 ## Major changes
 
 - `elx_curia_list()` is no longer exported because the Curia sites are not reliably available anymore
-- `elx_council_votes()` has been removed entirely (it was already unexported in a previous release when the Council voting API was discontinued)
 
 ## Minor changes
 
