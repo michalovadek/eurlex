@@ -11,6 +11,8 @@
 #' @param include_corrigenda If `TRUE`, results include corrigenda
 #' @param include_celex If `TRUE`, results include CELEX identifier for each resource URI
 #' @param include_date If `TRUE`, results include document date
+#' @param date_from Restrict results to documents dated on or after this date, in `YYYY-MM-DD` format
+#' @param date_to Restrict results to documents dated on or before this date, in `YYYY-MM-DD` format
 #' @param include_date_force If `TRUE`, results include date of entry into force
 #' @param include_date_endvalid If `TRUE`, results include date of end of validity
 #' @param include_date_transpos If `TRUE`, results include date of transposition deadline for directives
@@ -40,6 +42,7 @@
 #' @export
 #' @examples
 #' elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
+#' elx_make_query(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
 #' elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
 #' elx_make_query(resource_type = "any", sector = 2)
 #' elx_make_query(resource_type = "manual", manual_type = "SWD")
@@ -47,7 +50,8 @@
 elx_make_query <- function(resource_type = c("any","directive","regulation","decision","recommendation","intagr","caselaw","manual","proposal","national_impl"),
                            manual_type = "", directory = NULL, sector = NULL,
                            include_corrigenda = FALSE, include_celex = TRUE, include_lbs = FALSE,
-                           include_date = FALSE, include_date_force = FALSE, include_date_endvalid = FALSE,
+                           include_date = FALSE, date_from = NULL, date_to = NULL,
+                           include_date_force = FALSE, include_date_endvalid = FALSE,
                            include_date_transpos = FALSE, include_date_lodged = FALSE,
                            include_force = FALSE, include_eurovoc = FALSE,
                            include_citations = FALSE, include_citations_detailed = FALSE,
@@ -78,6 +82,18 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
   if (include_date_transpos == TRUE & !resource_type %in% c("any","directive")){
     stop("Transposition date currently only available for directives.", call. = TRUE)
   }
+  
+  if (include_date_transpos == TRUE & !resource_type %in% c("any","directive")){
+    stop("Transposition date currently only available for directives.", call. = TRUE)
+  }
+  
+  if (!is.null(date_from) && !grepl("^\\d{4}-\\d{2}-\\d{2}$", date_from)){
+    stop("'date_from' must be in YYYY-MM-DD format.", call. = TRUE)
+  }
+  
+  if (!is.null(date_to) && !grepl("^\\d{4}-\\d{2}-\\d{2}$", date_to)){
+    stop("'date_to' must be in YYYY-MM-DD format.", call. = TRUE)
+  }
 
   query <- "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
   PREFIX annot: <http://publications.europa.eu/ontology/annotation#>
@@ -94,10 +110,8 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   }
 
-  if (include_date == TRUE){
-
+  if (include_date == TRUE || !is.null(date_from) || !is.null(date_to)){
     query <- paste(query, "?date", sep = " ")
-
   }
 
   if (include_date_force == TRUE){
@@ -402,10 +416,19 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
   }
 
-  if (include_date == TRUE){
-
+  if (!is.null(date_from) || !is.null(date_to)){
+    query <- paste(query, "?work cdm:work_date_document ?date.")
+    
+    if (!is.null(date_from)){
+      query <- paste(query, paste0('FILTER(?date >= "', date_from, '"^^xsd:date)'))
+    }
+    
+    if (!is.null(date_to)){
+      query <- paste(query, paste0('FILTER(?date <= "', date_to, '"^^xsd:date)'))
+    }
+    
+  } else if (include_date == TRUE){
     query <- paste(query, "OPTIONAL{?work cdm:work_date_document ?date.}")
-
   }
 
   if (include_date_force == TRUE){

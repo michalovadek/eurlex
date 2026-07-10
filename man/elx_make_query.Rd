@@ -14,6 +14,8 @@ elx_make_query(
   include_celex = TRUE,
   include_lbs = FALSE,
   include_date = FALSE,
+  date_from = NULL,
+  date_to = NULL,
   include_date_force = FALSE,
   include_date_endvalid = FALSE,
   include_date_transpos = FALSE,
@@ -55,6 +57,10 @@ elx_make_query(
 \item{include_lbs}{If \code{TRUE}, results include legal bases of legislation}
 
 \item{include_date}{If \code{TRUE}, results include document date}
+
+\item{date_from}{Restrict results to documents dated on or after this date, in \code{YYYY-MM-DD} format}
+
+\item{date_to}{Restrict results to documents dated on or before this date, in \code{YYYY-MM-DD} format}
 
 \item{include_date_force}{If \code{TRUE}, results include date of entry into force}
 
@@ -112,6 +118,7 @@ Note that not all resource types are compatible with default parameter values.
 }
 \examples{
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
+elx_make_query(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
 elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
 elx_make_query(resource_type = "any", sector = 2)
 elx_make_query(resource_type = "manual", manual_type = "SWD")
