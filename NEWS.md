@@ -3,6 +3,7 @@
 ## Major changes
 
 - `elx_curia_list()` is no longer exported because the Curia sites are not reliably available anymore
+- `elx_council_votes()` has been removed entirely (it was already unexported in a previous release when the Council voting API was discontinued)
 
 ## Minor changes
 
