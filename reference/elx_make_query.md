@@ -19,6 +19,8 @@ elx_make_query(
   include_celex = TRUE,
   include_lbs = FALSE,
   include_date = FALSE,
+  date_from = NULL,
+  date_to = NULL,
   include_date_force = FALSE,
   include_date_endvalid = FALSE,
   include_date_transpos = FALSE,
@@ -78,6 +80,16 @@ elx_make_query(
 - include_date:
 
   If `TRUE`, results include document date
+
+- date_from:
+
+  Restrict results to documents dated on or after this date, in
+  `YYYY-MM-DD` format
+
+- date_to:
+
+  Restrict results to documents dated on or before this date, in
+  `YYYY-MM-DD` format
 
 - include_date_force:
 
@@ -179,11 +191,25 @@ elx_make_query(
 
 A character string containing the SPARQL query
 
+## Details
+
+When `date_from` or `date_to` are specified, the underlying SPARQL query
+requires [`?date`](https://rdrr.io/r/base/date.html) to be a well-formed
+`xsd:date`. Any document whose date does not resolve to a valid
+`xsd:date` would be silently excluded from the filtered results, without
+a warning or error. This has not been observed to occur in practice —
+sampling of live data (including pre-1970 documents, where imprecise
+dates would be most likely) found no such cases — but has been confirmed
+directly via a synthetic SPARQL test with a deliberately malformed date
+value, which was correctly excluded by the filter.
+
 ## Examples
 
 ``` r
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
 #> [1] "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>\n  PREFIX annot: <http://publications.europa.eu/ontology/annotation#>\n  PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n  PREFIX dc:<http://purl.org/dc/elements/1.1/>\n  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n  PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n  PREFIX owl:<http://www.w3.org/2002/07/owl#>\n  select distinct ?work ?type ?celex ?date ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL>) \n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} OPTIONAL{?work cdm:work_date_document ?date.} OPTIONAL{?work cdm:resource_legal_in-force ?force.} FILTER not exists{?work cdm:do_not_index \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>}. }"
+elx_make_query(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
+#> [1] "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>\n  PREFIX annot: <http://publications.europa.eu/ontology/annotation#>\n  PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n  PREFIX dc:<http://purl.org/dc/elements/1.1/>\n  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n  PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n  PREFIX owl:<http://www.w3.org/2002/07/owl#>\n  select distinct ?work ?type ?celex ?date where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL>) \n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} ?work cdm:work_date_document ?date. FILTER(?date >= \"2015-01-01\"^^xsd:date) FILTER(?date <= \"2015-12-31\"^^xsd:date) FILTER not exists{?work cdm:do_not_index \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>}. }"
 elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
 #> [1] "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>\n  PREFIX annot: <http://publications.europa.eu/ontology/annotation#>\n  PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n  PREFIX dc:<http://purl.org/dc/elements/1.1/>\n  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n  PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n  PREFIX owl:<http://www.w3.org/2002/07/owl#>\n  select distinct ?work ?type ?celex where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/REG>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_IMPL>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_FINANC>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/REG_DEL>) OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} FILTER not exists{?work cdm:do_not_index \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>}. } order by str(?date)"
 elx_make_query(resource_type = "any", sector = 2)
