@@ -4,6 +4,17 @@
 #' List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
 #' Note that not all resource types are compatible with default parameter values.
 #'
+#' @details
+#' When `date_from` or `date_to` are specified, the underlying SPARQL query 
+#' requires `?date` to be a well-formed `xsd:date`. Any document whose date 
+#' does not resolve to a valid `xsd:date` would be silently excluded from 
+#' the filtered results, without a warning or error. This has not been 
+#' observed to occur in practice — sampling of live data (including 
+#' pre-1970 documents, where imprecise dates would be most likely) found 
+#' no such cases — but has been confirmed directly via a synthetic SPARQL 
+#' test with a deliberately malformed date value, which was correctly 
+#' excluded by the filter.
+#'
 #' @param resource_type Type of resource to be retrieved via SPARQL query
 #' @param manual_type Define manually the type of resource to be retrieved
 #' @param directory Restrict the results to a given directory code
