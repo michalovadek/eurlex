@@ -8,7 +8,6 @@ testthat::test_that("queries can be made", {
   
 })
 
-
 testthat::test_that("national_impl query has balanced parentheses", {
   
   testthat::skip_on_cran()
@@ -34,7 +33,6 @@ testthat::test_that("national_impl query is well-formed", {
 })
 
 testthat::test_that("include_title returns document titles", {
-testthat::test_that("date_from and date_to filter results correctly", {
   
   testthat::skip_on_cran()
   
@@ -63,6 +61,14 @@ testthat::test_that("include_title works alongside other include parameters", {
   
   testthat::expect_true(all(c("title", "date", "author") %in% names(out)))
   testthat::expect_equal(nrow(out), 5)
+  
+})
+
+testthat::test_that("date_from and date_to filter results correctly", {
+  
+  testthat::skip_on_cran()
+  
+  q <- eurlex::elx_make_query(resource_type = "directive", 
                               date_from = "2015-01-01", 
                               date_to = "2015-12-31")
   
