@@ -2,9 +2,13 @@
 
 ## Major changes
 
+- new feature: `elx_make_query(include_title = TRUE)` retrieves the document title in English, thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
+- new feature: `elx_make_query(date_from = "2015-01-01", date_to = "2015-03-15")` restricts the query to a date range (formatted as "YYYY-MM-DD"), thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
+
 ## Minor changes
 
-- `elx_council_votes()` has been removed entirely due to the Council API being taken offline
+- `elx_council_votes()` has been removed entirely due to the Council API being taken offline, thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
+- improved test coverage, thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
 
 # eurlex 0.5.0
 
@@ -14,8 +18,8 @@
 
 ## Minor changes
 
-- fixed `elx_make_query(resource_type = "national_impl")`
-- vignette no longer makes API calls
+- fixed `elx_make_query(resource_type = "national_impl")`, thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
+- vignette no longer makes API calls, thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
 
 # eurlex 0.4.9
 
