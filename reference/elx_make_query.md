@@ -30,6 +30,7 @@ elx_make_query(
   include_citations = FALSE,
   include_citations_detailed = FALSE,
   include_author = FALSE,
+  include_title = FALSE,
   include_directory = FALSE,
   include_directory_code = FALSE,
   include_sector = FALSE,
@@ -129,6 +130,10 @@ elx_make_query(
 
   If `TRUE`, results include document author(s)
 
+- include_title:
+
+  If `TRUE`, results include document title in English
+
 - include_directory:
 
   If `TRUE`, results include the label of the Eur-Lex directory code
@@ -208,6 +213,8 @@ value, which was correctly excluded by the filter.
 ``` r
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
 #> [1] "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>\n  PREFIX annot: <http://publications.europa.eu/ontology/annotation#>\n  PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n  PREFIX dc:<http://purl.org/dc/elements/1.1/>\n  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n  PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n  PREFIX owl:<http://www.w3.org/2002/07/owl#>\n  select distinct ?work ?type ?celex ?date ?force where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL>) \n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} OPTIONAL{?work cdm:work_date_document ?date.} OPTIONAL{?work cdm:resource_legal_in-force ?force.} FILTER not exists{?work cdm:do_not_index \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>}. }"
+elx_make_query(resource_type = "directive", include_title = TRUE)
+#> [1] "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>\n  PREFIX annot: <http://publications.europa.eu/ontology/annotation#>\n  PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n  PREFIX dc:<http://purl.org/dc/elements/1.1/>\n  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n  PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n  PREFIX owl:<http://www.w3.org/2002/07/owl#>\n  select distinct ?work ?type ?celex ?title where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL>) \n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} OPTIONAL{?exp cdm:expression_belongs_to_work ?work.\n                 ?exp cdm:expression_title ?title.\n                 ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG>}. FILTER not exists{?work cdm:do_not_index \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>}. }"
 elx_make_query(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
 #> [1] "PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>\n  PREFIX annot: <http://publications.europa.eu/ontology/annotation#>\n  PREFIX skos:<http://www.w3.org/2004/02/skos/core#>\n  PREFIX dc:<http://purl.org/dc/elements/1.1/>\n  PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>\n  PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n  PREFIX owl:<http://www.w3.org/2002/07/owl#>\n  select distinct ?work ?type ?celex ?date where{ ?work cdm:work_has_resource-type ?type. FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL>||\n  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL>) \n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>} OPTIONAL{?work cdm:resource_legal_id_celex ?celex.} ?work cdm:work_date_document ?date. FILTER(?date >= \"2015-01-01\"^^xsd:date) FILTER(?date <= \"2015-12-31\"^^xsd:date) FILTER not exists{?work cdm:do_not_index \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>}. }"
 elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
