@@ -25,6 +25,7 @@ elx_make_query(
   include_citations = FALSE,
   include_citations_detailed = FALSE,
   include_author = FALSE,
+  include_title = FALSE,
   include_directory = FALSE,
   include_directory_code = FALSE,
   include_sector = FALSE,
@@ -80,6 +81,8 @@ elx_make_query(
 
 \item{include_author}{If \code{TRUE}, results include document author(s)}
 
+\item{include_title}{If \code{TRUE}, results include document title in English}
+
 \item{include_directory}{If \code{TRUE}, results include the label of the Eur-Lex directory code}
 
 \item{include_directory_code}{If \code{TRUE}, results include the Eur-Lex directory code}
@@ -129,6 +132,7 @@ excluded by the filter.
 }
 \examples{
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
+elx_make_query(resource_type = "directive", include_title = TRUE)
 elx_make_query(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
 elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
 elx_make_query(resource_type = "any", sector = 2)

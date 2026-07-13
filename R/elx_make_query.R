@@ -29,6 +29,7 @@
 #' @param include_citations If `TRUE`, results include citations (CELEX-labelled)
 #' @param include_citations_detailed If `TRUE`, results include citations (CELEX-labelled) with additional details
 #' @param include_author If `TRUE`, results include document author(s)
+#' @param include_title If `TRUE`, results include document title in English
 #' @param include_directory If `TRUE`, results include the label of the Eur-Lex directory code
 #' @param include_directory_code If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code
@@ -48,6 +49,7 @@
 #' @export
 #' @examples
 #' elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
+#' elx_make_query(resource_type = "directive", include_title = TRUE)
 #' elx_make_query(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
 #' elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
 #' elx_make_query(resource_type = "any", sector = 2)
@@ -62,6 +64,7 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
                            include_force = FALSE, include_eurovoc = FALSE,
                            include_citations = FALSE, include_citations_detailed = FALSE,
                            include_author = FALSE,
+                           include_title = FALSE,
                            include_directory = FALSE, include_directory_code = FALSE,
                            include_sector = FALSE,
                            include_ecli = FALSE, include_court_procedure = FALSE,
@@ -186,6 +189,10 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
 
     query <- paste(query, "?author", sep = " ")
 
+  }
+  
+  if (include_title == TRUE){
+    query <- paste(query, "?title", sep = " ")
   }
   
   if (include_citations == TRUE){
@@ -491,6 +498,12 @@ elx_make_query <- function(resource_type = c("any","directive","regulation","dec
     query <- paste(query, "OPTIONAL{?work cdm:work_created_by_agent ?authorx.
                    ?authorx skos:prefLabel ?author. FILTER(lang(?author)='en')}.")
 
+  }
+  
+  if (include_title == TRUE){
+    query <- paste(query, "OPTIONAL{?exp cdm:expression_belongs_to_work ?work.
+                 ?exp cdm:expression_title ?title.
+                 ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG>}.")
   }
   
   if (include_citations == TRUE){
