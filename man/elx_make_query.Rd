@@ -14,6 +14,8 @@ elx_make_query(
   include_celex = TRUE,
   include_lbs = FALSE,
   include_date = FALSE,
+  date_from = NULL,
+  date_to = NULL,
   include_date_force = FALSE,
   include_date_endvalid = FALSE,
   include_date_transpos = FALSE,
@@ -56,6 +58,10 @@ elx_make_query(
 \item{include_lbs}{If \code{TRUE}, results include legal bases of legislation}
 
 \item{include_date}{If \code{TRUE}, results include document date}
+
+\item{date_from}{Restrict results to documents dated on or after this date, in \code{YYYY-MM-DD} format}
+
+\item{date_to}{Restrict results to documents dated on or before this date, in \code{YYYY-MM-DD} format}
 
 \item{include_date_force}{If \code{TRUE}, results include date of entry into force}
 
@@ -113,9 +119,21 @@ Generates pre-defined or manual SPARQL queries to retrieve document ids from Cel
 List of available resource types: http://publications.europa.eu/resource/authority/resource-type .
 Note that not all resource types are compatible with default parameter values.
 }
+\details{
+When \code{date_from} or \code{date_to} are specified, the underlying SPARQL query
+requires \code{?date} to be a well-formed \code{xsd:date}. Any document whose date
+does not resolve to a valid \code{xsd:date} would be silently excluded from
+the filtered results, without a warning or error. This has not been
+observed to occur in practice — sampling of live data (including
+pre-1970 documents, where imprecise dates would be most likely) found
+no such cases — but has been confirmed directly via a synthetic SPARQL
+test with a deliberately malformed date value, which was correctly
+excluded by the filter.
+}
 \examples{
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
 elx_make_query(resource_type = "directive", include_title = TRUE)
+elx_make_query(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
 elx_make_query(resource_type = "regulation", include_corrigenda = TRUE, order = TRUE)
 elx_make_query(resource_type = "any", sector = 2)
 elx_make_query(resource_type = "manual", manual_type = "SWD")
