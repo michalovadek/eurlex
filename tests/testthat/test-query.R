@@ -70,7 +70,8 @@ testthat::test_that("date_from and date_to filter results correctly", {
   
   q <- eurlex::elx_make_query(resource_type = "directive", 
                               date_from = "2015-01-01", 
-                              date_to = "2015-12-31")
+                              date_to = "2015-12-31",
+                              limit = 5)
   
   out <- eurlex::elx_run_query(q)
   
