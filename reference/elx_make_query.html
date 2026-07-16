@@ -238,12 +238,13 @@ Note that not all resource types are compatible with default parameter values.</
     <p>When <code>date_from</code> or <code>date_to</code> are specified, the underlying SPARQL query
 requires <code><a href="https://rdrr.io/r/base/date.html" class="external-link">?date</a></code> to be a well-formed <code>xsd:date</code>. Any document whose date
 does not resolve to a valid <code>xsd:date</code> would be silently excluded from
-the filtered results, without a warning or error. This has not been
-observed to occur in practice — sampling of live data (including
-pre-1970 documents, where imprecise dates would be most likely) found
-no such cases — but has been confirmed directly via a synthetic SPARQL
-test with a deliberately malformed date value, which was correctly
-excluded by the filter.</p>
+the filtered results, without a warning or error.</p>
+<p>When <code>include_author</code> is <code>TRUE</code>, the query uses <code>GROUP_CONCAT</code> to combine
+multiple authors for the same document into a single pipe-separated
+(<code>|</code>) string in the <code>author</code> column, rather than returning one row per
+author. This avoids duplicate rows for documents with multiple authors,
+but means the query switches from <code>SELECT DISTINCT</code> to <code>SELECT ... GROUP BY</code>
+internally when <code>include_author</code> is used.</p>
     </div>
 
     <div class="section level2">
