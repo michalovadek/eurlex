@@ -81,10 +81,51 @@ run_byte_identity_suite <- function() {
     resource_type = "regulation", include_date = TRUE, limit = 5
   )
   
+  results[["decision"]] <- compare_query_builders(
+    "resource_type = decision",
+    resource_type = "decision", include_date = TRUE, limit = 5
+  )
+  
+  results[["recommendation"]] <- compare_query_builders(
+    "resource_type = recommendation",
+    resource_type = "recommendation", include_date = TRUE, limit = 5
+  )
+  
+  results[["intagr"]] <- compare_query_builders(
+    "resource_type = intagr",
+    resource_type = "intagr", include_date = TRUE, limit = 5
+  )
+  
+  results[["caselaw"]] <- compare_query_builders(
+    "resource_type = caselaw",
+    resource_type = "caselaw", include_date = TRUE, limit = 5
+  )
+  
+  results[["proposal"]] <- compare_query_builders(
+    "resource_type = proposal",
+    resource_type = "proposal", include_date = TRUE, limit = 5
+  )
+  
+  results[["national_impl"]] <- compare_query_builders(
+    "resource_type = national_impl",
+    resource_type = "national_impl", include_date = TRUE, limit = 5
+  )
+  
+  results[["manual"]] <- compare_query_builders(
+    "resource_type = manual",
+    resource_type = "manual", manual_type = "SWD", include_date = TRUE, limit = 5
+  )
+  
+  results[["any"]] <- compare_query_builders(
+    "resource_type = any",
+    resource_type = "any", include_date = TRUE, limit = 5
+  )
+  
   results[["no_limit"]] <- compare_query_builders(
     "no limit specified",
     resource_type = "directive", include_celex = TRUE
   )
+  
   
   summary_df <- do.call(rbind, results)
   rownames(summary_df) <- NULL

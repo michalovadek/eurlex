@@ -40,6 +40,7 @@ field_specs <- list(
 # ---- 2. Pääfunktio ----
 
 elx_make_query_new <- function(resource_type,
+                               manual_type = "",
                                include_celex = TRUE,
                                include_date = FALSE,
                                date_from = NULL,
@@ -135,14 +136,19 @@ elx_make_query_new <- function(resource_type,
   PREFIX owl:<http://www.w3.org/2002/07/owl#>",
     select_stmt, "?work ?type",
     paste(select_parts, collapse = " "),
-    "where{ ?work cdm:work_has_resource-type ?type."
+    if (resource_type == "any") {
+      "where{"
+    } else {
+      "where{ ?work cdm:work_has_resource-type ?type."
+    }
   )
   
   # resource_type FILTER (kopioitu suoraan vanhasta funktiosta, vain directive esimerkkinä prototyypissa)
-  if (resource_type == "directive"){
-    query <- paste(query, "FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/DIR>||
-  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_IMPL>||
-  ?type=<http://publications.europa.eu/resource/authority/resource-type/DIR_DEL>)", sep = " ")
+  # resource_type FILTER
+  rt_filter <- get_resource_type_filter(resource_type, manual_type)
+  if (!is.null(rt_filter)) {
+    filter_sep <- if (resource_type == "manual") "" else " "
+    query <- paste(query, rt_filter, sep = filter_sep)
   }
   
   query <- paste(query, "\n FILTER not exists{?work cdm:work_has_resource-type <http://publications.europa.eu/resource/authority/resource-type/CORRIGENDUM>}")
