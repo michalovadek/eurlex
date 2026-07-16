@@ -162,6 +162,30 @@ field_specs <- list(
                  ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG>}.",
     aggregatable = FALSE,
     incompatible_with = NULL
+  ),
+  
+  citations = list(
+    select_vars = "?citationcelex",
+    where = "OPTIONAL{?work cdm:work_cites_work ?citation. 
+                   ?citation cdm:resource_legal_id_celex ?citationcelex.}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  citations_detailed = list(
+    select_vars = c("?citationcelex", "?citationdetailcit", "?citationdetail"),
+    where = "OPTIONAL{?work cdm:work_cites_work ?citation. 
+                   ?citation cdm:resource_legal_id_celex ?citationcelex.
+                   OPTIONAL{?bn owl:annotatedSource ?work.
+    ?bn owl:annotatedProperty <http://publications.europa.eu/ontology/cdm#work_cites_work>.
+    ?bn owl:annotatedTarget ?citation.
+    ?bn annot:fragment_cited_target ?citationdetailcit.}
+    OPTIONAL{?bn owl:annotatedSource ?work.
+    ?bn owl:annotatedProperty <http://publications.europa.eu/ontology/cdm#work_cites_work>.
+    ?bn owl:annotatedTarget ?citation.
+    ?bn annot:fragment_citing_source ?citationdetail.}}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
   )
 )
 
@@ -192,6 +216,8 @@ elx_make_query_new <- function(resource_type,
                                include_original_language = FALSE,
                                include_proposal = FALSE,
                                include_title = FALSE,
+                               include_citations = FALSE,
+                               include_citations_detailed = FALSE,
                                aggregate_vars = NULL,
                                order = FALSE,
                                limit = NULL) {
@@ -222,6 +248,8 @@ elx_make_query_new <- function(resource_type,
     ecli = include_ecli,
     author = include_author,
     title = include_title,
+    citations = include_citations,
+    citations_detailed = include_citations_detailed,
     advocate_general = include_advocate_general,
     judge_rapporteur = include_judge_rapporteur,
     court_formation = include_court_formation,

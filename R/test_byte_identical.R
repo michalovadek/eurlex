@@ -231,6 +231,16 @@ run_byte_identity_suite <- function() {
     include_author = TRUE, limit = 5
   )
   
+  results[["citations"]] <- compare_query_builders(
+    "citations only",
+    resource_type = "directive", include_citations = TRUE, limit = 5
+  )
+  
+  results[["citations_detailed"]] <- compare_query_builders(
+    "citations_detailed only",
+    resource_type = "directive", include_citations_detailed = TRUE, limit = 5
+  )
+  
   results[["no_limit"]] <- compare_query_builders(
     "no limit specified",
     resource_type = "directive", include_celex = TRUE
