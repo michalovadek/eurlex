@@ -70,6 +70,34 @@ field_specs <- list(
     where = "OPTIONAL{?work cdm:resource_legal_id_sector ?sector.}",
     aggregatable = FALSE,
     incompatible_with = NULL
+  ),
+  
+  date_force = list(
+    select_vars = "?dateforce",
+    where = "OPTIONAL{?work cdm:resource_legal_date_entry-into-force ?dateforce.}",
+    aggregatable = FALSE,
+    incompatible_with = NULL
+  ),
+  
+  date_endvalid = list(
+    select_vars = "?dateendvalid",
+    where = "OPTIONAL{?work cdm:resource_legal_date_end-of-validity ?dateendvalid.}",
+    aggregatable = FALSE,
+    incompatible_with = NULL
+  ),
+  
+  date_transpos = list(
+    select_vars = "?datetranspos",
+    where = "OPTIONAL{?work cdm:directive_date_transposition ?datetranspos.}",
+    aggregatable = FALSE,
+    incompatible_with = NULL
+  ),
+  
+  date_lodged = list(
+    select_vars = "?datelodged",
+    where = "OPTIONAL{?work cdm:resource_legal_date_request_opinion ?datelodged.}",
+    aggregatable = FALSE,
+    incompatible_with = NULL
   )
   
 )
@@ -89,6 +117,10 @@ elx_make_query_new <- function(resource_type,
                                include_eurovoc = FALSE,
                                include_directory_code = FALSE,
                                include_sector = FALSE,
+                               include_date_force = FALSE,
+                               include_date_endvalid = FALSE,
+                               include_date_transpos = FALSE,
+                               include_date_lodged = FALSE,
                                aggregate_vars = NULL,
                                order = FALSE,
                                limit = NULL) {
@@ -101,11 +133,18 @@ elx_make_query_new <- function(resource_type,
   if (!is.null(date_to) && !grepl("^\\d{4}-\\d{2}-\\d{2}$", date_to)){
     stop("'date_to' must be in YYYY-MM-DD format.", call. = TRUE)
   }
+  if (include_date_transpos == TRUE & !resource_type %in% c("any","directive")){
+    stop("Transposition date currently only available for directives.", call. = TRUE)
+  }
   
   # Kootaan mitkä kentät ovat aktiivisia - JÄRJESTYS TÄRKEÄ (vastaa vanhan funktion SELECT-järjestystä)
   include_flags <- c(
     celex = include_celex,
     date  = include_date || !is.null(date_from) || !is.null(date_to),
+    date_force = include_date_force,
+    date_endvalid = include_date_endvalid,
+    date_transpos = include_date_transpos,
+    date_lodged = include_date_lodged,
     force = include_force,
     eurovoc = include_eurovoc,
     court_procedure = include_court_procedure,

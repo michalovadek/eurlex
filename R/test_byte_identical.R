@@ -152,6 +152,32 @@ run_byte_identity_suite <- function() {
     include_eurovoc = TRUE, include_directory_code = TRUE, include_sector = TRUE, limit = 5
   )
   
+  results[["date_force"]] <- compare_query_builders(
+    "date_force only",
+    resource_type = "directive", include_date_force = TRUE, limit = 5
+  )
+  
+  results[["date_endvalid"]] <- compare_query_builders(
+    "date_endvalid only",
+    resource_type = "directive", include_date_endvalid = TRUE, limit = 5
+  )
+  
+  results[["date_transpos"]] <- compare_query_builders(
+    "date_transpos only",
+    resource_type = "directive", include_date_transpos = TRUE, limit = 5
+  )
+  
+  results[["date_lodged"]] <- compare_query_builders(
+    "date_lodged only",
+    resource_type = "caselaw", include_date_lodged = TRUE, limit = 5
+  )
+  
+  results[["four_dates_combined"]] <- compare_query_builders(
+    "all four new date fields combined",
+    resource_type = "directive", include_date_force = TRUE, include_date_endvalid = TRUE,
+    include_date_transpos = TRUE, limit = 5
+  )
+  
   
   results[["no_limit"]] <- compare_query_builders(
     "no limit specified",
