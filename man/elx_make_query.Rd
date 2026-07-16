@@ -123,12 +123,14 @@ Note that not all resource types are compatible with default parameter values.
 When \code{date_from} or \code{date_to} are specified, the underlying SPARQL query
 requires \code{?date} to be a well-formed \code{xsd:date}. Any document whose date
 does not resolve to a valid \code{xsd:date} would be silently excluded from
-the filtered results, without a warning or error. This has not been
-observed to occur in practice — sampling of live data (including
-pre-1970 documents, where imprecise dates would be most likely) found
-no such cases — but has been confirmed directly via a synthetic SPARQL
-test with a deliberately malformed date value, which was correctly
-excluded by the filter.
+the filtered results, without a warning or error.
+
+When \code{include_author} is \code{TRUE}, the query uses \code{GROUP_CONCAT} to combine
+multiple authors for the same document into a single pipe-separated
+(\code{|}) string in the \code{author} column, rather than returning one row per
+author. This avoids duplicate rows for documents with multiple authors,
+but means the query switches from \verb{SELECT DISTINCT} to \verb{SELECT ... GROUP BY}
+internally when \code{include_author} is used.
 }
 \examples{
 elx_make_query(resource_type = "directive", include_date = TRUE, include_force = TRUE)
