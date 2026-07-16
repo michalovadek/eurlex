@@ -186,6 +186,19 @@ field_specs <- list(
     ?bn annot:fragment_citing_source ?citationdetail.}}",
     aggregatable = TRUE,
     incompatible_with = NULL
+  ),
+  
+  lbs = list(
+    select_vars = c("?lbs", "?lbcelex", "?lbsuffix"),
+    where = "OPTIONAL{?work cdm:resource_legal_based_on_resource_legal ?lbs.
+    ?lbs cdm:resource_legal_id_celex ?lbcelex.
+    OPTIONAL{?bn owl:annotatedSource ?work.
+    ?bn owl:annotatedProperty <http://publications.europa.eu/ontology/cdm#resource_legal_based_on_resource_legal>.
+    ?bn owl:annotatedTarget ?lbs.
+    ?bn annot:comment_on_legal_basis ?lbsuffix}}",
+    aggregatable = TRUE,
+    incompatible_with = "caselaw",
+    incompatible_message = "Legal basis variable incompatible with requested resource type"
   )
 )
 
@@ -218,6 +231,7 @@ elx_make_query_new <- function(resource_type,
                                include_title = FALSE,
                                include_citations = FALSE,
                                include_citations_detailed = FALSE,
+                               include_lbs = FALSE,
                                aggregate_vars = NULL,
                                order = FALSE,
                                limit = NULL) {
@@ -242,6 +256,7 @@ elx_make_query_new <- function(resource_type,
     date_endvalid = include_date_endvalid,
     date_transpos = include_date_transpos,
     date_lodged = include_date_lodged,
+    lbs = include_lbs,
     force = include_force,
     eurovoc = include_eurovoc,
     court_procedure = include_court_procedure,
@@ -273,7 +288,12 @@ elx_make_query_new <- function(resource_type,
     
     # yhteensopivuustarkistus
     if (!is.null(spec$incompatible_with) && resource_type %in% spec$incompatible_with) {
-      stop(paste(field_name, "variable incompatible with requested resource type"), call. = TRUE)
+      msg <- if (!is.null(spec$incompatible_message)) {
+        spec$incompatible_message
+      } else {
+        paste(field_name, "variable incompatible with requested resource type")
+      }
+      stop(msg, call. = TRUE)
     }
     
     is_aggregated <- field_name %in% aggregate_vars

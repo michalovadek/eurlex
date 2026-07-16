@@ -241,6 +241,26 @@ run_byte_identity_suite <- function() {
     resource_type = "directive", include_citations_detailed = TRUE, limit = 5
   )
   
+  results[["lbs"]] <- compare_query_builders(
+    "lbs only",
+    resource_type = "directive", include_lbs = TRUE, limit = 5
+  )
+  
+  # Testataan myös että incompatible_with toimii oikein
+  lbs_error_old <- tryCatch(
+    elx_make_query(resource_type = "caselaw", include_lbs = TRUE),
+    error = function(e) conditionMessage(e)
+  )
+  lbs_error_new <- tryCatch(
+    elx_make_query_new(resource_type = "caselaw", include_lbs = TRUE),
+    error = function(e) conditionMessage(e)
+  )
+  results[["lbs_caselaw_error"]] <- data.frame(
+    test = "lbs + caselaw error message matches",
+    identical = identical(lbs_error_old, lbs_error_new),
+    stringsAsFactors = FALSE
+  )
+  
   results[["no_limit"]] <- compare_query_builders(
     "no limit specified",
     resource_type = "directive", include_celex = TRUE
