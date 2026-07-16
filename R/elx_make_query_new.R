@@ -153,8 +153,16 @@ field_specs <- list(
                    ?adoptedx cdm:resource_legal_id_celex ?proposal.}",
     aggregatable = TRUE,
     incompatible_with = NULL
-  )
+  ),
   
+  title = list(
+    select_vars = "?title",
+    where = "OPTIONAL{?exp cdm:expression_belongs_to_work ?work.
+                 ?exp cdm:expression_title ?title.
+                 ?exp cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG>}.",
+    aggregatable = FALSE,
+    incompatible_with = NULL
+  )
 )
 
 # ---- 2. Pääfunktio ----
@@ -183,6 +191,7 @@ elx_make_query_new <- function(resource_type,
                                include_court_origin = FALSE,
                                include_original_language = FALSE,
                                include_proposal = FALSE,
+                               include_title = FALSE,
                                aggregate_vars = NULL,
                                order = FALSE,
                                limit = NULL) {
@@ -212,6 +221,7 @@ elx_make_query_new <- function(resource_type,
     court_procedure = include_court_procedure,
     ecli = include_ecli,
     author = include_author,
+    title = include_title,
     advocate_general = include_advocate_general,
     judge_rapporteur = include_judge_rapporteur,
     court_formation = include_court_formation,

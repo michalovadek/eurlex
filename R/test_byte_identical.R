@@ -220,6 +220,17 @@ run_byte_identity_suite <- function() {
     include_original_language = TRUE, include_proposal = TRUE, limit = 5
   )
   
+  results[["title"]] <- compare_query_builders(
+    "title only",
+    resource_type = "directive", include_title = TRUE, limit = 5
+  )
+  
+  results[["title_with_date_author"]] <- compare_query_builders(
+    "title + date + author combined",
+    resource_type = "directive", include_title = TRUE, include_date = TRUE, 
+    include_author = TRUE, limit = 5
+  )
+  
   results[["no_limit"]] <- compare_query_builders(
     "no limit specified",
     resource_type = "directive", include_celex = TRUE
