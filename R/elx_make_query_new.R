@@ -159,7 +159,7 @@ elx_make_query_new <- function(resource_type,
   
   if (order == TRUE){
     order_var <- if (use_group_by) "?work" else "?date"
-    query <- paste(query, "order by str(", order_var, ")")
+    query <- paste0(query, " order by str(", order_var, ")")
   }
   
   if (!is.null(limit) & is.integer(as.integer(limit))){
