@@ -246,6 +246,16 @@ run_byte_identity_suite <- function() {
     resource_type = "directive", include_lbs = TRUE, limit = 5
   )
   
+  results[["directory"]] <- compare_query_builders(
+    "directory only (not directory_code)",
+    resource_type = "directive", include_directory = TRUE, limit = 5
+  )
+  
+  results[["directory_both"]] <- compare_query_builders(
+    "directory + directory_code both TRUE",
+    resource_type = "directive", include_directory = TRUE, include_directory_code = TRUE, limit = 5
+  )
+  
   # Testataan myös että incompatible_with toimii oikein
   lbs_error_old <- tryCatch(
     elx_make_query(resource_type = "caselaw", include_lbs = TRUE),

@@ -1,6 +1,4 @@
 #' PROTOTYYPPI - uusi datavetoinen query builder
-#' Testattu neljällä kentällä: celex, date, force, author
-#' Tarkoitus: validoida arkkitehtuuri ennen kaikkien ~25 kentän lisäämistä
 
 # ---- 1. Kenttien määrittely yhdessä paikassa ----
 
@@ -16,7 +14,7 @@ field_specs <- list(
   date = list(
     select_vars = "?date",
     where = "OPTIONAL{?work cdm:work_date_document ?date.}",
-    aggregatable = FALSE,  # yksi dokumentti = yksi päivämäärä tyypillisesti
+    aggregatable = FALSE,
     incompatible_with = NULL
   ),
   
@@ -199,6 +197,14 @@ field_specs <- list(
     aggregatable = TRUE,
     incompatible_with = "caselaw",
     incompatible_message = "Legal basis variable incompatible with requested resource type"
+  ),
+  
+  directory = list(
+    select_vars = "?directory",
+    where = "OPTIONAL{?work cdm:resource_legal_is_about_concept_directory-code ?directoryx.
+                   ?directoryx skos:prefLabel ?directory. FILTER(lang(?directory)='en').}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
   )
 )
 
@@ -231,6 +237,7 @@ elx_make_query_new <- function(resource_type,
                                include_title = FALSE,
                                include_citations = FALSE,
                                include_citations_detailed = FALSE,
+                               include_directory = FALSE,
                                include_lbs = FALSE,
                                aggregate_vars = NULL,
                                order = FALSE,
@@ -248,7 +255,6 @@ elx_make_query_new <- function(resource_type,
     stop("Transposition date currently only available for directives.", call. = TRUE)
   }
   
-  # Kootaan mitkä kentät ovat aktiivisia - JÄRJESTYS TÄRKEÄ (vastaa vanhan funktion SELECT-järjestystä)
   include_flags <- c(
     celex = include_celex,
     date  = include_date || !is.null(date_from) || !is.null(date_to),
@@ -272,6 +278,7 @@ elx_make_query_new <- function(resource_type,
     court_origin = include_court_origin,
     original_language = include_original_language,
     proposal = include_proposal,
+    directory = include_directory,
     directory_code = include_directory_code,
     sector = include_sector
   )
@@ -286,7 +293,6 @@ elx_make_query_new <- function(resource_type,
     
     spec <- field_specs[[field_name]]
     
-    # yhteensopivuustarkistus
     if (!is.null(spec$incompatible_with) && resource_type %in% spec$incompatible_with) {
       msg <- if (!is.null(spec$incompatible_message)) {
         spec$incompatible_message
@@ -309,15 +315,16 @@ elx_make_query_new <- function(resource_type,
       }, character(1))
       select_parts <- c(select_parts, agg_parts)
     } else {
-      select_parts <- c(select_parts, spec$select_vars)
-      group_vars <- c(group_vars, spec$select_vars)
+      if (!(field_name == "directory_code" && "directory" %in% active_fields)) {
+        select_parts <- c(select_parts, spec$select_vars)
+        group_vars <- c(group_vars, spec$select_vars)
+      }
     }
     
     where_parts <- c(where_parts, spec$where)
   }
   
   # ---- date_from / date_to erikoishaara ----
-  # Jos annettu, date-kentän WHERE-lohko pitää korvata pakollisella + FILTER-lauseilla
   if (!is.null(date_from) || !is.null(date_to)) {
     
     date_filter <- "?work cdm:work_date_document ?date."
@@ -328,7 +335,6 @@ elx_make_query_new <- function(resource_type,
       date_filter <- paste(date_filter, paste0('FILTER(?date <= "', date_to, '"^^xsd:date)'))
     }
     
-    # korvataan date-kentän alkuperäinen (OPTIONAL) where-lohko pakollisella versiolla
     date_idx <- which(active_fields == "date")
     if (length(date_idx) > 0) {
       where_parts[date_idx] <- date_filter
@@ -356,8 +362,6 @@ elx_make_query_new <- function(resource_type,
     }
   )
   
-  # resource_type FILTER (kopioitu suoraan vanhasta funktiosta, vain directive esimerkkinä prototyypissa)
-  # resource_type FILTER
   rt_filter <- get_resource_type_filter(resource_type, manual_type)
   if (!is.null(rt_filter)) {
     filter_sep <- if (resource_type == "manual") "" else " "
