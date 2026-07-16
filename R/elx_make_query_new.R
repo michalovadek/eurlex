@@ -33,6 +33,43 @@ field_specs <- list(
                    ?authorx skos:prefLabel ?author. FILTER(lang(?author)='en')}.",
     aggregatable = TRUE,
     incompatible_with = NULL
+  ),
+  
+  ecli = list(
+    select_vars = "?ecli",
+    where = "OPTIONAL{?work cdm:case-law_ecli ?ecli.}",
+    aggregatable = FALSE,
+    incompatible_with = NULL
+  ),
+  
+  court_procedure = list(
+    select_vars = "?courtprocedure",
+    where = "OPTIONAL{?work cdm:case-law_has_type_procedure_concept_type_procedure ?proc.
+           ?proc skos:prefLabel ?courtprocedure. FILTER(lang(?courtprocedure)='en')}.",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  eurovoc = list(
+    select_vars = "?eurovoc",
+    where = 'OPTIONAL{?work cdm:work_is_about_concept_eurovoc ?eurovoc. graph ?gs
+    { ?eurovoc skos:prefLabel ?subjectLabel filter (lang(?subjectLabel)="en") }.}',
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  directory_code = list(
+    select_vars = "?directory",
+    where = "OPTIONAL{?work cdm:resource_legal_is_about_concept_directory-code ?directory.}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  sector = list(
+    select_vars = "?sector",
+    where = "OPTIONAL{?work cdm:resource_legal_id_sector ?sector.}",
+    aggregatable = FALSE,
+    incompatible_with = NULL
   )
   
 )
@@ -47,6 +84,11 @@ elx_make_query_new <- function(resource_type,
                                date_to = NULL,
                                include_force = FALSE,
                                include_author = FALSE,
+                               include_ecli = FALSE,
+                               include_court_procedure = FALSE,
+                               include_eurovoc = FALSE,
+                               include_directory_code = FALSE,
+                               include_sector = FALSE,
                                aggregate_vars = NULL,
                                order = FALSE,
                                limit = NULL) {
@@ -65,7 +107,12 @@ elx_make_query_new <- function(resource_type,
     celex = include_celex,
     date  = include_date || !is.null(date_from) || !is.null(date_to),
     force = include_force,
-    author = include_author
+    eurovoc = include_eurovoc,
+    court_procedure = include_court_procedure,
+    ecli = include_ecli,
+    author = include_author,
+    directory_code = include_directory_code,
+    sector = include_sector
   )
   
   active_fields <- names(include_flags)[include_flags]

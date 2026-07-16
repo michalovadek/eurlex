@@ -121,6 +121,38 @@ run_byte_identity_suite <- function() {
     resource_type = "any", include_date = TRUE, limit = 5
   )
   
+  results[["ecli"]] <- compare_query_builders(
+    "ecli only",
+    resource_type = "caselaw", include_ecli = TRUE, limit = 5
+  )
+  
+  results[["court_procedure"]] <- compare_query_builders(
+    "court_procedure only",
+    resource_type = "caselaw", include_court_procedure = TRUE, limit = 5
+  )
+  
+  results[["eurovoc"]] <- compare_query_builders(
+    "eurovoc only",
+    resource_type = "directive", include_eurovoc = TRUE, limit = 5
+  )
+  
+  results[["directory_code"]] <- compare_query_builders(
+    "directory_code only",
+    resource_type = "directive", include_directory_code = TRUE, limit = 5
+  )
+  
+  results[["sector"]] <- compare_query_builders(
+    "sector only",
+    resource_type = "directive", include_sector = TRUE, limit = 5
+  )
+  
+  results[["five_new_combined"]] <- compare_query_builders(
+    "ecli+court_procedure+eurovoc+directory_code+sector combined",
+    resource_type = "caselaw", include_ecli = TRUE, include_court_procedure = TRUE,
+    include_eurovoc = TRUE, include_directory_code = TRUE, include_sector = TRUE, limit = 5
+  )
+  
+  
   results[["no_limit"]] <- compare_query_builders(
     "no limit specified",
     resource_type = "directive", include_celex = TRUE
