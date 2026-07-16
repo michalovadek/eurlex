@@ -178,6 +178,47 @@ run_byte_identity_suite <- function() {
     include_date_transpos = TRUE, limit = 5
   )
   
+  results[["advocate_general"]] <- compare_query_builders(
+    "advocate_general only",
+    resource_type = "caselaw", include_advocate_general = TRUE, limit = 5
+  )
+  
+  results[["judge_rapporteur"]] <- compare_query_builders(
+    "judge_rapporteur only",
+    resource_type = "caselaw", include_judge_rapporteur = TRUE, limit = 5
+  )
+  
+  results[["court_formation"]] <- compare_query_builders(
+    "court_formation only",
+    resource_type = "caselaw", include_court_formation = TRUE, limit = 5
+  )
+  
+  results[["court_scholarship"]] <- compare_query_builders(
+    "court_scholarship only",
+    resource_type = "caselaw", include_court_scholarship = TRUE, limit = 5
+  )
+  
+  results[["court_origin"]] <- compare_query_builders(
+    "court_origin only",
+    resource_type = "caselaw", include_court_origin = TRUE, limit = 5
+  )
+  
+  results[["original_language"]] <- compare_query_builders(
+    "original_language only",
+    resource_type = "directive", include_original_language = TRUE, limit = 5
+  )
+  
+  results[["proposal"]] <- compare_query_builders(
+    "proposal only",
+    resource_type = "directive", include_proposal = TRUE, limit = 5
+  )
+  
+  results[["seven_court_combined"]] <- compare_query_builders(
+    "all seven new fields combined",
+    resource_type = "caselaw", include_advocate_general = TRUE, include_judge_rapporteur = TRUE,
+    include_court_formation = TRUE, include_court_scholarship = TRUE, include_court_origin = TRUE,
+    include_original_language = TRUE, include_proposal = TRUE, limit = 5
+  )
   
   results[["no_limit"]] <- compare_query_builders(
     "no limit specified",

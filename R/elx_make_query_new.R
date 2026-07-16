@@ -98,6 +98,61 @@ field_specs <- list(
     where = "OPTIONAL{?work cdm:resource_legal_date_request_opinion ?datelodged.}",
     aggregatable = FALSE,
     incompatible_with = NULL
+  ),
+  
+  advocate_general = list(
+    select_vars = "?ag",
+    where = "OPTIONAL{?work cdm:case-law_delivered_by_advocate-general ?agx.
+                   ?agx cdm:agent_name ?ag.}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  judge_rapporteur = list(
+    select_vars = "?jr",
+    where = "OPTIONAL{?work cdm:case-law_delivered_by_judge ?jrx.
+                   ?jrx cdm:agent_name ?jr.}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  court_formation = list(
+    select_vars = "?cf",
+    where = "OPTIONAL{?work cdm:case-law_delivered_by_court-formation ?cfx.
+                   ?cfx skos:prefLabel ?cf. FILTER(lang(?cf)='en')}.",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  court_scholarship = list(
+    select_vars = "?scholarship",
+    where = "OPTIONAL{?work cdm:case-law_article_journal_related ?scholarship.}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  court_origin = list(
+    select_vars = "?courtorigin",
+    where = "OPTIONAL{?work cdm:case-law_originates_in_country ?courtoriginx.
+                   ?courtoriginx skos:prefLabel ?courtorigin. FILTER(lang(?courtorigin)='en')}.",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  original_language = list(
+    select_vars = "?origlang",
+    where = "OPTIONAL{?work cdm:resource_legal_uses_originally_language ?origlangx.
+                   ?origlangx skos:prefLabel ?origlang. FILTER(lang(?origlang)='en')}.",
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  proposal = list(
+    select_vars = "?proposal",
+    where = "OPTIONAL{?work cdm:resource_legal_adopts_resource_legal ?adoptedx.
+                   ?adoptedx cdm:resource_legal_id_celex ?proposal.}",
+    aggregatable = TRUE,
+    incompatible_with = NULL
   )
   
 )
@@ -121,6 +176,13 @@ elx_make_query_new <- function(resource_type,
                                include_date_endvalid = FALSE,
                                include_date_transpos = FALSE,
                                include_date_lodged = FALSE,
+                               include_advocate_general = FALSE,
+                               include_judge_rapporteur = FALSE,
+                               include_court_formation = FALSE,
+                               include_court_scholarship = FALSE,
+                               include_court_origin = FALSE,
+                               include_original_language = FALSE,
+                               include_proposal = FALSE,
                                aggregate_vars = NULL,
                                order = FALSE,
                                limit = NULL) {
@@ -150,6 +212,13 @@ elx_make_query_new <- function(resource_type,
     court_procedure = include_court_procedure,
     ecli = include_ecli,
     author = include_author,
+    advocate_general = include_advocate_general,
+    judge_rapporteur = include_judge_rapporteur,
+    court_formation = include_court_formation,
+    court_scholarship = include_court_scholarship,
+    court_origin = include_court_origin,
+    original_language = include_original_language,
+    proposal = include_proposal,
     directory_code = include_directory_code,
     sector = include_sector
   )
