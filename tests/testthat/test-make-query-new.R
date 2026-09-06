@@ -9,8 +9,7 @@ test_that("elx_make_query_new produces byte-identical output to elx_make_query f
   test_cases <- list(
     list(resource_type = "directive", include_celex = TRUE, limit = 5),
     list(resource_type = "directive", include_date = TRUE, limit = 5),
-    list(resource_type = "directive", include_force = TRUE, limit = 5),
-    list(resource_type = "directive", include_author = TRUE, limit = 5)
+    list(resource_type = "directive", include_force = TRUE, limit = 5)
   )
   
   for (args in test_cases) {
@@ -18,6 +17,23 @@ test_that("elx_make_query_new produces byte-identical output to elx_make_query f
     new_q <- do.call(elx_make_query_new, args)
     expect_equal(normalize_ws(old_q), normalize_ws(new_q))
   }
+  
+})
+
+test_that("elx_make_query_new with explicit aggregate_vars matches elx_make_query's automatic author aggregation", {
+  
+  skip_on_cran()
+  
+  normalize_ws <- function(x) trimws(gsub("\\s+", " ", x))
+  
+  # Vanha elx_make_query() aggregoi author-kentän AINA automaattisesti.
+  # Uusi elx_make_query_new() vaatii eksplisiittisen aggregate_vars = "author".
+  # Tämä on tarkoituksellinen, dokumentoitu käytösero (ks. @details).
+  old_q <- elx_make_query(resource_type = "directive", include_author = TRUE, limit = 5)
+  new_q <- elx_make_query_new(resource_type = "directive", include_author = TRUE, 
+                              aggregate_vars = "author", limit = 5)
+  
+  expect_equal(normalize_ws(old_q), normalize_ws(new_q))
   
 })
 

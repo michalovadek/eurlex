@@ -103,3 +103,94 @@ testthat::test_that("include_date still works without date_from/date_to", {
   testthat::expect_true(grepl("OPTIONAL\\{\\?work cdm:work_date_document \\?date\\.\\}", q))
   
 })
+
+
+testthat::test_that("include_author combines multiple authors without duplicating rows", {
+  
+  testthat::skip_on_cran()
+  
+  q <- eurlex::elx_make_query(resource_type = "directive", 
+                              include_author = TRUE, 
+                              limit = 2000)
+  
+  out <- eurlex::elx_run_query(q)
+  
+  # No document should appear more than once
+  testthat::expect_true(all(table(out$work) == 1))
+  
+})
+
+testthat::test_that("include_author correctly concatenates known multi-author document", {
+  
+  testthat::skip_on_cran()
+  
+  q <- '
+  PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+  SELECT ?work (group_concat(distinct ?author;separator="|") as ?author) WHERE {
+    VALUES ?work { <http://publications.europa.eu/resource/cellar/01d3846d-ff64-4190-a1bd-39abf9673281> }
+    OPTIONAL{
+      ?work cdm:work_created_by_agent ?authorx.
+      ?authorx skos:prefLabel ?author. 
+      FILTER(lang(?author)="en")
+    }
+  }
+  GROUP BY ?work
+  '
+  
+  out <- eurlex::elx_run_query(q)
+  
+  testthat::expect_equal(nrow(out), 1)
+  testthat::expect_true(grepl("Council of the European Union", out$author))
+  testthat::expect_true(grepl("European Parliament", out$author))
+  
+})
+
+testthat::test_that("include_author works combined with other include parameters", {
+  
+  testthat::skip_on_cran()
+  
+  q <- eurlex::elx_make_query(resource_type = "directive", 
+                              include_author = TRUE, 
+                              include_date = TRUE,
+                              include_force = TRUE,
+                              limit = 5)
+  
+  out <- eurlex::elx_run_query(q)
+  
+  testthat::expect_true(all(c("author", "date", "force") %in% names(out)))
+  testthat::expect_equal(nrow(out), 5)
+  
+})
+
+testthat::test_that("order = TRUE works correctly with include_author", {
+  
+  testthat::skip_on_cran()
+  
+  q <- eurlex::elx_make_query(resource_type = "directive", 
+                              include_author = TRUE, 
+                              order = TRUE,
+                              limit = 5)
+  
+  out <- eurlex::elx_run_query(q)
+  
+  testthat::expect_equal(nrow(out), 5)
+  
+})
+
+testthat::test_that("include_author does not affect queries without it (regression)", {
+  
+  testthat::skip_on_cran()
+  
+  q <- eurlex::elx_make_query(resource_type = "directive", 
+                              include_date = TRUE, 
+                              include_force = TRUE, 
+                              limit = 5)
+  
+  testthat::expect_true(grepl("select distinct", q))
+  testthat::expect_false(grepl("GROUP BY", q))
+  
+  out <- eurlex::elx_run_query(q)
+  testthat::expect_equal(nrow(out), 5)
+  
+})
