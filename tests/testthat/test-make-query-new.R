@@ -26,9 +26,9 @@ test_that("elx_make_query_new with explicit aggregate_vars matches elx_make_quer
   
   normalize_ws <- function(x) trimws(gsub("\\s+", " ", x))
   
-  # Vanha elx_make_query() aggregoi author-kentän AINA automaattisesti.
-  # Uusi elx_make_query_new() vaatii eksplisiittisen aggregate_vars = "author".
-  # Tämä on tarkoituksellinen, dokumentoitu käytösero (ks. @details).
+  # Old elx_make_query() ALWAYS auto-aggregates the author field.
+  # New elx_make_query_new() requires explicit aggregate_vars = "author".
+  # This is an intentional, documented behavior difference (see @details).
   old_q <- elx_make_query(resource_type = "directive", include_author = TRUE, limit = 5)
   new_q <- elx_make_query_new(resource_type = "directive", include_author = TRUE, 
                               aggregate_vars = "author", limit = 5)
@@ -52,7 +52,7 @@ test_that("elx_make_query_new produces byte-identical output for all resource_ty
     expect_equal(normalize_ws(old_q), normalize_ws(new_q))
   }
   
-  # manual type - eri kutsu koska vaatii manual_type-parametrin
+  # manual type - separate call since it requires the manual_type parameter
   old_manual <- elx_make_query(resource_type = "manual", manual_type = "SWD", include_date = TRUE, limit = 5)
   new_manual <- elx_make_query_new(resource_type = "manual", manual_type = "SWD", include_date = TRUE, limit = 5)
   expect_equal(normalize_ws(old_manual), normalize_ws(new_manual))
@@ -132,7 +132,7 @@ test_that("date_to must not be earlier than date_from", {
     "must be on or after"
   )
   
-  # Sama päivä on sallittu
+  # Same date on both ends is allowed
   expect_no_error(
     elx_make_query_new(resource_type = "directive", date_from = "2015-06-15", date_to = "2015-06-15")
   )
