@@ -69,9 +69,9 @@
 #' elx_make_query_new(resource_type = "directive", date_from = "2015-01-01", date_to = "2015-12-31")
 #' }
 
-#' PROTOTYYPPI - uusi datavetoinen query builder
+#' PROTOTYPE - new data-driven query builder
 
-# ---- 1. Kenttien määrittely yhdessä paikassa ----
+# ---- 1. Field definitions in one place ----
 
 field_specs <- list(
   
@@ -288,7 +288,7 @@ field_specs <- list(
 
 )
 
-# ---- 2. Pääfunktio ----
+# ---- 2. Main function ----
 
 elx_make_query_new <- function(resource_type,
                                manual_type = "",
@@ -407,7 +407,7 @@ elx_make_query_new <- function(resource_type,
     where_parts <- c(where_parts, spec$where)
   }
   
-  # ---- date_from / date_to erikoishaara ----
+  # ---- date_from / date_to special-case branch ----
   if (!is.null(date_from) || !is.null(date_to)) {
     
     date_filter <- "?work cdm:work_date_document ?date."

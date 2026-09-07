@@ -1,6 +1,6 @@
-#' Resource type -suodattimet omana apufunktiona
-#' Palauttaa SPARQL FILTER-lausekkeen resource_type-arvon perusteella,
-#' tai NULL jos resource_type == "any" (ei suodatinta tarvita)
+#' Resource type filters as a standalone helper function
+#' Returns a SPARQL FILTER expression based on the resource_type value,
+#' or NULL if resource_type == "any" (no filter needed)
 #'
 #' @noRd
 get_resource_type_filter <- function(resource_type, manual_type = "") {
@@ -126,5 +126,5 @@ get_resource_type_filter <- function(resource_type, manual_type = "") {
     return(paste0("FILTER(?type=<http://publications.europa.eu/resource/authority/resource-type/", manual_type, ">)"))
   }
   
-  return(NULL)  # "any" -> ei suodatinta
+  return(NULL)  # "any" -> no filter
 }

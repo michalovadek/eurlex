@@ -2,10 +2,10 @@ compare_query_builders <- function(label, ...) {
   old_q <- elx_make_query(...)
   new_q <- elx_make_query_new(...)
   
-  # Normalisoidaan whitespace ennen vertailua - SPARQL ei valita ylimaaraisista
-  # valilyonneista/rivinvaihdoista, joten tama on merkityksellinen vertailu
+  # Normalize whitespace before comparing - SPARQL doesn't care about extra
+  # whitespace/line breaks, so this is a meaningful comparison
   normalize_ws <- function(x) {
-    x <- gsub("\\s+", " ", x)  # kaikki whitespace-sarjat yhdeksi valiksi
+    x <- gsub("\\s+", " ", x)  #  collapse all whitespace runs to a single space
     trimws(x)
   }
   
@@ -256,7 +256,7 @@ run_byte_identity_suite <- function() {
     resource_type = "directive", include_directory = TRUE, include_directory_code = TRUE, limit = 5
   )
   
-  # Testataan myös että incompatible_with toimii oikein
+  # Also test that incompatible_with works correctly
   lbs_error_old <- tryCatch(
     elx_make_query(resource_type = "caselaw", include_lbs = TRUE),
     error = function(e) conditionMessage(e)
