@@ -38,6 +38,7 @@
 #' @param include_ecli If `TRUE`, results include the ECLI identifier for court documents
 #' @param include_court_procedure If `TRUE`, results include type of court procedure and outcome
 #' @param include_eurovoc If `TRUE`, results include EuroVoc descriptors of subject matter
+#' @param include_subject_matter If `TRUE`, results include subject-matter descriptors (a controlled EUR-Lex classification of up to 200 keywords, distinct from EuroVoc)
 #' @param include_directory_code If `TRUE`, results include the Eur-Lex directory code
 #' @param include_sector If `TRUE`, results include the Eur-Lex sector code
 #' @param include_date_force If `TRUE`, results include date of entry into force
@@ -123,6 +124,14 @@ field_specs <- list(
     select_vars = "?eurovoc",
     where = 'OPTIONAL{?work cdm:work_is_about_concept_eurovoc ?eurovoc. graph ?gs
     { ?eurovoc skos:prefLabel ?subjectLabel filter (lang(?subjectLabel)="en") }.}',
+    aggregatable = TRUE,
+    incompatible_with = NULL
+  ),
+  
+  subject_matter = list(
+    select_vars = "?subjectmatter",
+    where = 'OPTIONAL{?work cdm:resource_legal_is_about_subject-matter ?subjmx.
+    ?subjmx skos:prefLabel ?subjectmatter. FILTER(lang(?subjectmatter)="en")}.',
     aggregatable = TRUE,
     incompatible_with = NULL
   ),
@@ -301,6 +310,7 @@ elx_make_query_new <- function(resource_type,
                                include_ecli = FALSE,
                                include_court_procedure = FALSE,
                                include_eurovoc = FALSE,
+                               include_subject_matter = FALSE,
                                include_directory_code = FALSE,
                                include_sector = FALSE,
                                include_date_force = FALSE,
@@ -348,6 +358,7 @@ elx_make_query_new <- function(resource_type,
     lbs = include_lbs,
     force = include_force,
     eurovoc = include_eurovoc,
+    subject_matter = include_subject_matter,
     court_procedure = include_court_procedure,
     ecli = include_ecli,
     author = include_author,
