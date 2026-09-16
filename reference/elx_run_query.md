@@ -37,7 +37,7 @@ contains the Cellar URI of the resource.
 elx_run_query(elx_make_query("directive", include_force = TRUE, limit = 10))
 #>                                    work type      celex force
 #> 1  2ecb0332-5fb2-11f1-9af0-01aa75ed71a1  DIR 32026L1194  true
-#> 5  86beade5-741e-11f1-9800-01aa75ed71a1  DIR 32026L1472 false
+#> 5  86beade5-741e-11f1-9800-01aa75ed71a1  DIR 32026L1472  true
 #> 9  0d76f53e-267f-495c-9854-15e8c3ee05c5  DIR 31965L0066 false
 #> 13 47ba284d-04b9-11e3-a352-01aa75ed71a1  DIR 32013L0038  true
 #> 17 899b6c44-84ec-11e4-91cd-01aa75ed71a1  DIR 32014L0107  true
