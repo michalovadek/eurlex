@@ -151,3 +151,46 @@ test_that("order = TRUE works correctly with aggregate_vars", {
   expect_equal(nrow(out), 5)
   
 })
+
+
+test_that("subject_matter field returns valid classification terms", {
+  
+  skip_on_cran()
+  
+  q <- elx_make_query_new(resource_type = "directive", include_subject_matter = TRUE, limit = 5)
+  
+  out <- elx_run_query(q)
+  
+  expect_true("subjectmatter" %in% names(out))
+  expect_true(all(nchar(out$subjectmatter[!is.na(out$subjectmatter)]) > 2))
+  
+})
+
+test_that("subject_matter aggregates correctly for documents with multiple descriptors", {
+  
+  skip_on_cran()
+  
+  q <- elx_make_query_new(resource_type = "directive", include_subject_matter = TRUE,
+                          aggregate_vars = "subject_matter", limit = 5)
+  
+  out <- elx_run_query(q)
+  
+  expect_true(all(table(out$work) == 1))
+  
+})
+
+test_that("subject_matter works combined with other aggregated fields", {
+  
+  skip_on_cran()
+  
+  q <- elx_make_query_new(resource_type = "directive", include_subject_matter = TRUE, 
+                          include_author = TRUE, aggregate_vars = c("subject_matter", "author"), 
+                          limit = 5)
+  
+  out <- elx_run_query(q)
+  
+  expect_true(all(c("subjectmatter", "author") %in% names(out)))
+  expect_equal(nrow(out), 5)
+  
+})
+
