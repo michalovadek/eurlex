@@ -194,3 +194,74 @@ test_that("subject_matter works combined with other aggregated fields", {
   
 })
 
+test_that("official_journal field returns valid OJ reference components", {
+  
+  skip_on_cran()
+  
+  q <- elx_make_query_new(resource_type = "regulation", include_celex = TRUE,
+                          include_official_journal = TRUE, limit = 5)
+  
+  out <- elx_run_query(q)
+  
+  expect_true(all(c("ojnumber", "ojyear", "ojclass") %in% names(out)))
+  expect_true(all(grepl("^\\d{4}$", out$ojyear[!is.na(out$ojyear)])))
+  
+})
+
+test_that("official_journal field returns valid OJ reference components", {
+  
+  skip_on_cran()
+  
+  q <- elx_make_query_new(resource_type = "regulation", include_celex = TRUE,
+                          include_official_journal = TRUE, limit = 5)
+  
+  out <- elx_run_query(q)
+  
+  expect_true(all(c("ojnumber", "ojyear", "ojclass") %in% names(out)))
+  expect_true(all(grepl("^\\d{4}$", out$ojyear[!is.na(out$ojyear)])))
+  
+})
+
+test_that("official_journal aggregates correctly for documents published in multiple OJs", {
+  
+  skip_on_cran()
+  
+  q <- '
+  PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+  SELECT ?work (group_concat(distinct ?ojnumber;separator="|") as ?ojnumber) 
+               (group_concat(distinct ?ojyear;separator="|") as ?ojyear)
+               (group_concat(distinct ?ojclass;separator="|") as ?ojclass) WHERE {
+    VALUES ?work { <http://publications.europa.eu/resource/cellar/009393f1-f7f6-4c6e-a067-e497420f1e79> }
+    OPTIONAL{
+      ?work cdm:resource_legal_published_in_official-journal ?oj.
+      ?oj cdm:official-journal_number ?ojnumber.
+      ?oj cdm:official-journal_year ?ojyear.
+      ?oj cdm:official-journal_class ?ojclass.
+    }
+  }
+  GROUP BY ?work
+  '
+  
+  out <- elx_run_query(q)
+  
+  expect_equal(nrow(out), 1)
+  expect_true(grepl("143", out$ojnumber))
+  expect_true(grepl("275", out$ojnumber))
+  
+})
+
+test_that("official_journal works combined with other aggregated fields", {
+  
+  skip_on_cran()
+  
+  q <- elx_make_query_new(resource_type = "regulation", include_official_journal = TRUE, 
+                          include_author = TRUE, 
+                          aggregate_vars = c("official_journal", "author"), 
+                          limit = 5)
+  
+  out <- elx_run_query(q)
+  
+  expect_true(all(c("ojnumber", "ojyear", "ojclass", "author") %in% names(out)))
+  expect_equal(nrow(out), 5)
+  
+})
