@@ -293,8 +293,8 @@ results %>%
   distinct(type)
 #>       type
 #> 1      DIR
-#> 2  DIR_DEL
-#> 3 DIR_IMPL
+#> 2 DIR_IMPL
+#> 3  DIR_DEL
 ```
 
 The data is returned in the long format, which means that rows are
