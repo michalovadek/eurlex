@@ -4,6 +4,10 @@
 
 ### Major changes
 
+- rewrite of the query-composition system (`elx_make_query_new()`) by
+  [@KristianVepsalainen](https://github.com/KristianVepsalainen),
+  including subject matter retrieval, OJ numbers and flexible group
+  concatenation
 - new feature: `elx_make_query(include_title = TRUE)` retrieves the
   document title in English, thanks to
   [@KristianVepsalainen](https://github.com/KristianVepsalainen)

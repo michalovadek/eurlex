@@ -34,14 +34,15 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/michalovadek/eurlex/blob/v0.5.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/michalovadek/eurlex/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1" id="eurlex-051">eurlex 0.5.1<a class="anchor" aria-label="anchor" href="#eurlex-051"></a></h2>
 <div class="section level3">
 <h3 id="major-changes-0-5-1">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-5-1"></a></h3>
-<ul><li>new feature: <code>elx_make_query(include_title = TRUE)</code> retrieves the document title in English, thanks to <a href="https://github.com/KristianVepsalainen" class="external-link">@KristianVepsalainen</a>
+<ul><li>rewrite of the query-composition system (<code>elx_make_query_new()</code>) by <a href="https://github.com/KristianVepsalainen" class="external-link">@KristianVepsalainen</a>, including subject matter retrieval, OJ numbers and flexible group concatenation</li>
+<li>new feature: <code>elx_make_query(include_title = TRUE)</code> retrieves the document title in English, thanks to <a href="https://github.com/KristianVepsalainen" class="external-link">@KristianVepsalainen</a>
 </li>
 <li>new feature: <code>elx_make_query(date_from = "2015-01-01", date_to = "2015-03-15")</code> restricts the query to a date range (formatted as “YYYY-MM-DD”), thanks to <a href="https://github.com/KristianVepsalainen" class="external-link">@KristianVepsalainen</a>
 </li>
