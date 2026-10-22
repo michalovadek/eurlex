@@ -2,6 +2,7 @@
 
 ## Major changes
 
+- rewrite of the query-composition system (`elx_make_query_new()`) by [@KristianVepsalainen](https://github.com/KristianVepsalainen), including subject matter retrieval, OJ numbers and flexible group concatenation
 - new feature: `elx_make_query(include_title = TRUE)` retrieves the document title in English, thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
 - new feature: `elx_make_query(date_from = "2015-01-01", date_to = "2015-03-15")` restricts the query to a date range (formatted as "YYYY-MM-DD"), thanks to [@KristianVepsalainen](https://github.com/KristianVepsalainen)
 
